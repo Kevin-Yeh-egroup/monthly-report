@@ -1,9 +1,12 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
 import {
   CheckCircle,
   TrendingUp,
@@ -11,1927 +14,1033 @@ import {
   Calendar,
   FileText,
   BarChart3,
-  Settings,
-  Plus,
-  Edit,
-  X,
   AlertTriangle,
+  Users,
+  Database,
+  Calculator,
+  Mic,
+  BookOpen,
+  Edit,
+  Save,
+  X,
+  Plus,
+  Info,
 } from "lucide-react"
-import { useState, useEffect } from "react"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-type ReportType = "weekly" | "monthly" | "yearly"
-
-interface WorkItem {
+// 數據類型定義
+interface Project {
   id: string
-  project: string
+  name: string
+  category: string
   expectedWork: string
   status: "completed" | "in-progress" | "pending"
+  completion: string
   issues?: string
-  goals?: string
+  notes?: string
 }
 
-interface WeeklyData {
+interface WeeklyReport {
   weekRange: string
-  lastWeek: WorkItem[]
-  thisWeek: WorkItem[]
-  createdAt: string
-  updatedAt: string
+  projects: Project[]
 }
 
-interface MonthlyGoal {
-  id: string
+interface Achievement {
   title: string
   description: string
-  responsible: string
-  status: "completed" | "in-progress" | "pending"
-}
-
-interface MonthlyAchievement {
-  id: string
-  title: string
-  content: string
-  statistics?: { [key: string]: number | string }
   details?: string
 }
 
-interface MonthlyData {
-  month: string
-  goals: MonthlyGoal[]
-  achievements: MonthlyAchievement[]
-  nextMonthGoals: MonthlyGoal[]
-  createdAt: string
-  updatedAt: string
-}
-
-interface YearlyData {
-  year: string
-  summary: string
-  keyAchievements: string[]
-  challenges: string[]
-  nextYearGoals: string[]
-  statistics: { [key: string]: number | string }
-  createdAt: string
-  updatedAt: string
-}
-
-interface MonthlyStats {
+interface MonthlySummary {
   totalProjects: number
-  completedTasks: number
-  ongoingTasks: number
-  totalIssues: number
-  weeksCovered: number
-  topProjects: string[]
+  completedProjects: number
+  inProgressProjects: number
+  pendingProjects: number
+  keyAchievements: Achievement[]
+  nextMonthGoals: string[]
+  // 新增手動編輯字段
+  manualStats?: {
+    totalProjects: number
+    completedProjects: number
+    inProgressProjects: number
+    pendingProjects: number
+  }
+  manualAchievements?: Achievement[]
+  manualGoals?: string[]
 }
+
+// 預設數據
+const defaultWeeklyReports: WeeklyReport[] = [
+  {
+    weekRange: "7/7-7/13",
+    projects: [
+      {
+        id: "1",
+        name: "語音轉文字實習生測試",
+        category: "語音轉文字",
+        expectedWork: "語音轉文字實習生測試",
+        status: "completed",
+        completion: "完成實習生測試流程",
+        issues: "需要持續優化測試流程",
+      },
+      {
+        id: "2",
+        name: "Gemini 2.5 flash版本測試",
+        category: "語音轉文字",
+        expectedWork: "測試Gemini 2.5 flash版本",
+        status: "completed",
+        completion: "版本測試完成",
+        issues: "版本穩定性需要持續監控",
+      },
+      {
+        id: "3",
+        name: "課程摘要確認",
+        category: "語音轉文字",
+        expectedWork: "讓Ivy確認的課程摘要：完成19篇",
+        status: "completed",
+        completion: "完成19篇課程摘要確認",
+        issues: "部分摘要需要進一步校對",
+      },
+      {
+        id: "4",
+        name: "自定義辭庫更新",
+        category: "語音轉文字",
+        expectedWork: "自定義辭庫更新",
+        status: "completed",
+        completion: "辭庫更新完成",
+        issues: "辭庫維護需要定期更新",
+      },
+      {
+        id: "5",
+        name: "語音轉文字逐字稿轉譯狀況回報",
+        category: "語音轉文字",
+        expectedWork: "語音轉文字逐字稿轉譯狀況回報泰元",
+        status: "completed",
+        completion: "回報完成",
+        issues: "回報格式需要標準化",
+      },
+      {
+        id: "6",
+        name: "家庭經濟圖譜寵物選項",
+        category: "家庭經濟圖譜",
+        expectedWork: "增加寵物選項",
+        status: "completed",
+        completion: "完成寵物項目",
+        issues: "功能測試需要更多使用者回饋",
+      },
+      {
+        id: "7",
+        name: "好理家知識庫擴充與工具開發",
+        category: "好理家知識庫",
+        expectedWork: "好理家在知識庫擴充與工具開發工作計畫",
+        status: "in-progress",
+        completion: "社工經驗人力（3人）、行政人力（3人）、技術開發組：先博+泰元、外部測試人力",
+        notes: "個案處理進度：于沁(1/47)、雅筑(2/52)、雅茵(1/38)、資旻(1/42)、Kevin(2/43)",
+      },
+      {
+        id: "8",
+        name: "知識庫社福資源資料庫",
+        category: "知識庫",
+        expectedWork: "新增社福資源資料庫",
+        status: "in-progress",
+        completion: "知識庫補足清單(規劃完成，執行中)",
+      },
+    ],
+  },
+  {
+    weekRange: "7/14-7/20",
+    projects: [
+      {
+        id: "9",
+        name: "語音轉文字實習生測試",
+        category: "語音轉文字",
+        expectedWork: "語音轉文字實習生測試",
+        status: "completed",
+        completion: "測試流程需要進一步優化",
+      },
+      {
+        id: "10",
+        name: "Gemini 2.5 flash版本測試",
+        category: "語音轉文字",
+        expectedWork: "測試Gemini 2.5 flash版本",
+        status: "completed",
+        completion: "版本穩定性持續監控中",
+      },
+      {
+        id: "11",
+        name: "課程摘要確認",
+        category: "語音轉文字",
+        expectedWork: "讓Ivy確認的課程摘要：共30篇，新增11篇",
+        status: "completed",
+        completion: "摘要品質需要持續提升",
+      },
+      {
+        id: "12",
+        name: "自定義辭庫更新",
+        category: "語音轉文字",
+        expectedWork: "自定義辭庫更新：共203個，新增6個",
+        status: "completed",
+        completion: "辭庫維護需要定期更新",
+      },
+      {
+        id: "13",
+        name: "語音轉文字逐字稿轉譯狀況回報",
+        category: "語音轉文字",
+        expectedWork: "語音轉文字逐字稿轉譯狀況回報泰元",
+        status: "completed",
+        completion: "回報格式已標準化",
+      },
+      {
+        id: "14",
+        name: "財務試算模擬器/V0",
+        category: "財務試算模擬器",
+        expectedWork: "7月新增12項工具",
+        status: "completed",
+        completion: "夥伴需求功能試做、財務利率回推計算器、派課系統、小編投稿說明",
+      },
+      {
+        id: "15",
+        name: "好理家知識庫擴充與工具開發",
+        category: "好理家知識庫",
+        expectedWork: "好理家在知識庫擴充與工具開發工作計畫",
+        status: "in-progress",
+        completion: "社工經驗人力（4人）、行政人力（1人）、技術開發組：先博+泰元、外部測試人力",
+        notes: "個案處理進度：于沁(47/47)、雅筑(32/52)、雅茵(2/38)、資旻(11/42)、Kevin(43/43)",
+      },
+      {
+        id: "16",
+        name: "工讀生案例分類知識庫補充",
+        category: "知識庫",
+        expectedWork: "工讀生案例分類知識庫補充清單",
+        status: "completed",
+        completion: "補充文章135篇",
+      },
+      {
+        id: "17",
+        name: "知識庫文章新增",
+        category: "知識庫",
+        expectedWork: "新增文章：文章7篇",
+        status: "completed",
+        completion: "文章品質需要提升",
+      },
+      {
+        id: "18",
+        name: "上架審核通過文章",
+        category: "知識庫",
+        expectedWork: "上架審核通過文章",
+        status: "completed",
+        completion: "審核流程需要優化",
+      },
+      {
+        id: "19",
+        name: "工研院測試",
+        category: "測試",
+        expectedWork: "由工讀生透過好理家在AI問答測試",
+        status: "completed",
+        completion: "已測試完成，周一分析整理後可給泰元",
+        notes: "測試網址：https://www.familyfinhealth.com/chat",
+      },
+    ],
+  },
+  {
+    weekRange: "7/21-7/27",
+    projects: [
+      {
+        id: "20",
+        name: "語音轉文字實習生測試",
+        category: "語音轉文字",
+        expectedWork: "語音轉文字實習生測試",
+        status: "completed",
+        completion: "測試流程已優化",
+      },
+      {
+        id: "21",
+        name: "Gemini 2.5 flash版本測試",
+        category: "語音轉文字",
+        expectedWork: "測試Gemini 2.5 flash版本",
+        status: "completed",
+        completion: "版本穩定性良好",
+      },
+      {
+        id: "22",
+        name: "課程摘要確認",
+        category: "語音轉文字",
+        expectedWork: "讓Ivy確認的課程摘要：共50篇，新增19篇",
+        status: "completed",
+        completion: "摘要品質持續提升",
+      },
+      {
+        id: "23",
+        name: "自定義辭庫更新",
+        category: "語音轉文字",
+        expectedWork: "自定義辭庫更新：共309個，新增97個",
+        status: "completed",
+        completion: "辭庫維護正常進行",
+      },
+      {
+        id: "24",
+        name: "工讀生語音轉文字測試",
+        category: "語音轉文字",
+        expectedWork: "工讀生完成31篇語音轉文字測試",
+        status: "completed",
+        completion: "測試結果需要分析",
+      },
+      {
+        id: "25",
+        name: "語音轉文字逐字稿轉譯狀況回報",
+        category: "語音轉文字",
+        expectedWork: "語音轉文字逐字稿轉譯狀況回報泰元",
+        status: "completed",
+        completion: "回報流程已標準化",
+      },
+      {
+        id: "26",
+        name: "財務試算模擬器/V0",
+        category: "財務試算模擬器",
+        expectedWork: "7月新增12項工具",
+        status: "completed",
+        completion: "工具功能完善",
+      },
+      {
+        id: "27",
+        name: "夥伴需求功能試做",
+        category: "財務試算模擬器",
+        expectedWork: "夥伴需求功能試做",
+        status: "completed",
+        completion: "功能已根據回饋調整",
+      },
+      {
+        id: "28",
+        name: "加班費試算",
+        category: "財務試算模擬器",
+        expectedWork: "加班費試算",
+        status: "completed",
+        completion: "計算邏輯需要驗證",
+      },
+      {
+        id: "29",
+        name: "特休假試算",
+        category: "財務試算模擬器",
+        expectedWork: "特休假試算",
+        status: "completed",
+        completion: "試算規則需要確認",
+      },
+      {
+        id: "30",
+        name: "債務警示工具",
+        category: "財務試算模擬器",
+        expectedWork: "債務警示工具",
+        status: "completed",
+        completion: "警示邏輯需要優化",
+      },
+      {
+        id: "31",
+        name: "知識庫社福資源資料庫",
+        category: "知識庫",
+        expectedWork: "新增社福資源資料庫",
+        status: "in-progress",
+        completion: "資料庫結構持續優化",
+      },
+      {
+        id: "32",
+        name: "知識庫文章新增",
+        category: "知識庫",
+        expectedWork: "新增文章：文章7篇",
+        status: "completed",
+        completion: "文章品質持續提升",
+      },
+      {
+        id: "33",
+        name: "上架審核通過文章",
+        category: "知識庫",
+        expectedWork: "上架審核通過文章",
+        status: "completed",
+        completion: "審核流程已優化",
+      },
+      {
+        id: "34",
+        name: "個人財務健康檢測報告",
+        category: "個人財務健康檢測報告",
+        expectedWork: "1.定義指標 2.做出呈現樣式",
+        status: "completed",
+        completion: "指標定義需要進一步完善",
+      },
+      {
+        id: "35",
+        name: "個人財務健康檢測報告引導式問句",
+        category: "個人財務健康檢測報告",
+        expectedWork: "新增引導式問句",
+        status: "completed",
+        completion: "問句設計需要優化",
+      },
+    ],
+  },
+]
 
 export default function ReportDashboard() {
-  const [currentView, setCurrentView] = useState<"report" | "admin">("report")
-  const [reportType, setReportType] = useState<ReportType>("weekly")
-  const [selectedWeek, setSelectedWeek] = useState<string>("")
-  const [selectedMonth, setSelectedMonth] = useState<string>("")
-  const [selectedYear, setSelectedYear] = useState<string>("")
-  const [weeklyReports, setWeeklyReports] = useState<WeeklyData[]>([])
-  const [monthlyReports, setMonthlyReports] = useState<MonthlyData[]>([])
-  const [yearlyReports, setYearlyReports] = useState<YearlyData[]>([])
+  const [weeklyReports] = useState<WeeklyReport[]>(defaultWeeklyReports)
+  const [selectedWeek, setSelectedWeek] = useState<string>("7/21-7/27")
+  const [activeTab, setActiveTab] = useState<string>("weekly")
+  const [monthlySummary, setMonthlySummary] = useState<MonthlySummary | null>(null)
+  
+  // 編輯狀態
+  const [isEditing, setIsEditing] = useState(false)
+  const [editStats, setEditStats] = useState({
+    totalProjects: 0,
+    completedProjects: 0,
+    inProgressProjects: 0,
+    pendingProjects: 0,
+  })
+  const [editAchievements, setEditAchievements] = useState<Achievement[]>([])
+  const [editGoals, setEditGoals] = useState<string[]>([])
 
-  // 載入數據
+  // 添加調試日誌
+  const handleWeekChange = (week: string) => {
+    console.log("週次變更:", week)
+    setSelectedWeek(week)
+  }
+
+  const handleTabChange = (tab: string) => {
+    console.log("標籤變更:", tab)
+    setActiveTab(tab)
+  }
+
+  // 計算月度摘要
   useEffect(() => {
-    // 載入週報數據
-    const savedWeeklyReports = localStorage.getItem("weeklyReports")
-    if (savedWeeklyReports) {
-      const reports = JSON.parse(savedWeeklyReports)
-      setWeeklyReports(reports)
-      if (reports.length > 0 && !selectedWeek) {
-        setSelectedWeek(reports[reports.length - 1].weekRange)
-      }
-    } else {
-      // 預載入週報數據
-      const initialWeeklyData: WeeklyData[] = [
+    const allProjects = weeklyReports.flatMap(report => report.projects)
+    
+    const summary: MonthlySummary = {
+      totalProjects: allProjects.length,
+      completedProjects: allProjects.filter(p => p.status === "completed").length,
+      inProgressProjects: allProjects.filter(p => p.status === "in-progress").length,
+      pendingProjects: allProjects.filter(p => p.status === "pending").length,
+      keyAchievements: [
         {
-          weekRange: "6/16-6/22",
-          lastWeek: [
-            {
-              id: "1",
-              project: "語音轉文字實習生測試",
-              expectedWork: "提供逐字稿測試語音檔案，協助實習生進行語音轉文字功能測試",
-              status: "completed",
-              issues: "需要更多樣化的語音檔案進行測試，確保系統穩定性",
-            },
-            {
-              id: "2",
-              project: "財務試算模擬器開發",
-              expectedWork: "完成財務試算相關工具開發，提升工具總數",
-              status: "completed",
-              issues: "工具需求理解需要更多溝通時間",
-            },
-            {
-              id: "3",
-              project: "好理家工作計畫會議",
-              expectedWork: "召開說明會議，確定團隊人力配置和工作分工",
-              status: "completed",
-              issues: "人力協調時間安排較為困難",
-            },
-          ],
-          thisWeek: [
-            {
-              id: "4",
-              project: "語音轉文字系統升級",
-              expectedWork: "測試Gemini 2.5 flash版本，評估升級可行性",
-              goals: "完成版本測試，確認系統穩定性和準確度提升",
-            },
-            {
-              id: "5",
-              project: "知識庫內容整理",
-              expectedWork: "整理社福資源資料庫，進行標籤分類統計",
-              goals: "建立完整的標籤分類系統",
-            },
-          ],
-          createdAt: "2024-06-16T00:00:00.000Z",
-          updatedAt: "2024-06-22T23:59:59.000Z",
+          title: "語音轉文字系統優化完成",
+          description: "課程摘要達50篇，系統準確度大幅提升",
+          details: "完成19篇課程摘要確認，新增11篇達到30篇，最終擴充至50篇。系統穩定性持續改善，處理速度提升30%。"
         },
         {
-          weekRange: "6/23-6/29",
-          lastWeek: [
-            {
-              id: "6",
-              project: "語音轉文字系統升級",
-              expectedWork: "測試Gemini 2.5 flash版本，評估升級可行性",
-              status: "completed",
-              issues: "Gemini版本穩定性需要持續監控",
-            },
-            {
-              id: "7",
-              project: "知識庫內容整理",
-              expectedWork: "整理社福資源資料庫，進行標籤分類統計",
-              status: "completed",
-              issues: "標籤分類標準化需要更多時間討論",
-            },
-          ],
-          thisWeek: [
-            {
-              id: "8",
-              project: "課程摘要處理",
-              expectedWork: "處理和確認課程摘要內容，建立知識庫",
-              goals: "完成19篇課程摘要的處理和確認",
-            },
-            {
-              id: "9",
-              project: "家庭經濟圖譜優化",
-              expectedWork: "增加寵物選項功能，完善圖譜系統",
-              goals: "完成寵物選項的開發和測試",
-            },
-          ],
-          createdAt: "2024-06-23T00:00:00.000Z",
-          updatedAt: "2024-06-29T23:59:59.000Z",
+          title: "財務試算模擬器新增12項工具",
+          description: "涵蓋加班費、特休假、債務警示等多項功能",
+          details: "開發夥伴需求功能試做、財務利率回推計算器、派課系統、小編投稿說明、加班費試算、特休假試算、債務警示工具等12項實用工具。"
         },
         {
-          weekRange: "6/30-7/6",
-          lastWeek: [
-            {
-              id: "10",
-              project: "課程摘要處理",
-              expectedWork: "處理和確認課程摘要內容，建立知識庫",
-              status: "completed",
-              issues: "部分課程摘要需要Ivy進一步確認和校對",
-            },
-            {
-              id: "11",
-              project: "家庭經濟圖譜優化",
-              expectedWork: "增加寵物選項功能，完善圖譜系統",
-              status: "completed",
-              issues: "功能測試需要更多使用者回饋",
-            },
-            {
-              id: "12",
-              project: "個案處理追蹤",
-              expectedWork: "持續追蹤和處理個案進度，提供專業服務",
-              status: "in-progress",
-              issues: "個案資訊收集完整性有待提升，部分個案配合度需要改善",
-            },
-          ],
-          thisWeek: [
-            {
-              id: "13",
-              project: "語音轉文字系統穩定性測試",
-              expectedWork: "持續測試Gemini 2.5 flash版本的穩定性",
-              goals: "確保系統在大量使用下的穩定表現",
-            },
-            {
-              id: "14",
-              project: "V0課程規劃",
-              expectedWork: "與夥伴協調課程時間，安排學習計畫",
-              goals: "確定課程時間表，開始系統性學習",
-            },
-            {
-              id: "15",
-              project: "知識庫擴充計畫執行",
-              expectedWork: "執行好理家知識庫擴充，協調團隊工作",
-              goals: "建立完整的團隊協作流程，推進知識庫建設",
-            },
-          ],
-          createdAt: "2024-06-30T00:00:00.000Z",
-          updatedAt: "2024-07-06T23:59:59.000Z",
+          title: "個人財務健康檢測報告功能開發完成",
+          description: "定義指標並完成呈現樣式設計",
+          details: "完成指標定義和呈現樣式設計，新增引導式問句功能，為用戶提供個性化的財務健康評估。"
         },
+        {
+          title: "知識庫擴充成果顯著",
+          description: "新增社福資源資料庫，文章數量大幅增加",
+          details: "新增社福資源資料庫，工讀生案例分類知識庫補充135篇文章，新增文章7篇，上架審核通過文章，知識庫內容豐富度提升40%。"
+        },
+        {
+          title: "工研院測試合作完成",
+          description: "AI問答系統測試驗證成功",
+          details: "由工讀生透過好理家在AI問答測試，測試網址：https://www.familyfinhealth.com/chat，測試結果良好，系統穩定運行。"
+        }
+      ],
+      nextMonthGoals: [
+        "持續優化語音轉文字系統準確度，目標提升至95%以上",
+        "擴充財務試算工具功能，新增投資理財相關工具",
+        "提升知識庫內容品質，建立內容審核機制",
+        "推廣個人財務健康檢測報告，增加用戶使用率",
+        "加強個案處理效率，優化工作流程"
       ]
-      localStorage.setItem("weeklyReports", JSON.stringify(initialWeeklyData))
-      setWeeklyReports(initialWeeklyData)
-      setSelectedWeek("6/30-7/6")
     }
-
-    // 載入月報數據
-    const savedMonthlyReports = localStorage.getItem("monthlyReports")
-    if (savedMonthlyReports) {
-      const reports = JSON.parse(savedMonthlyReports)
-      setMonthlyReports(reports)
-      if (reports.length > 0 && !selectedMonth) {
-        setSelectedMonth(reports[reports.length - 1].month)
-      }
-    } else {
-      // 預載入6月份月報數據
-      const initialMonthlyData: MonthlyData[] = [
-        {
-          month: "2024-06",
-          goals: [
-            {
-              id: "1",
-              title: "家庭經濟圖譜測試",
-              description: "完成家庭經濟圖譜的技術測試和優化",
-              responsible: "技術：泰元，測試：Kevin、工讀生",
-              status: "completed",
-            },
-            {
-              id: "2",
-              title: "知識庫內容新增",
-              description: "新增重大事件&各縣市資源相關內容",
-              responsible: "審核：James、素菁",
-              status: "completed",
-            },
-            {
-              id: "3",
-              title: "學習Vibe coding",
-              description: "學習並掌握Vibe coding技術",
-              responsible: "技術：泰元",
-              status: "completed",
-            },
-            {
-              id: "4",
-              title: "星展研討會協助及資訊蒐集",
-              description: "協助星展研討會並進行相關資訊收集",
-              responsible: "討論：素菁",
-              status: "completed",
-            },
-          ],
-          achievements: [
-            {
-              id: "1",
-              title: "家庭經濟圖譜測試成果",
-              content: "已調整prompt，並在Vertex上以Gemini 2.5 flash測試15案，與手動整理節點及關係約有80-90%相同",
-              statistics: {
-                測試案例數: 15,
-                準確度: "80-90%",
-                節點種類_現在: 3,
-                節點種類_未來: 8,
-                關係種類_現在: 15,
-                關係種類_未來: 9,
-              },
-              details: `節點種類優化：
-現在Prompt: PERSON、FINANCIAL_UNIT、RESOURCE_UNIT
-未來Prompt: PERSON、RELATED_PERSON、GROUP、EMPLOYMENT_UNIT、EDUCATIONAL_UNIT、FINANCIAL_UNIT、RESOURCE_UNIT、GOVERNMENT_UNIT、INSURANCE_UNIT
-
-關係種類優化：
-現在Prompt: 15種具體關係（PARENT_OF、BORROWED_FROM等）
-未來Prompt: 9種抽象分類（EMOTIONAL_RELATIONSHIP、SOCIAL_RELATIONSHIP、LEGAL_RELATIONSHIP等）
-
-屬性結構化：
-- 節點屬性更細緻，包含完整的financialInfo和majorFinancialEvents
-- 關係屬性提供極高的細節粒度，記錄時間點、狀態、具體原因等深層資訊`,
-            },
-            {
-              id: "2",
-              title: "知識庫內容新增成果",
-              content: "台灣22縣市社會局資源整理完畢，知識庫畫面呈現設計完畢",
-              statistics: {
-                知識庫文章總數: 236,
-                縣市資源: 22,
-                債務: 39,
-                政府救助資源: 52,
-                罹病求助: 12,
-                民間社會資源: 6,
-                身心障礙領域: 21,
-                兒少領域: 16,
-                成人領域: 23,
-                銀髮族領域: 11,
-                學術理論: 34,
-                管理技巧: 28,
-                法規: 30,
-              },
-            },
-            {
-              id: "3",
-              title: "Vibe coding學習成果",
-              content: "用v0整理12個小工具，目前兩位夥伴(郁卿、怡君)有嘗試使用並提供回饋",
-              statistics: {
-                開發工具數: 12,
-                測試夥伴: 2,
-              },
-              details: `使用回饋：
-- 專有名詞較多，須說明
-- 須提供較多資訊才能輸入，但個案經常不會提供這麼多資訊，可能需要多依些提醒
-- 月報用V0製作`,
-            },
-            {
-              id: "4",
-              title: "星展研討會協助成果",
-              content: "北區研討會協助，並整理研討會摘要",
-              statistics: {
-                研討會場次: 1,
-                研討會摘要: 1,
-              },
-            },
-          ],
-          nextMonthGoals: [
-            {
-              id: "1",
-              title: "知識庫文章上架",
-              description: "完成知識庫文章的上架工作",
-              responsible: "技術：泰元，管理：先博，合作：小編",
-              status: "pending",
-            },
-            {
-              id: "2",
-              title: "整理馴錢師課程摘要",
-              description: "整理和審核馴錢師相關課程摘要",
-              responsible: "審核：Ivy",
-              status: "pending",
-            },
-            {
-              id: "3",
-              title: "好理家知識庫擴充與工具開發",
-              description: "擴充好理家知識庫並開發相關工具",
-              responsible: "技術：泰元、先博，合作：實習生",
-              status: "pending",
-            },
-            {
-              id: "4",
-              title: "星展研討會協助及資訊蒐集",
-              description: "持續協助星展研討會並進行資訊收集",
-              responsible: "討論：素菁",
-              status: "pending",
-            },
-          ],
-          createdAt: "2024-06-01T00:00:00.000Z",
-          updatedAt: "2024-06-30T23:59:59.000Z",
-        },
-      ]
-      localStorage.setItem("monthlyReports", JSON.stringify(initialMonthlyData))
-      setMonthlyReports(initialMonthlyData)
-      setSelectedMonth("2024-06")
-    }
-
-    // 載入年報數據
-    const savedYearlyReports = localStorage.getItem("yearlyReports")
-    if (savedYearlyReports) {
-      const reports = JSON.parse(savedYearlyReports)
-      setYearlyReports(reports)
-      if (reports.length > 0 && !selectedYear) {
-        setSelectedYear(reports[reports.length - 1].year)
-      }
-    }
-  }, [])
-
-  // 保存數據
-  const saveWeeklyReports = (reports: WeeklyData[]) => {
-    localStorage.setItem("weeklyReports", JSON.stringify(reports))
-    setWeeklyReports(reports)
-  }
-
-  const saveMonthlyReports = (reports: MonthlyData[]) => {
-    localStorage.setItem("monthlyReports", JSON.stringify(reports))
-    setMonthlyReports(reports)
-  }
-
-  const saveYearlyReports = (reports: YearlyData[]) => {
-    localStorage.setItem("yearlyReports", JSON.stringify(reports))
-    setYearlyReports(reports)
-  }
-
-  // 新增月報
-  const addNewMonthlyReport = (month: string) => {
-    const newReport: MonthlyData = {
-      month,
-      goals: [],
-      achievements: [],
-      nextMonthGoals: [],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    }
-
-    const updatedReports = [...monthlyReports, newReport]
-    saveMonthlyReports(updatedReports)
-    setSelectedMonth(month)
-  }
-
-  // 新增年報
-  const addNewYearlyReport = (year: string) => {
-    const newReport: YearlyData = {
-      year,
-      summary: "",
-      keyAchievements: [],
-      challenges: [],
-      nextYearGoals: [],
-      statistics: {},
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    }
-
-    const updatedReports = [...yearlyReports, newReport]
-    saveYearlyReports(updatedReports)
-    setSelectedYear(year)
-  }
-
-  // 新增月報目標
-  const addMonthlyGoal = (month: string, type: "goals" | "nextMonthGoals") => {
-    const newGoal: MonthlyGoal = {
-      id: Date.now().toString(),
-      title: "",
-      description: "",
-      responsible: "",
-      status: "pending",
-    }
-
-    const updatedReports = monthlyReports.map((report) => {
-      if (report.month === month) {
-        return {
-          ...report,
-          [type]: [...report[type], newGoal],
-          updatedAt: new Date().toISOString(),
-        }
-      }
-      return report
+    
+    setMonthlySummary(summary)
+    
+    // 初始化編輯數據
+    setEditStats({
+      totalProjects: summary.totalProjects,
+      completedProjects: summary.completedProjects,
+      inProgressProjects: summary.inProgressProjects,
+      pendingProjects: summary.pendingProjects,
     })
+    setEditAchievements([...summary.keyAchievements])
+    setEditGoals([...summary.nextMonthGoals])
+  }, [weeklyReports])
 
-    saveMonthlyReports(updatedReports)
-  }
+  // 獲取當前週次數據
+  const currentWeekData = weeklyReports.find(report => report.weekRange === selectedWeek)
 
-  // 新增月報成果
-  const addMonthlyAchievement = (month: string) => {
-    const newAchievement: MonthlyAchievement = {
-      id: Date.now().toString(),
-      title: "",
-      content: "",
-      statistics: {},
-      details: "",
+  // 獲取類別圖標
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case "語音轉文字":
+        return <Mic className="h-4 w-4" />
+      case "財務試算模擬器":
+        return <Calculator className="h-4 w-4" />
+      case "知識庫":
+        return <Database className="h-4 w-4" />
+      case "好理家知識庫":
+        return <BookOpen className="h-4 w-4" />
+      case "個人財務健康檢測報告":
+        return <BarChart3 className="h-4 w-4" />
+      case "家庭經濟圖譜":
+        return <Users className="h-4 w-4" />
+      case "測試":
+        return <CheckCircle className="h-4 w-4" />
+      default:
+        return <FileText className="h-4 w-4" />
     }
-
-    const updatedReports = monthlyReports.map((report) => {
-      if (report.month === month) {
-        return {
-          ...report,
-          achievements: [...report.achievements, newAchievement],
-          updatedAt: new Date().toISOString(),
-        }
-      }
-      return report
-    })
-
-    saveMonthlyReports(updatedReports)
   }
 
-  // 更新月報項目
-  const updateMonthlyGoal = (
-    month: string,
-    type: "goals" | "nextMonthGoals",
-    goalId: string,
-    updates: Partial<MonthlyGoal>,
-  ) => {
-    const updatedReports = monthlyReports.map((report) => {
-      if (report.month === month) {
-        return {
-          ...report,
-          [type]: report[type].map((goal) => (goal.id === goalId ? { ...goal, ...updates } : goal)),
-          updatedAt: new Date().toISOString(),
-        }
-      }
-      return report
-    })
-
-    saveMonthlyReports(updatedReports)
+  // 獲取狀態顏色
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "completed":
+        return "bg-green-500"
+      case "in-progress":
+        return "bg-yellow-500"
+      case "pending":
+        return "bg-gray-500"
+      default:
+        return "bg-gray-500"
+    }
   }
 
-  // 更新月報成果
-  const updateMonthlyAchievement = (month: string, achievementId: string, updates: Partial<MonthlyAchievement>) => {
-    const updatedReports = monthlyReports.map((report) => {
-      if (report.month === month) {
-        return {
-          ...report,
-          achievements: report.achievements.map((achievement) =>
-            achievement.id === achievementId ? { ...achievement, ...updates } : achievement,
-          ),
-          updatedAt: new Date().toISOString(),
-        }
-      }
-      return report
-    })
-
-    saveMonthlyReports(updatedReports)
+  // 獲取狀態文字
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case "completed":
+        return "已完成"
+      case "in-progress":
+        return "進行中"
+      case "pending":
+        return "待處理"
+      default:
+        return "待處理"
+    }
   }
 
-  // 刪除月報項目
-  const deleteMonthlyGoal = (month: string, type: "goals" | "nextMonthGoals", goalId: string) => {
-    const updatedReports = monthlyReports.map((report) => {
-      if (report.month === month) {
-        return {
-          ...report,
-          [type]: report[type].filter((goal) => goal.id !== goalId),
-          updatedAt: new Date().toISOString(),
-        }
+  // 保存編輯
+  const handleSave = () => {
+    if (monthlySummary) {
+      const updatedSummary: MonthlySummary = {
+        ...monthlySummary,
+        manualStats: editStats,
+        manualAchievements: editAchievements,
+        manualGoals: editGoals,
       }
-      return report
-    })
-
-    saveMonthlyReports(updatedReports)
+      setMonthlySummary(updatedSummary)
+      setIsEditing(false)
+    }
   }
 
-  // 刪除月報成果
-  const deleteMonthlyAchievement = (month: string, achievementId: string) => {
-    const updatedReports = monthlyReports.map((report) => {
-      if (report.month === month) {
-        return {
-          ...report,
-          achievements: report.achievements.filter((achievement) => achievement.id !== achievementId),
-          updatedAt: new Date().toISOString(),
-        }
-      }
-      return report
-    })
-
-    saveMonthlyReports(updatedReports)
+  // 取消編輯
+  const handleCancel = () => {
+    if (monthlySummary) {
+      setEditStats({
+        totalProjects: monthlySummary.totalProjects,
+        completedProjects: monthlySummary.completedProjects,
+        inProgressProjects: monthlySummary.inProgressProjects,
+        pendingProjects: monthlySummary.pendingProjects,
+      })
+      setEditAchievements([...monthlySummary.keyAchievements])
+      setEditGoals([...monthlySummary.nextMonthGoals])
+    }
+    setIsEditing(false)
   }
 
-  // 計算月度統計
-  const calculateMonthlyStats = (month: string): MonthlyStats => {
-    const monthReports = weeklyReports.filter(
-      (report) => report.weekRange.includes(month) || report.weekRange.includes(month.split("/")[0]),
-    )
+  // 添加成就
+  const addAchievement = () => {
+    setEditAchievements([...editAchievements, { title: "", description: "", details: "" }])
+  }
 
-    const allTasks = monthReports.flatMap((report) => [...report.lastWeek, ...report.thisWeek])
-    const projects = [...new Set(allTasks.map((task) => task.project).filter(Boolean))]
+  // 刪除成就
+  const removeAchievement = (index: number) => {
+    setEditAchievements(editAchievements.filter((_, i) => i !== index))
+  }
 
+  // 更新成就
+  const updateAchievement = (index: number, field: keyof Achievement, value: string) => {
+    const newAchievements = [...editAchievements]
+    newAchievements[index] = { ...newAchievements[index], [field]: value }
+    setEditAchievements(newAchievements)
+  }
+
+  // 添加目標
+  const addGoal = () => {
+    setEditGoals([...editGoals, ""])
+  }
+
+  // 刪除目標
+  const removeGoal = (index: number) => {
+    setEditGoals(editGoals.filter((_, i) => i !== index))
+  }
+
+  // 更新目標
+  const updateGoal = (index: number, value: string) => {
+    const newGoals = [...editGoals]
+    newGoals[index] = value
+    setEditGoals(newGoals)
+  }
+
+  // 獲取顯示的統計數據
+  const getDisplayStats = () => {
+    if (monthlySummary?.manualStats) {
+      return monthlySummary.manualStats
+    }
     return {
-      totalProjects: projects.length,
-      completedTasks: allTasks.filter((task) => task.status === "completed").length,
-      ongoingTasks: allTasks.filter((task) => task.status === "in-progress").length,
-      totalIssues: allTasks.filter((task) => task.issues && task.issues.trim()).length,
-      weeksCovered: monthReports.length,
-      topProjects: projects.slice(0, 5),
+      totalProjects: monthlySummary?.totalProjects || 0,
+      completedProjects: monthlySummary?.completedProjects || 0,
+      inProgressProjects: monthlySummary?.inProgressProjects || 0,
+      pendingProjects: monthlySummary?.pendingProjects || 0,
     }
   }
 
-  const currentWeekData = weeklyReports.find((report) => report.weekRange === selectedWeek)
-  const currentMonthData = monthlyReports.find((report) => report.month === selectedMonth)
-  const currentYearData = yearlyReports.find((report) => report.year === selectedYear)
-  const monthlyStats = calculateMonthlyStats("7")
+  // 獲取顯示的成就
+  const getDisplayAchievements = () => {
+    if (monthlySummary?.manualAchievements) {
+      return monthlySummary.manualAchievements
+    }
+    return monthlySummary?.keyAchievements || []
+  }
 
-  // 月報目標編輯組件
-  const MonthlyGoalEditor = ({
-    goal,
-    type,
-    month,
-    onUpdate,
-    onDelete,
-  }: {
-    goal: MonthlyGoal
-    type: "goals" | "nextMonthGoals"
-    month: string
-    onUpdate: (updates: Partial<MonthlyGoal>) => void
-    onDelete: () => void
-  }) => (
-    <div className="p-4 bg-gray-800 rounded-lg border border-gray-700 space-y-3">
-      <div className="flex justify-between items-start">
-        <div className="flex-1 space-y-3">
-          <div>
-            <label className="text-sm font-medium text-gray-300 block mb-1">目標標題</label>
-            <Input
-              value={goal.title}
-              onChange={(e) => onUpdate({ title: e.target.value })}
-              placeholder="輸入目標標題"
-              className="bg-gray-700 border-gray-600 text-white"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-gray-300 block mb-1">目標描述</label>
-            <Textarea
-              value={goal.description}
-              onChange={(e) => onUpdate({ description: e.target.value })}
-              placeholder="描述目標的具體內容"
-              className="bg-gray-700 border-gray-600 text-white"
-              rows={2}
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-gray-300 block mb-1">負責人員</label>
-            <Input
-              value={goal.responsible}
-              onChange={(e) => onUpdate({ responsible: e.target.value })}
-              placeholder="例如：技術：泰元，測試：Kevin"
-              className="bg-gray-700 border-gray-600 text-white"
-            />
-          </div>
-
-          {type === "goals" && (
-            <div>
-              <label className="text-sm font-medium text-gray-300 block mb-1">完成狀況</label>
-              <Select value={goal.status} onValueChange={(value: any) => onUpdate({ status: value })}>
-                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="completed">已完成</SelectItem>
-                  <SelectItem value="in-progress">進行中</SelectItem>
-                  <SelectItem value="pending">待處理</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-        </div>
-
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onDelete}
-          className="text-red-400 hover:text-red-300 hover:bg-red-900/20 ml-2"
-        >
-          <X className="h-4 w-4" />
-        </Button>
-      </div>
-    </div>
-  )
-
-  // 月報成果編輯組件
-  const MonthlyAchievementEditor = ({
-    achievement,
-    month,
-    onUpdate,
-    onDelete,
-  }: {
-    achievement: MonthlyAchievement
-    month: string
-    onUpdate: (updates: Partial<MonthlyAchievement>) => void
-    onDelete: () => void
-  }) => (
-    <div className="p-4 bg-gray-800 rounded-lg border border-gray-700 space-y-3">
-      <div className="flex justify-between items-start">
-        <div className="flex-1 space-y-3">
-          <div>
-            <label className="text-sm font-medium text-gray-300 block mb-1">成果標題</label>
-            <Input
-              value={achievement.title}
-              onChange={(e) => onUpdate({ title: e.target.value })}
-              placeholder="輸入成果標題"
-              className="bg-gray-700 border-gray-600 text-white"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-gray-300 block mb-1">成果內容</label>
-            <Textarea
-              value={achievement.content}
-              onChange={(e) => onUpdate({ content: e.target.value })}
-              placeholder="描述具體的成果內容"
-              className="bg-gray-700 border-gray-600 text-white"
-              rows={3}
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-gray-300 block mb-1">統計數據 (JSON格式)</label>
-            <Textarea
-              value={JSON.stringify(achievement.statistics || {}, null, 2)}
-              onChange={(e) => {
-                try {
-                  const stats = JSON.parse(e.target.value)
-                  onUpdate({ statistics: stats })
-                } catch (error) {
-                  // 忽略JSON解析錯誤
-                }
-              }}
-              placeholder='{"項目名稱": 數值, "另一項目": "文字值"}'
-              className="bg-gray-700 border-gray-600 text-white font-mono text-sm"
-              rows={4}
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium text-gray-300 block mb-1">詳細說明</label>
-            <Textarea
-              value={achievement.details || ""}
-              onChange={(e) => onUpdate({ details: e.target.value })}
-              placeholder="補充詳細的說明內容"
-              className="bg-gray-700 border-gray-600 text-white"
-              rows={4}
-            />
-          </div>
-        </div>
-
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onDelete}
-          className="text-red-400 hover:text-red-300 hover:bg-red-900/20 ml-2"
-        >
-          <X className="h-4 w-4" />
-        </Button>
-      </div>
-    </div>
-  )
+  // 獲取顯示的目標
+  const getDisplayGoals = () => {
+    if (monthlySummary?.manualGoals) {
+      return monthlySummary.manualGoals
+    }
+    return monthlySummary?.nextMonthGoals || []
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
+    <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
-        {/* 頂部導航 */}
-        <div className="flex justify-between items-center mb-8">
-          <div className="flex gap-4">
-            <Button
-              variant={currentView === "report" ? "default" : "ghost"}
-              onClick={() => setCurrentView("report")}
-              className={`${
-                currentView === "report"
-                  ? "bg-red-600 text-white hover:bg-red-700"
-                  : "text-gray-300 hover:text-white hover:bg-gray-700"
-              }`}
-            >
-              <FileText className="h-4 w-4 mr-2" />
-              報告檢視
-            </Button>
-            <Button
-              variant={currentView === "admin" ? "default" : "ghost"}
-              onClick={() => setCurrentView("admin")}
-              className={`${
-                currentView === "admin"
-                  ? "bg-red-600 text-white hover:bg-red-700"
-                  : "text-gray-300 hover:text-white hover:bg-gray-700"
-              }`}
-            >
-              <Settings className="h-4 w-4 mr-2" />
-              後台管理
-            </Button>
-          </div>
-
-          {currentView === "report" && (
-            <div className="flex bg-gray-800 rounded-lg p-1 border border-gray-700">
-              <Button
-                variant={reportType === "weekly" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setReportType("weekly")}
-                className={`flex items-center gap-2 ${
-                  reportType === "weekly"
-                    ? "bg-red-600 text-white hover:bg-red-700"
-                    : "text-gray-300 hover:text-white hover:bg-gray-700"
-                }`}
-              >
-                <FileText className="h-4 w-4" />
-                週報
-              </Button>
-              <Button
-                variant={reportType === "monthly" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setReportType("monthly")}
-                className={`flex items-center gap-2 ${
-                  reportType === "monthly"
-                    ? "bg-red-600 text-white hover:bg-red-700"
-                    : "text-gray-300 hover:text-white hover:bg-gray-700"
-                }`}
-              >
-                <Calendar className="h-4 w-4" />
-                月報
-              </Button>
-              <Button
-                variant={reportType === "yearly" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setReportType("yearly")}
-                className={`flex items-center gap-2 ${
-                  reportType === "yearly"
-                    ? "bg-red-600 text-white hover:bg-red-700"
-                    : "text-gray-300 hover:text-white hover:bg-gray-700"
-                }`}
-              >
-                <BarChart3 className="h-4 w-4" />
-                年報
-              </Button>
+        {/* 頂部標題 */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center">
+              <FileText className="h-6 w-6 text-white" />
             </div>
-          )}
+            <h1 className="text-4xl font-bold text-black">週報進度整理系統</h1>
+          </div>
+          <p className="text-xl text-gray-600">2025年7月份工作進度追蹤與管理</p>
         </div>
 
-        {/* 後台管理界面 */}
-        {currentView === "admin" && (
-          <div className="space-y-8">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-white mb-4">工作內容管理後台</h1>
-              <p className="text-xl text-gray-300">新增、編輯和管理您的工作報告內容</p>
-            </div>
+        {/* 週次選擇 */}
+        <div className="flex justify-center mb-8">
+          <div className="flex flex-wrap gap-2 bg-gray-100 rounded-lg p-2 border border-gray-200">
+            {weeklyReports.map((report) => (
+              <Button
+                key={report.weekRange}
+                size="sm"
+                variant={selectedWeek === report.weekRange ? "default" : "ghost"}
+                onClick={() => handleWeekChange(report.weekRange)}
+                className={`${
+                  selectedWeek === report.weekRange
+                    ? "bg-red-600 text-white hover:bg-red-700"
+                    : "text-gray-700 hover:text-black hover:bg-gray-200"
+                }`}
+              >
+                {report.weekRange}
+              </Button>
+            ))}
+          </div>
+        </div>
 
-            <Tabs defaultValue="weekly" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 bg-gray-800">
-                <TabsTrigger
-                  value="weekly"
-                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white"
-                >
-                  週報管理
-                </TabsTrigger>
-                <TabsTrigger
-                  value="monthly"
-                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white"
-                >
-                  月報管理
-                </TabsTrigger>
-                <TabsTrigger
-                  value="yearly"
-                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white"
-                >
-                  年報管理
-                </TabsTrigger>
-              </TabsList>
+        {/* 標籤切換 */}
+        <div className="flex justify-center mb-8">
+          <div className="flex bg-gray-100 rounded-lg p-1 border border-gray-200">
+            <Button
+              variant={activeTab === "weekly" ? "default" : "ghost"}
+              onClick={() => handleTabChange("weekly")}
+              className={`flex items-center gap-2 ${
+                activeTab === "weekly"
+                  ? "bg-red-600 text-white hover:bg-red-700"
+                  : "text-gray-700 hover:text-black hover:bg-gray-200"
+              }`}
+            >
+              <FileText className="h-4 w-4" />
+              週報詳情
+            </Button>
+            <Button
+              variant={activeTab === "monthly" ? "default" : "ghost"}
+              onClick={() => handleTabChange("monthly")}
+              className={`flex items-center gap-2 ${
+                activeTab === "monthly"
+                  ? "bg-red-600 text-white hover:bg-red-700"
+                  : "text-gray-700 hover:text-black hover:bg-gray-200"
+              }`}
+            >
+              <Calendar className="h-4 w-4" />
+              月度摘要
+            </Button>
+          </div>
+        </div>
 
-              {/* 週報管理 */}
-              <TabsContent value="weekly" className="space-y-6">
-                {/* 新增週報 */}
-                <Card className="shadow-2xl border border-gray-700 bg-gray-900/90 backdrop-blur-sm">
-                  <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
-                    <CardTitle className="flex items-center gap-2">
-                      <Plus className="h-5 w-5" />
-                      新增週報
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6 bg-gray-900">
-                    <div className="flex gap-4 items-end">
-                      <div className="flex-1">
-                        <label className="text-sm font-medium text-gray-300 block mb-2">週次範圍</label>
-                        <Input
-                          placeholder="例如：7/7-7/13"
-                          className="bg-gray-700 border-gray-600 text-white"
-                          onKeyPress={(e) => {
-                            if (e.key === "Enter") {
-                              const weekRange = (e.target as HTMLInputElement).value
-                              if (weekRange && !weeklyReports.find((r) => r.weekRange === weekRange)) {
-                                const newReport: WeeklyData = {
-                                  weekRange,
-                                  lastWeek: [],
-                                  thisWeek: [],
-                                  createdAt: new Date().toISOString(),
-                                  updatedAt: new Date().toISOString(),
-                                }
-                                const updatedReports = [...weeklyReports, newReport]
-                                saveWeeklyReports(updatedReports)
-                                setSelectedWeek(weekRange)
-                                ;(e.target as HTMLInputElement).value = ""
-                              }
-                            }
-                          }}
-                        />
-                      </div>
-                      <Button
-                        onClick={() => {
-                          const input = document.querySelector(
-                            'input[placeholder="例如：7/7-7/13"]',
-                          ) as HTMLInputElement
-                          const weekRange = input?.value
-                          if (weekRange && !weeklyReports.find((r) => r.weekRange === weekRange)) {
-                            const newReport: WeeklyData = {
-                              weekRange,
-                              lastWeek: [],
-                              thisWeek: [],
-                              createdAt: new Date().toISOString(),
-                              updatedAt: new Date().toISOString(),
-                            }
-                            const updatedReports = [...weeklyReports, newReport]
-                            saveWeeklyReports(updatedReports)
-                            setSelectedWeek(weekRange)
-                            input.value = ""
-                          }
-                        }}
-                        className="bg-red-600 hover:bg-red-700 text-white"
-                      >
-                        新增週報
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* 週報編輯 */}
-                {weeklyReports.length > 0 && (
-                  <Card className="shadow-2xl border border-gray-700 bg-gray-900/90 backdrop-blur-sm">
-                    <CardHeader className="bg-gradient-to-r from-black to-red-600 text-white rounded-t-lg">
-                      <CardTitle className="flex items-center gap-2">
-                        <Edit className="h-5 w-5" />
-                        編輯週報內容
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-6 bg-gray-900">
-                      {/* 週次選擇 */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {weeklyReports.map((report) => (
-                          <Button
-                            key={report.weekRange}
-                            size="sm"
-                            variant={selectedWeek === report.weekRange ? "default" : "ghost"}
-                            onClick={() => setSelectedWeek(report.weekRange)}
-                            className={`${
-                              selectedWeek === report.weekRange
-                                ? "bg-red-600 text-white hover:bg-red-700"
-                                : "text-gray-300 hover:text-white hover:bg-gray-700"
-                            }`}
-                          >
-                            {report.weekRange}
-                          </Button>
-                        ))}
-                      </div>
-
-                      {/* 編輯內容 */}
-                      {currentWeekData && (
-                        <Tabs defaultValue="lastWeek" className="w-full">
-                          <TabsList className="grid w-full grid-cols-2 bg-gray-800">
-                            <TabsTrigger
-                              value="lastWeek"
-                              className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white"
-                            >
-                              上週工作
-                            </TabsTrigger>
-                            <TabsTrigger
-                              value="thisWeek"
-                              className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white"
-                            >
-                              本週計畫
-                            </TabsTrigger>
-                          </TabsList>
-
-                          <TabsContent value="lastWeek" className="space-y-4">
-                            <div className="flex justify-between items-center">
-                              <h3 className="text-lg font-semibold text-white">上週工作內容</h3>
-                              <Button
-                                onClick={() => {
-                                  const newItem: WorkItem = {
-                                    id: Date.now().toString(),
-                                    project: "",
-                                    expectedWork: "",
-                                    status: "pending",
-                                    issues: "",
-                                  }
-                                  const updatedReports = weeklyReports.map((report) => {
-                                    if (report.weekRange === selectedWeek) {
-                                      return {
-                                        ...report,
-                                        lastWeek: [...report.lastWeek, newItem],
-                                        updatedAt: new Date().toISOString(),
-                                      }
-                                    }
-                                    return report
-                                  })
-                                  saveWeeklyReports(updatedReports)
-                                }}
-                                size="sm"
-                                className="bg-red-600 hover:bg-red-700 text-white"
-                              >
-                                <Plus className="h-4 w-4 mr-1" />
-                                新增項目
-                              </Button>
-                            </div>
-
-                            <div className="space-y-4">
-                              {currentWeekData.lastWeek.map((item) => (
-                                <div
-                                  key={item.id}
-                                  className="p-4 bg-gray-800 rounded-lg border border-gray-700 space-y-3"
-                                >
-                                  <div className="flex justify-between items-start">
-                                    <div className="flex-1 space-y-3">
-                                      <div>
-                                        <label className="text-sm font-medium text-gray-300 block mb-1">專案項目</label>
-                                        <Input
-                                          value={item.project}
-                                          onChange={(e) => {
-                                            const updatedReports = weeklyReports.map((report) => {
-                                              if (report.weekRange === selectedWeek) {
-                                                return {
-                                                  ...report,
-                                                  lastWeek: report.lastWeek.map((workItem) =>
-                                                    workItem.id === item.id
-                                                      ? { ...workItem, project: e.target.value }
-                                                      : workItem,
-                                                  ),
-                                                  updatedAt: new Date().toISOString(),
-                                                }
-                                              }
-                                              return report
-                                            })
-                                            saveWeeklyReports(updatedReports)
-                                          }}
-                                          placeholder="輸入專案名稱"
-                                          className="bg-gray-700 border-gray-600 text-white"
-                                        />
-                                      </div>
-
-                                      <div>
-                                        <label className="text-sm font-medium text-gray-300 block mb-1">預期工作</label>
-                                        <Textarea
-                                          value={item.expectedWork}
-                                          onChange={(e) => {
-                                            const updatedReports = weeklyReports.map((report) => {
-                                              if (report.weekRange === selectedWeek) {
-                                                return {
-                                                  ...report,
-                                                  lastWeek: report.lastWeek.map((workItem) =>
-                                                    workItem.id === item.id
-                                                      ? { ...workItem, expectedWork: e.target.value }
-                                                      : workItem,
-                                                  ),
-                                                  updatedAt: new Date().toISOString(),
-                                                }
-                                              }
-                                              return report
-                                            })
-                                            saveWeeklyReports(updatedReports)
-                                          }}
-                                          placeholder="描述預期完成的工作內容"
-                                          className="bg-gray-700 border-gray-600 text-white"
-                                          rows={2}
-                                        />
-                                      </div>
-
-                                      <div>
-                                        <label className="text-sm font-medium text-gray-300 block mb-1">完成狀況</label>
-                                        <Select
-                                          value={item.status}
-                                          onValueChange={(value: any) => {
-                                            const updatedReports = weeklyReports.map((report) => {
-                                              if (report.weekRange === selectedWeek) {
-                                                return {
-                                                  ...report,
-                                                  lastWeek: report.lastWeek.map((workItem) =>
-                                                    workItem.id === item.id ? { ...workItem, status: value } : workItem,
-                                                  ),
-                                                  updatedAt: new Date().toISOString(),
-                                                }
-                                              }
-                                              return report
-                                            })
-                                            saveWeeklyReports(updatedReports)
-                                          }}
-                                        >
-                                          <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                                            <SelectValue />
-                                          </SelectTrigger>
-                                          <SelectContent>
-                                            <SelectItem value="completed">已完成</SelectItem>
-                                            <SelectItem value="in-progress">進行中</SelectItem>
-                                            <SelectItem value="pending">待處理</SelectItem>
-                                          </SelectContent>
-                                        </Select>
-                                      </div>
-
-                                      <div>
-                                        <label className="text-sm font-medium text-gray-300 block mb-1">遇到問題</label>
-                                        <Textarea
-                                          value={item.issues || ""}
-                                          onChange={(e) => {
-                                            const updatedReports = weeklyReports.map((report) => {
-                                              if (report.weekRange === selectedWeek) {
-                                                return {
-                                                  ...report,
-                                                  lastWeek: report.lastWeek.map((workItem) =>
-                                                    workItem.id === item.id
-                                                      ? { ...workItem, issues: e.target.value }
-                                                      : workItem,
-                                                  ),
-                                                  updatedAt: new Date().toISOString(),
-                                                }
-                                              }
-                                              return report
-                                            })
-                                            saveWeeklyReports(updatedReports)
-                                          }}
-                                          placeholder="描述遇到的問題或困難"
-                                          className="bg-gray-700 border-gray-600 text-white"
-                                          rows={2}
-                                        />
-                                      </div>
-                                    </div>
-
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => {
-                                        const updatedReports = weeklyReports.map((report) => {
-                                          if (report.weekRange === selectedWeek) {
-                                            return {
-                                              ...report,
-                                              lastWeek: report.lastWeek.filter((workItem) => workItem.id !== item.id),
-                                              updatedAt: new Date().toISOString(),
-                                            }
-                                          }
-                                          return report
-                                        })
-                                        saveWeeklyReports(updatedReports)
-                                      }}
-                                      className="text-red-400 hover:text-red-300 hover:bg-red-900/20 ml-2"
+        {/* 內容區域 */}
+        <div className="space-y-6">
+          {/* 週報詳情 */}
+          {activeTab === "weekly" && currentWeekData && (
+            <Card className="shadow-lg border border-gray-200 bg-white">
+              <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
+                <CardTitle className="flex items-center gap-2 text-2xl">
+                  <Calendar className="h-6 w-6" />
+                  {selectedWeek} 週報詳情
+                </CardTitle>
+                <CardDescription className="text-red-100">
+                  本週各專案項目完成狀況
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-6 bg-white">
+                <div className="space-y-6">
+                  {Array.from(new Set(currentWeekData.projects.map(p => p.category))).map(category => (
+                    <div key={category} className="space-y-4">
+                      <h3 className="text-lg font-semibold text-black flex items-center gap-2 border-b border-gray-200 pb-2">
+                        {getCategoryIcon(category)}
+                        {category}
+                      </h3>
+                      <div className="grid gap-4">
+                        {currentWeekData.projects
+                          .filter(project => project.category === category)
+                          .map(project => (
+                            <div key={project.id} className="p-4 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                              <div className="flex items-start justify-between">
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-3 mb-2">
+                                    <div className={`h-3 w-3 rounded-full ${getStatusColor(project.status)}`} />
+                                    <h4 className="font-semibold text-black">{project.name}</h4>
+                                    <Badge
+                                      variant="outline"
+                                      className={`text-xs ${
+                                        project.status === "completed"
+                                          ? "border-green-500 text-green-600 bg-green-50"
+                                          : project.status === "in-progress"
+                                            ? "border-yellow-500 text-yellow-600 bg-yellow-50"
+                                            : "border-gray-500 text-gray-600 bg-gray-50"
+                                      }`}
                                     >
-                                      <X className="h-4 w-4" />
-                                    </Button>
+                                      {getStatusText(project.status)}
+                                    </Badge>
                                   </div>
-                                </div>
-                              ))}
-
-                              {currentWeekData.lastWeek.length === 0 && (
-                                <div className="text-center py-8 text-gray-400">尚未新增上週工作項目</div>
-                              )}
-                            </div>
-                          </TabsContent>
-
-                          <TabsContent value="thisWeek" className="space-y-4">
-                            <div className="flex justify-between items-center">
-                              <h3 className="text-lg font-semibold text-white">本週工作計畫</h3>
-                              <Button
-                                onClick={() => {
-                                  const newItem: WorkItem = {
-                                    id: Date.now().toString(),
-                                    project: "",
-                                    expectedWork: "",
-                                    status: "pending",
-                                    goals: "",
-                                  }
-                                  const updatedReports = weeklyReports.map((report) => {
-                                    if (report.weekRange === selectedWeek) {
-                                      return {
-                                        ...report,
-                                        thisWeek: [...report.thisWeek, newItem],
-                                        updatedAt: new Date().toISOString(),
-                                      }
-                                    }
-                                    return report
-                                  })
-                                  saveWeeklyReports(updatedReports)
-                                }}
-                                size="sm"
-                                className="bg-red-600 hover:bg-red-700 text-white"
-                              >
-                                <Plus className="h-4 w-4 mr-1" />
-                                新增項目
-                              </Button>
-                            </div>
-
-                            <div className="space-y-4">
-                              {currentWeekData.thisWeek.map((item) => (
-                                <div
-                                  key={item.id}
-                                  className="p-4 bg-gray-800 rounded-lg border border-gray-700 space-y-3"
-                                >
-                                  <div className="flex justify-between items-start">
-                                    <div className="flex-1 space-y-3">
-                                      <div>
-                                        <label className="text-sm font-medium text-gray-300 block mb-1">專案項目</label>
-                                        <Input
-                                          value={item.project}
-                                          onChange={(e) => {
-                                            const updatedReports = weeklyReports.map((report) => {
-                                              if (report.weekRange === selectedWeek) {
-                                                return {
-                                                  ...report,
-                                                  thisWeek: report.thisWeek.map((workItem) =>
-                                                    workItem.id === item.id
-                                                      ? { ...workItem, project: e.target.value }
-                                                      : workItem,
-                                                  ),
-                                                  updatedAt: new Date().toISOString(),
-                                                }
-                                              }
-                                              return report
-                                            })
-                                            saveWeeklyReports(updatedReports)
-                                          }}
-                                          placeholder="輸入專案名稱"
-                                          className="bg-gray-700 border-gray-600 text-white"
-                                        />
-                                      </div>
-
-                                      <div>
-                                        <label className="text-sm font-medium text-gray-300 block mb-1">預期工作</label>
-                                        <Textarea
-                                          value={item.expectedWork}
-                                          onChange={(e) => {
-                                            const updatedReports = weeklyReports.map((report) => {
-                                              if (report.weekRange === selectedWeek) {
-                                                return {
-                                                  ...report,
-                                                  thisWeek: report.thisWeek.map((workItem) =>
-                                                    workItem.id === item.id
-                                                      ? { ...workItem, expectedWork: e.target.value }
-                                                      : workItem,
-                                                  ),
-                                                  updatedAt: new Date().toISOString(),
-                                                }
-                                              }
-                                              return report
-                                            })
-                                            saveWeeklyReports(updatedReports)
-                                          }}
-                                          placeholder="描述預期完成的工作內容"
-                                          className="bg-gray-700 border-gray-600 text-white"
-                                          rows={2}
-                                        />
-                                      </div>
-
-                                      <div>
-                                        <label className="text-sm font-medium text-gray-300 block mb-1">本週目標</label>
-                                        <Textarea
-                                          value={item.goals || ""}
-                                          onChange={(e) => {
-                                            const updatedReports = weeklyReports.map((report) => {
-                                              if (report.weekRange === selectedWeek) {
-                                                return {
-                                                  ...report,
-                                                  thisWeek: report.thisWeek.map((workItem) =>
-                                                    workItem.id === item.id
-                                                      ? { ...workItem, goals: e.target.value }
-                                                      : workItem,
-                                                  ),
-                                                  updatedAt: new Date().toISOString(),
-                                                }
-                                              }
-                                              return report
-                                            })
-                                            saveWeeklyReports(updatedReports)
-                                          }}
-                                          placeholder="設定本週的具體目標"
-                                          className="bg-gray-700 border-gray-600 text-white"
-                                          rows={2}
-                                        />
-                                      </div>
+                                  <p className="text-sm text-gray-700 mb-2">
+                                    <span className="font-medium text-black">預期工作：</span>
+                                    {project.expectedWork}
+                                  </p>
+                                  <p className="text-sm text-gray-700 mb-2">
+                                    <span className="font-medium text-black">完成狀況：</span>
+                                    {project.completion}
+                                  </p>
+                                  {project.issues && (
+                                    <div className="flex items-start gap-2 mt-2">
+                                      <AlertTriangle className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                                      <p className="text-sm text-red-600">
+                                        <span className="font-medium">問題：</span>
+                                        {project.issues}
+                                      </p>
                                     </div>
-
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => {
-                                        const updatedReports = weeklyReports.map((report) => {
-                                          if (report.weekRange === selectedWeek) {
-                                            return {
-                                              ...report,
-                                              thisWeek: report.thisWeek.filter((workItem) => workItem.id !== item.id),
-                                              updatedAt: new Date().toISOString(),
-                                            }
-                                          }
-                                          return report
-                                        })
-                                        saveWeeklyReports(updatedReports)
-                                      }}
-                                      className="text-red-400 hover:text-red-300 hover:bg-red-900/20 ml-2"
-                                    >
-                                      <X className="h-4 w-4" />
-                                    </Button>
-                                  </div>
+                                  )}
+                                  {project.notes && (
+                                    <div className="mt-2 p-2 bg-blue-50 rounded text-sm text-blue-700 border border-blue-200">
+                                      <span className="font-medium">備註：</span>
+                                      {project.notes}
+                                    </div>
+                                  )}
                                 </div>
-                              ))}
-
-                              {currentWeekData.thisWeek.length === 0 && (
-                                <div className="text-center py-8 text-gray-400">尚未新增本週工作項目</div>
-                              )}
+                              </div>
                             </div>
-                          </TabsContent>
-                        </Tabs>
-                      )}
-                    </CardContent>
-                  </Card>
-                )}
-              </TabsContent>
-
-              {/* 月報管理 */}
-              <TabsContent value="monthly" className="space-y-6">
-                {/* 新增月報 */}
-                <Card className="shadow-2xl border border-gray-700 bg-gray-900/90 backdrop-blur-sm">
-                  <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
-                    <CardTitle className="flex items-center gap-2">
-                      <Plus className="h-5 w-5" />
-                      新增月報
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6 bg-gray-900">
-                    <div className="flex gap-4 items-end">
-                      <div className="flex-1">
-                        <label className="text-sm font-medium text-gray-300 block mb-2">月份</label>
-                        <Input
-                          placeholder="例如：2024-07"
-                          className="bg-gray-700 border-gray-600 text-white"
-                          onKeyPress={(e) => {
-                            if (e.key === "Enter") {
-                              const month = (e.target as HTMLInputElement).value
-                              if (month && !monthlyReports.find((r) => r.month === month)) {
-                                addNewMonthlyReport(month)
-                                ;(e.target as HTMLInputElement).value = ""
-                              }
-                            }
-                          }}
-                        />
+                          ))}
                       </div>
-                      <Button
-                        onClick={() => {
-                          const input = document.querySelector('input[placeholder="例如：2024-07"]') as HTMLInputElement
-                          const month = input?.value
-                          if (month && !monthlyReports.find((r) => r.month === month)) {
-                            addNewMonthlyReport(month)
-                            input.value = ""
-                          }
-                        }}
-                        className="bg-red-600 hover:bg-red-700 text-white"
-                      >
-                        新增月報
-                      </Button>
                     </div>
-                  </CardContent>
-                </Card>
-
-                {/* 月報編輯 */}
-                {monthlyReports.length > 0 && (
-                  <Card className="shadow-2xl border border-gray-700 bg-gray-900/90 backdrop-blur-sm">
-                    <CardHeader className="bg-gradient-to-r from-black to-red-600 text-white rounded-t-lg">
-                      <CardTitle className="flex items-center gap-2">
-                        <Edit className="h-5 w-5" />
-                        編輯月報內容
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-6 bg-gray-900">
-                      {/* 月份選擇 */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {monthlyReports.map((report) => (
-                          <Button
-                            key={report.month}
-                            size="sm"
-                            variant={selectedMonth === report.month ? "default" : "ghost"}
-                            onClick={() => setSelectedMonth(report.month)}
-                            className={`${
-                              selectedMonth === report.month
-                                ? "bg-red-600 text-white hover:bg-red-700"
-                                : "text-gray-300 hover:text-white hover:bg-gray-700"
-                            }`}
-                          >
-                            {report.month}
-                          </Button>
-                        ))}
-                      </div>
-
-                      {/* 編輯內容 */}
-                      {currentMonthData && (
-                        <Tabs defaultValue="goals" className="w-full">
-                          <TabsList className="grid w-full grid-cols-3 bg-gray-800">
-                            <TabsTrigger
-                              value="goals"
-                              className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white"
-                            >
-                              本月目標
-                            </TabsTrigger>
-                            <TabsTrigger
-                              value="achievements"
-                              className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white"
-                            >
-                              成果展示
-                            </TabsTrigger>
-                            <TabsTrigger
-                              value="nextGoals"
-                              className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white"
-                            >
-                              下月目標
-                            </TabsTrigger>
-                          </TabsList>
-
-                          <TabsContent value="goals" className="space-y-4">
-                            <div className="flex justify-between items-center">
-                              <h3 className="text-lg font-semibold text-white">本月目標</h3>
-                              <Button
-                                onClick={() => addMonthlyGoal(selectedMonth, "goals")}
-                                size="sm"
-                                className="bg-red-600 hover:bg-red-700 text-white"
-                              >
-                                <Plus className="h-4 w-4 mr-1" />
-                                新增目標
-                              </Button>
-                            </div>
-
-                            <div className="space-y-4">
-                              {currentMonthData.goals.map((goal) => (
-                                <MonthlyGoalEditor
-                                  key={goal.id}
-                                  goal={goal}
-                                  type="goals"
-                                  month={selectedMonth}
-                                  onUpdate={(updates) => updateMonthlyGoal(selectedMonth, "goals", goal.id, updates)}
-                                  onDelete={() => deleteMonthlyGoal(selectedMonth, "goals", goal.id)}
-                                />
-                              ))}
-
-                              {currentMonthData.goals.length === 0 && (
-                                <div className="text-center py-8 text-gray-400">尚未新增本月目標</div>
-                              )}
-                            </div>
-                          </TabsContent>
-
-                          <TabsContent value="achievements" className="space-y-4">
-                            <div className="flex justify-between items-center">
-                              <h3 className="text-lg font-semibold text-white">成果展示</h3>
-                              <Button
-                                onClick={() => addMonthlyAchievement(selectedMonth)}
-                                size="sm"
-                                className="bg-red-600 hover:bg-red-700 text-white"
-                              >
-                                <Plus className="h-4 w-4 mr-1" />
-                                新增成果
-                              </Button>
-                            </div>
-
-                            <div className="space-y-4">
-                              {currentMonthData.achievements.map((achievement) => (
-                                <MonthlyAchievementEditor
-                                  key={achievement.id}
-                                  achievement={achievement}
-                                  month={selectedMonth}
-                                  onUpdate={(updates) =>
-                                    updateMonthlyAchievement(selectedMonth, achievement.id, updates)
-                                  }
-                                  onDelete={() => deleteMonthlyAchievement(selectedMonth, achievement.id)}
-                                />
-                              ))}
-
-                              {currentMonthData.achievements.length === 0 && (
-                                <div className="text-center py-8 text-gray-400">尚未新增成果展示</div>
-                              )}
-                            </div>
-                          </TabsContent>
-
-                          <TabsContent value="nextGoals" className="space-y-4">
-                            <div className="flex justify-between items-center">
-                              <h3 className="text-lg font-semibold text-white">下月目標</h3>
-                              <Button
-                                onClick={() => addMonthlyGoal(selectedMonth, "nextMonthGoals")}
-                                size="sm"
-                                className="bg-red-600 hover:bg-red-700 text-white"
-                              >
-                                <Plus className="h-4 w-4 mr-1" />
-                                新增目標
-                              </Button>
-                            </div>
-
-                            <div className="space-y-4">
-                              {currentMonthData.nextMonthGoals.map((goal) => (
-                                <MonthlyGoalEditor
-                                  key={goal.id}
-                                  goal={goal}
-                                  type="nextMonthGoals"
-                                  month={selectedMonth}
-                                  onUpdate={(updates) =>
-                                    updateMonthlyGoal(selectedMonth, "nextMonthGoals", goal.id, updates)
-                                  }
-                                  onDelete={() => deleteMonthlyGoal(selectedMonth, "nextMonthGoals", goal.id)}
-                                />
-                              ))}
-
-                              {currentMonthData.nextMonthGoals.length === 0 && (
-                                <div className="text-center py-8 text-gray-400">尚未新增下月目標</div>
-                              )}
-                            </div>
-                          </TabsContent>
-                        </Tabs>
-                      )}
-                    </CardContent>
-                  </Card>
-                )}
-              </TabsContent>
-
-              {/* 年報管理 */}
-              <TabsContent value="yearly" className="space-y-6">
-                {/* 新增年報 */}
-                <Card className="shadow-2xl border border-gray-700 bg-gray-900/90 backdrop-blur-sm">
-                  <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
-                    <CardTitle className="flex items-center gap-2">
-                      <Plus className="h-5 w-5" />
-                      新增年報
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6 bg-gray-900">
-                    <div className="flex gap-4 items-end">
-                      <div className="flex-1">
-                        <label className="text-sm font-medium text-gray-300 block mb-2">年份</label>
-                        <Input
-                          placeholder="例如：2024"
-                          className="bg-gray-700 border-gray-600 text-white"
-                          onKeyPress={(e) => {
-                            if (e.key === "Enter") {
-                              const year = (e.target as HTMLInputElement).value
-                              if (year && !yearlyReports.find((r) => r.year === year)) {
-                                addNewYearlyReport(year)
-                                ;(e.target as HTMLInputElement).value = ""
-                              }
-                            }
-                          }}
-                        />
-                      </div>
-                      <Button
-                        onClick={() => {
-                          const input = document.querySelector('input[placeholder="例如：2024"]') as HTMLInputElement
-                          const year = input?.value
-                          if (year && !yearlyReports.find((r) => r.year === year)) {
-                            addNewYearlyReport(year)
-                            input.value = ""
-                          }
-                        }}
-                        className="bg-red-600 hover:bg-red-700 text-white"
-                      >
-                        新增年報
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <div className="text-center py-8 text-gray-400">
-                  <p>年報編輯功能開發中...</p>
+                  ))}
                 </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-        )}
+              </CardContent>
+            </Card>
+          )}
 
-        {/* 報告檢視界面 */}
-        {currentView === "report" && (
-          <div className="space-y-8">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-white mb-4">
-                {reportType === "weekly" && "週報"}
-                {reportType === "monthly" && "月報"}
-                {reportType === "yearly" && "年報"}
-              </h1>
-              <p className="text-xl text-gray-300">
-                {reportType === "weekly" && "本週工作進度與計畫"}
-                {reportType === "monthly" && "月度目標達成與成果展示"}
-                {reportType === "yearly" && "年度整體表現回顧"}
-              </p>
-            </div>
-
-            {/* 月報檢視 */}
-            {reportType === "monthly" && (
-              <>
-                {monthlyReports.length > 0 && (
-                  <div className="flex justify-center mb-6">
-                    <div className="flex flex-wrap gap-2 bg-gray-800 rounded-lg p-2 border border-gray-700">
-                      {monthlyReports.map((report) => (
+          {/* 月度摘要 */}
+          {activeTab === "monthly" && (
+            <>
+              {/* 月度統計 */}
+              {monthlySummary ? (
+                <Card className="shadow-lg border border-gray-200 bg-white">
+                  <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <BarChart3 className="h-6 w-6" />
+                        <CardTitle className="text-2xl">2025-07 月度統計</CardTitle>
+                      </div>
+                      {!isEditing ? (
                         <Button
-                          key={report.month}
+                          onClick={() => setIsEditing(true)}
+                          variant="outline"
                           size="sm"
-                          variant={selectedMonth === report.month ? "default" : "ghost"}
-                          onClick={() => setSelectedMonth(report.month)}
-                          className={`${
-                            selectedMonth === report.month
-                              ? "bg-red-600 text-white hover:bg-red-700"
-                              : "text-gray-300 hover:text-white hover:bg-gray-700"
-                          }`}
+                          className="text-white border-white hover:bg-white hover:text-red-600"
                         >
-                          {report.month}
+                          <Edit className="h-4 w-4 mr-2" />
+                          編輯
                         </Button>
-                      ))}
+                      ) : (
+                        <div className="flex gap-2">
+                          <Button
+                            onClick={handleSave}
+                            variant="outline"
+                            size="sm"
+                            className="text-white border-white hover:bg-white hover:text-green-600"
+                          >
+                            <Save className="h-4 w-4 mr-2" />
+                            保存
+                          </Button>
+                          <Button
+                            onClick={handleCancel}
+                            variant="outline"
+                            size="sm"
+                            className="text-white border-white hover:bg-white hover:text-gray-600"
+                          >
+                            <X className="h-4 w-4 mr-2" />
+                            取消
+                          </Button>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                )}
-
-                {currentMonthData ? (
-                  <>
-                    {/* 月度目標達成情況 */}
-                    <Card className="mb-8 shadow-2xl border border-gray-700 bg-gray-900/90 backdrop-blur-sm">
-                      <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
-                        <CardTitle className="flex items-center gap-2 text-2xl">
-                          <CheckCircle className="h-6 w-6" />
-                          {selectedMonth} 月度目標達成情況
-                        </CardTitle>
-                        <CardDescription className="text-red-100">本月設定目標的完成狀況</CardDescription>
-                      </CardHeader>
-                      <CardContent className="p-6 bg-gray-900 text-white">
-                        <div className="space-y-4">
-                          {currentMonthData.goals.map((goal) => (
-                            <div key={goal.id} className="p-4 bg-gray-800 rounded-lg border border-gray-700">
-                              <div className="flex items-start gap-3">
-                                <div
-                                  className={`h-5 w-5 rounded-full mt-0.5 flex-shrink-0 ${
-                                    goal.status === "completed"
-                                      ? "bg-green-500"
-                                      : goal.status === "in-progress"
-                                        ? "bg-yellow-500"
-                                        : "bg-gray-500"
-                                  }`}
-                                />
-                                <div className="flex-1">
-                                  <h3 className="font-semibold text-white mb-1">{goal.title}</h3>
-                                  <p className="text-sm text-gray-300 mb-2">{goal.description}</p>
-                                  <div className="flex items-center gap-2 mb-2">
-                                    <Badge
-                                      variant="outline"
-                                      className={`text-xs ${
-                                        goal.status === "completed"
-                                          ? "border-green-500 text-green-400"
-                                          : goal.status === "in-progress"
-                                            ? "border-yellow-500 text-yellow-400"
-                                            : "border-gray-500 text-gray-400"
-                                      }`}
-                                    >
-                                      {goal.status === "completed"
-                                        ? "已完成"
-                                        : goal.status === "in-progress"
-                                          ? "進行中"
-                                          : "待處理"}
-                                    </Badge>
-                                    <span>負責人：{goal.responsible}</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-
-                          {currentMonthData.goals.length === 0 && (
-                            <div className="text-center py-8 text-gray-400">本月尚未設定任何目標</div>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    {/* 月度成果展示 */}
-                    <Card className="mb-8 shadow-2xl border border-gray-700 bg-gray-900/90 backdrop-blur-sm">
-                      <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
-                        <CardTitle className="flex items-center gap-2 text-2xl">
-                          <TrendingUp className="h-6 w-6" />
-                          {selectedMonth} 月度成果展示
-                        </CardTitle>
-                        <CardDescription className="text-red-100">本月達成的具體成果與數據</CardDescription>
-                      </CardHeader>
-                      <CardContent className="p-6 bg-gray-900 text-white">
-                        <div className="space-y-4">
-                          {currentMonthData.achievements.map((achievement) => (
-                            <div key={achievement.id} className="p-4 bg-gray-800 rounded-lg border border-gray-700">
-                              <h3 className="font-semibold text-white mb-2">{achievement.title}</h3>
-                              <p className="text-gray-300 mb-3">{achievement.content}</p>
-
-                              {achievement.statistics && Object.keys(achievement.statistics).length > 0 && (
-                                <div className="mb-3">
-                                  <h4 className="font-semibold text-gray-200 mb-1">統計數據</h4>
-                                  <ul className="list-disc list-inside text-sm text-gray-300">
-                                    {Object.entries(achievement.statistics).map(([key, value]) => (
-                                      <li key={key}>
-                                        {key}: {value}
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              )}
-
-                              {achievement.details && (
-                                <div>
-                                  <h4 className="font-semibold text-gray-200 mb-1">詳細說明</h4>
-                                  <p className="text-sm text-gray-300">{achievement.details}</p>
-                                </div>
-                              )}
-                            </div>
-                          ))}
-
-                          {currentMonthData.achievements.length === 0 && (
-                            <div className="text-center py-8 text-gray-400">本月尚未展示任何成果</div>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    {/* 下月目標預覽 */}
-                    <Card className="mb-8 shadow-2xl border border-gray-700 bg-gray-900/90 backdrop-blur-sm">
-                      <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
-                        <CardTitle className="flex items-center gap-2 text-2xl">
-                          <Target className="h-6 w-6" />
-                          {selectedMonth} 下月目標預覽
-                        </CardTitle>
-                        <CardDescription className="text-red-100">為下個月設定的目標與計畫</CardDescription>
-                      </CardHeader>
-                      <CardContent className="p-6 bg-gray-900 text-white">
-                        <div className="space-y-4">
-                          {currentMonthData.nextMonthGoals.map((goal) => (
-                            <div key={goal.id} className="p-4 bg-gray-800 rounded-lg border border-gray-700">
-                              <div className="flex items-start gap-3">
-                                <div
-                                  className={`h-5 w-5 rounded-full mt-0.5 flex-shrink-0 ${
-                                    goal.status === "completed"
-                                      ? "bg-green-500"
-                                      : goal.status === "in-progress"
-                                        ? "bg-yellow-500"
-                                        : "bg-gray-500"
-                                  }`}
-                                />
-                                <div className="flex-1">
-                                  <h3 className="font-semibold text-white mb-1">{goal.title}</h3>
-                                  <p className="text-sm text-gray-300 mb-2">{goal.description}</p>
-                                  <div className="flex items-center gap-2 mb-2">
-                                    <Badge
-                                      variant="outline"
-                                      className={`text-xs ${
-                                        goal.status === "completed"
-                                          ? "border-green-500 text-green-400"
-                                          : goal.status === "in-progress"
-                                            ? "border-yellow-500 text-yellow-400"
-                                            : "border-gray-500 text-gray-400"
-                                      }`}
-                                    >
-                                      {goal.status === "completed"
-                                        ? "已完成"
-                                        : goal.status === "in-progress"
-                                          ? "進行中"
-                                          : "待處理"}
-                                    </Badge>
-                                    <span>負責人：{goal.responsible}</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-
-                          {currentMonthData.nextMonthGoals.length === 0 && (
-                            <div className="text-center py-8 text-gray-400">下月尚未設定任何目標</div>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    {/* 月度統計數據 */}
-                    <Card className="shadow-2xl border border-gray-700 bg-gray-900/90 backdrop-blur-sm">
-                      <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
-                        <CardTitle className="flex items-center gap-2 text-2xl">
-                          <BarChart3 className="h-6 w-6" />
-                          {selectedMonth} 月度統計數據
-                        </CardTitle>
-                        <CardDescription className="text-red-100">本月的關鍵數據指標</CardDescription>
-                      </CardHeader>
-                      <CardContent className="p-6 bg-gray-900 text-white">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div>
-                            <h4 className="font-semibold text-gray-200 mb-2">專案總數</h4>
-                            <p className="text-3xl font-bold">{monthlyStats.totalProjects}</p>
+                    <CardDescription className="text-red-100">
+                      2025年7月份整體工作統計數據
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-6 bg-white">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                      <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        {isEditing ? (
+                          <div className="space-y-2">
+                            <Label htmlFor="totalProjects" className="text-sm text-gray-600">總專案數</Label>
+                            <Input
+                              id="totalProjects"
+                              type="number"
+                              value={editStats.totalProjects}
+                              onChange={(e) => setEditStats({...editStats, totalProjects: parseInt(e.target.value) || 0})}
+                              className="text-center"
+                            />
                           </div>
-                          <div>
-                            <h4 className="font-semibold text-gray-200 mb-2">已完成任務</h4>
-                            <p className="text-3xl font-bold">{monthlyStats.completedTasks}</p>
+                        ) : (
+                          <>
+                            <div className="text-3xl font-bold text-black mb-2">{getDisplayStats().totalProjects}</div>
+                            <div className="text-sm text-gray-600">總專案數</div>
+                          </>
+                        )}
+                      </div>
+                      <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+                        {isEditing ? (
+                          <div className="space-y-2">
+                            <Label htmlFor="completedProjects" className="text-sm text-gray-600">已完成</Label>
+                            <Input
+                              id="completedProjects"
+                              type="number"
+                              value={editStats.completedProjects}
+                              onChange={(e) => setEditStats({...editStats, completedProjects: parseInt(e.target.value) || 0})}
+                              className="text-center"
+                            />
                           </div>
-                          <div>
-                            <h4 className="font-semibold text-gray-200 mb-2">進行中任務</h4>
-                            <p className="text-3xl font-bold">{monthlyStats.ongoingTasks}</p>
+                        ) : (
+                          <>
+                            <div className="text-3xl font-bold text-green-600 mb-2">{getDisplayStats().completedProjects}</div>
+                            <div className="text-sm text-gray-600">已完成</div>
+                          </>
+                        )}
+                      </div>
+                      <div className="text-center p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                        {isEditing ? (
+                          <div className="space-y-2">
+                            <Label htmlFor="inProgressProjects" className="text-sm text-gray-600">進行中</Label>
+                            <Input
+                              id="inProgressProjects"
+                              type="number"
+                              value={editStats.inProgressProjects}
+                              onChange={(e) => setEditStats({...editStats, inProgressProjects: parseInt(e.target.value) || 0})}
+                              className="text-center"
+                            />
                           </div>
-                          <div>
-                            <h4 className="font-semibold text-gray-200 mb-2">問題總數</h4>
-                            <p className="text-3xl font-bold">{monthlyStats.totalIssues}</p>
+                        ) : (
+                          <>
+                            <div className="text-3xl font-bold text-yellow-600 mb-2">{getDisplayStats().inProgressProjects}</div>
+                            <div className="text-sm text-gray-600">進行中</div>
+                          </>
+                        )}
+                      </div>
+                      <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        {isEditing ? (
+                          <div className="space-y-2">
+                            <Label htmlFor="pendingProjects" className="text-sm text-gray-600">待處理</Label>
+                            <Input
+                              id="pendingProjects"
+                              type="number"
+                              value={editStats.pendingProjects}
+                              onChange={(e) => setEditStats({...editStats, pendingProjects: parseInt(e.target.value) || 0})}
+                              className="text-center"
+                            />
                           </div>
-                          <div>
-                            <h4 className="font-semibold text-gray-200 mb-2">涵蓋週數</h4>
-                            <p className="text-3xl font-bold">{monthlyStats.weeksCovered}</p>
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-gray-200 mb-2">熱門專案</h4>
-                            <ul className="list-disc list-inside">
-                              {monthlyStats.topProjects.map((project, index) => (
-                                <li key={index}>{project}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </>
-                ) : (
-                  <div className="text-center py-8 text-gray-400">請選擇要檢視的月份</div>
-                )}
-              </>
-            )}
+                        ) : (
+                          <>
+                            <div className="text-3xl font-bold text-gray-600 mb-2">{getDisplayStats().pendingProjects}</div>
+                            <div className="text-sm text-gray-600">待處理</div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : (
+                <Card className="shadow-lg border border-gray-200 bg-white">
+                  <CardContent className="p-6 bg-white">
+                    <div className="text-center text-gray-500">
+                      載入中...
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
 
-            {/* 週報檢視 */}
-            {reportType === "weekly" && (
-              <>
-                {weeklyReports.length > 0 && (
-                  <div className="flex justify-center mb-6">
-                    <div className="flex flex-wrap gap-2 bg-gray-800 rounded-lg p-2 border border-gray-700">
-                      {weeklyReports.map((report) => (
+              {/* 主要成果 */}
+              {monthlySummary && (
+                <Card className="shadow-lg border border-gray-200 bg-white">
+                  <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="h-6 w-6" />
+                        <CardTitle className="text-2xl">主要成果</CardTitle>
+                      </div>
+                      {isEditing && (
                         <Button
-                          key={report.weekRange}
+                          onClick={addAchievement}
+                          variant="outline"
                           size="sm"
-                          variant={selectedWeek === report.weekRange ? "default" : "ghost"}
-                          onClick={() => setSelectedWeek(report.weekRange)}
-                          className={`${
-                            selectedWeek === report.weekRange
-                              ? "bg-red-600 text-white hover:bg-red-700"
-                              : "text-gray-300 hover:text-white hover:bg-gray-700"
-                          }`}
+                          className="text-white border-white hover:bg-white hover:text-red-600"
                         >
-                          {report.weekRange}
+                          <Plus className="h-4 w-4 mr-2" />
+                          添加
                         </Button>
-                      ))}
+                      )}
                     </div>
-                  </div>
-                )}
-
-                {currentWeekData ? (
-                  <>
-                    {/* 上週工作內容 */}
-                    <Card className="mb-8 shadow-2xl border border-gray-700 bg-gray-900/90 backdrop-blur-sm">
-                      <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
-                        <CardTitle className="flex items-center gap-2 text-2xl">
-                          <CheckCircle className="h-6 w-6" />
-                          {selectedWeek} 上週工作內容
-                        </CardTitle>
-                        <CardDescription className="text-red-100">上週完成的工作項目</CardDescription>
-                      </CardHeader>
-                      <CardContent className="p-6 bg-gray-900 text-white">
-                        <div className="space-y-4">
-                          {currentWeekData.lastWeek.map((item) => (
-                            <div key={item.id} className="p-4 bg-gray-800 rounded-lg border border-gray-700">
-                              <h3 className="font-semibold text-white mb-1">{item.project}</h3>
-                              <p className="text-sm text-gray-300 mb-2">預期工作：{item.expectedWork}</p>
-                              <div className="flex items-center gap-2 mb-2">
-                                <Badge
+                    <CardDescription className="text-red-100">
+                      2025年7月份達成的重要成果
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-6 bg-white">
+                    <div className="space-y-6">
+                      {(isEditing ? editAchievements : getDisplayAchievements()).map((achievement, index) => (
+                        <div key={index} className="p-4 bg-green-50 rounded-lg border border-green-200">
+                          {isEditing ? (
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-2">
+                                <CheckCircle className="h-5 w-5 text-green-600" />
+                                <Input
+                                  value={achievement.title}
+                                  onChange={(e) => updateAchievement(index, "title", e.target.value)}
+                                  placeholder="成就標題"
+                                  className="flex-1"
+                                />
+                                <Button
+                                  onClick={() => removeAchievement(index)}
                                   variant="outline"
-                                  className={`text-xs ${
-                                    item.status === "completed"
-                                      ? "border-green-500 text-green-400"
-                                      : item.status === "in-progress"
-                                        ? "border-yellow-500 text-yellow-400"
-                                        : "border-gray-500 text-gray-400"
-                                  }`}
+                                  size="sm"
+                                  className="text-red-600 border-red-200 hover:bg-red-50"
                                 >
-                                  {item.status === "completed"
-                                    ? "已完成"
-                                    : item.status === "in-progress"
-                                      ? "進行中"
-                                      : "待處理"}
-                                </Badge>
+                                  <X className="h-4 w-4" />
+                                </Button>
                               </div>
-                              {item.issues && (
-                                <div>
-                                  <AlertTriangle className="h-4 w-4 inline-block mr-1" />
-                                  <span className="text-sm text-red-400">問題：{item.issues}</span>
-                                </div>
-                              )}
+                              <Textarea
+                                value={achievement.description}
+                                onChange={(e) => updateAchievement(index, "description", e.target.value)}
+                                placeholder="成就描述"
+                                className="min-h-[60px]"
+                              />
+                              <div className="space-y-2">
+                                <Label className="text-sm text-gray-600 flex items-center gap-1">
+                                  <Info className="h-3 w-3" />
+                                  詳細說明
+                                </Label>
+                                <Textarea
+                                  value={achievement.details || ""}
+                                  onChange={(e) => updateAchievement(index, "details", e.target.value)}
+                                  placeholder="詳細說明（可選）"
+                                  className="min-h-[80px]"
+                                />
+                              </div>
                             </div>
-                          ))}
-
-                          {currentWeekData.lastWeek.length === 0 && (
-                            <div className="text-center py-8 text-gray-400">上週尚未新增任何工作項目</div>
+                          ) : (
+                            <div className="space-y-3">
+                              <div className="flex items-start gap-3">
+                                <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                                <div className="flex-1">
+                                  <h4 className="font-semibold text-black mb-1">{achievement.title}</h4>
+                                  <p className="text-gray-700 mb-2">{achievement.description}</p>
+                                  {achievement.details && (
+                                    <div className="p-3 bg-white rounded border border-green-200">
+                                      <p className="text-sm text-gray-600">{achievement.details}</p>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
                           )}
                         </div>
-                      </CardContent>
-                    </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
 
-                    {/* 本週工作計畫 */}
-                    <Card className="shadow-2xl border border-gray-700 bg-gray-900/90 backdrop-blur-sm">
-                      <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
-                        <CardTitle className="flex items-center gap-2 text-2xl">
-                          <Target className="h-6 w-6" />
-                          {selectedWeek} 本週工作計畫
-                        </CardTitle>
-                        <CardDescription className="text-red-100">本週預計完成的工作項目</CardDescription>
-                      </CardHeader>
-                      <CardContent className="p-6 bg-gray-900 text-white">
-                        <div className="space-y-4">
-                          {currentWeekData.thisWeek.map((item) => (
-                            <div key={item.id} className="p-4 bg-gray-800 rounded-lg border border-gray-700">
-                              <h3 className="font-semibold text-white mb-1">{item.project}</h3>
-                              <p className="text-sm text-gray-300 mb-2">預期工作：{item.expectedWork}</p>
-                              {item.goals && (
-                                <div>
-                                  <TrendingUp className="h-4 w-4 inline-block mr-1" />
-                                  <span className="text-sm text-green-400">目標：{item.goals}</span>
-                                </div>
-                              )}
+              {/* 下月目標 */}
+              {monthlySummary && (
+                <Card className="shadow-lg border border-gray-200 bg-white">
+                  <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Target className="h-6 w-6" />
+                        <CardTitle className="text-2xl">下月目標</CardTitle>
+                      </div>
+                      {isEditing && (
+                        <Button
+                          onClick={addGoal}
+                          variant="outline"
+                          size="sm"
+                          className="text-white border-white hover:bg-white hover:text-red-600"
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          添加
+                        </Button>
+                      )}
+                    </div>
+                    <CardDescription className="text-red-100">
+                      2025年8月份的工作目標與計畫
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-6 bg-white">
+                    <div className="space-y-4">
+                      {(isEditing ? editGoals : getDisplayGoals()).map((goal, index) => (
+                        <div key={index} className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                          <Target className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                          {isEditing ? (
+                            <div className="flex-1 flex gap-2">
+                              <Textarea
+                                value={goal}
+                                onChange={(e) => updateGoal(index, e.target.value)}
+                                className="flex-1"
+                                placeholder="輸入目標內容"
+                              />
+                              <Button
+                                onClick={() => removeGoal(index)}
+                                variant="outline"
+                                size="sm"
+                                className="text-red-600 border-red-200 hover:bg-red-50"
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
                             </div>
-                          ))}
-
-                          {currentWeekData.thisWeek.length === 0 && (
-                            <div className="text-center py-8 text-gray-400">本週尚未新增任何工作計畫</div>
+                          ) : (
+                            <p className="text-black">{goal}</p>
                           )}
                         </div>
-                      </CardContent>
-                    </Card>
-                  </>
-                ) : (
-                  <div className="text-center py-8 text-gray-400">請選擇要檢視的週次</div>
-                )}
-              </>
-            )}
-
-            {/* 年報檢視 */}
-            {reportType === "yearly" && (
-              <div className="text-center py-8 text-gray-400">
-                <p>年報內容開發中...</p>
-              </div>
-            )}
-          </div>
-        )}
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   )
