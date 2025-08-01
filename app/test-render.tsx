@@ -59,7 +59,7 @@ export default function TestRender() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
           <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
             <div className="text-3xl font-bold text-black mb-2">35</div>
-            <div className="text-sm text-gray-600">總專案數</div>
+            <div className="text-sm text-gray-600">任務數</div>
           </div>
           <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
             <div className="text-3xl font-bold text-green-600 mb-2">32</div>

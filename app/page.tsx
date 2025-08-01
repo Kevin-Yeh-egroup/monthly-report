@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
   CheckCircle,
   TrendingUp,
@@ -56,6 +57,7 @@ interface MonthlySummary {
   inProgressProjects: number
   pendingProjects: number
   keyAchievements: Achievement[]
+  workChallenges: Achievement[]
   nextMonthGoals: string[]
   // 新增手動編輯字段
   manualStats?: {
@@ -65,6 +67,7 @@ interface MonthlySummary {
     pendingProjects: number
   }
   manualAchievements?: Achievement[]
+  manualChallenges?: Achievement[]
   manualGoals?: string[]
 }
 
@@ -380,7 +383,61 @@ export default function ReportDashboard() {
   const [weeklyReports] = useState<WeeklyReport[]>(defaultWeeklyReports)
   const [selectedWeek, setSelectedWeek] = useState<string>("7/21-7/27")
   const [activeTab, setActiveTab] = useState<string>("weekly")
+  const [selectedMonth, setSelectedMonth] = useState<string>("2025-07")
   const [monthlySummary, setMonthlySummary] = useState<MonthlySummary | null>(null)
+  
+  // 月份選項
+  const monthOptions = [
+    { value: "2025-07", label: "2025年7月" },
+    { value: "2025-08", label: "2025年8月" },
+    { value: "2025-09", label: "2025年9月" },
+    { value: "2025-10", label: "2025年10月" },
+    { value: "2025-11", label: "2025年11月" },
+    { value: "2025-12", label: "2025年12月" },
+  ]
+  
+  // 週次選項 - 根據月份動態生成
+  const getWeekOptions = (month: string) => {
+    const weekOptions = {
+      "2025-07": [
+        { value: "7/7-7/13", label: "7/7-7/13" },
+        { value: "7/14-7/20", label: "7/14-7/20" },
+        { value: "7/21-7/27", label: "7/21-7/27" },
+        { value: "7/28-8/3", label: "7/28-8/3" },
+      ],
+      "2025-08": [
+        { value: "8/4-8/10", label: "8/4-8/10" },
+        { value: "8/11-8/17", label: "8/11-8/17" },
+        { value: "8/18-8/24", label: "8/18-8/24" },
+        { value: "8/25-8/31", label: "8/25-8/31" },
+      ],
+      "2025-09": [
+        { value: "9/1-9/7", label: "9/1-9/7" },
+        { value: "9/8-9/14", label: "9/8-9/14" },
+        { value: "9/15-9/21", label: "9/15-9/21" },
+        { value: "9/22-9/28", label: "9/22-9/28" },
+      ],
+      "2025-10": [
+        { value: "10/6-10/12", label: "10/6-10/12" },
+        { value: "10/13-10/19", label: "10/13-10/19" },
+        { value: "10/20-10/26", label: "10/20-10/26" },
+        { value: "10/27-11/2", label: "10/27-11/2" },
+      ],
+      "2025-11": [
+        { value: "11/3-11/9", label: "11/3-11/9" },
+        { value: "11/10-11/16", label: "11/10-11/16" },
+        { value: "11/17-11/23", label: "11/17-11/23" },
+        { value: "11/24-11/30", label: "11/24-11/30" },
+      ],
+      "2025-12": [
+        { value: "12/1-12/7", label: "12/1-12/7" },
+        { value: "12/8-12/14", label: "12/8-12/14" },
+        { value: "12/15-12/21", label: "12/15-12/21" },
+        { value: "12/22-12/28", label: "12/22-12/28" },
+      ],
+    }
+    return weekOptions[month as keyof typeof weekOptions] || weekOptions["2025-07"]
+  }
   
   // 編輯狀態
   const [isEditing, setIsEditing] = useState(false)
@@ -392,6 +449,7 @@ export default function ReportDashboard() {
   })
   const [editAchievements, setEditAchievements] = useState<Achievement[]>([])
   const [editGoals, setEditGoals] = useState<string[]>([])
+  const [editChallenges, setEditChallenges] = useState<Achievement[]>([])
 
   // 添加調試日誌
   const handleWeekChange = (week: string) => {
@@ -404,9 +462,26 @@ export default function ReportDashboard() {
     setActiveTab(tab)
   }
 
+  const handleMonthChange = (month: string) => {
+    console.log("月份變更:", month)
+    setSelectedMonth(month)
+    // 當月份變更時，重置週次選擇為該月份的第一週
+    const weekOptions = getWeekOptions(month)
+    if (weekOptions.length > 0) {
+      setSelectedWeek(weekOptions[0].value)
+    }
+  }
+
   // 計算月度摘要
   useEffect(() => {
-    const allProjects = weeklyReports.flatMap(report => report.projects)
+    // 根據選擇的月份過濾週報數據
+    const monthWeekOptions = getWeekOptions(selectedMonth)
+    const monthWeekRanges = monthWeekOptions.map(option => option.value)
+    const filteredReports = weeklyReports.filter(report => 
+      monthWeekRanges.includes(report.weekRange)
+    )
+    
+    const allProjects = filteredReports.flatMap(report => report.projects)
     
     const summary: MonthlySummary = {
       totalProjects: allProjects.length,
@@ -440,6 +515,18 @@ export default function ReportDashboard() {
           details: "由工讀生透過好理家在AI問答測試，測試網址：https://www.familyfinhealth.com/chat，測試結果良好，系統穩定運行。"
         }
       ],
+      workChallenges: [
+        {
+          title: "語音轉文字系統穩定性挑戰",
+          description: "系統在處理大量音檔時偶爾出現不穩定情況",
+          details: "需要持續優化系統架構，提升處理大量音檔時的穩定性，並建立更完善的錯誤處理機制。"
+        },
+        {
+          title: "知識庫內容品質控制",
+          description: "新增內容需要更嚴格的審核流程",
+          details: "建立內容審核機制，確保新增的知識庫內容品質，並制定標準化的內容格式規範。"
+        }
+      ],
       nextMonthGoals: [
         "持續優化語音轉文字系統準確度，目標提升至95%以上",
         "擴充財務試算工具功能，新增投資理財相關工具",
@@ -460,10 +547,16 @@ export default function ReportDashboard() {
     })
     setEditAchievements([...summary.keyAchievements])
     setEditGoals([...summary.nextMonthGoals])
+    setEditChallenges([...summary.workChallenges])
   }, [weeklyReports])
 
-  // 獲取當前週次數據
-  const currentWeekData = weeklyReports.find(report => report.weekRange === selectedWeek)
+  // 獲取當前週次數據 - 根據選擇的月份過濾
+  const monthWeekOptions = getWeekOptions(selectedMonth)
+  const monthWeekRanges = monthWeekOptions.map(option => option.value)
+  const filteredReports = weeklyReports.filter(report => 
+    monthWeekRanges.includes(report.weekRange)
+  )
+  const currentWeekData = filteredReports.find(report => report.weekRange === selectedWeek)
 
   // 獲取類別圖標
   const getCategoryIcon = (category: string) => {
@@ -522,6 +615,7 @@ export default function ReportDashboard() {
         ...monthlySummary,
         manualStats: editStats,
         manualAchievements: editAchievements,
+        manualChallenges: editChallenges,
         manualGoals: editGoals,
       }
       setMonthlySummary(updatedSummary)
@@ -539,6 +633,7 @@ export default function ReportDashboard() {
         pendingProjects: monthlySummary.pendingProjects,
       })
       setEditAchievements([...monthlySummary.keyAchievements])
+      setEditChallenges([...monthlySummary.workChallenges])
       setEditGoals([...monthlySummary.nextMonthGoals])
     }
     setIsEditing(false)
@@ -578,6 +673,22 @@ export default function ReportDashboard() {
     setEditGoals(newGoals)
   }
 
+  const addChallenge = () => {
+    const newChallenges = [...editChallenges, { title: "", description: "", details: "" }]
+    setEditChallenges(newChallenges)
+  }
+
+  const removeChallenge = (index: number) => {
+    const newChallenges = editChallenges.filter((_, i) => i !== index)
+    setEditChallenges(newChallenges)
+  }
+
+  const updateChallenge = (index: number, field: keyof Achievement, value: string) => {
+    const newChallenges = [...editChallenges]
+    newChallenges[index] = { ...newChallenges[index], [field]: value }
+    setEditChallenges(newChallenges)
+  }
+
   // 獲取顯示的統計數據
   const getDisplayStats = () => {
     if (monthlySummary?.manualStats) {
@@ -607,6 +718,14 @@ export default function ReportDashboard() {
     return monthlySummary?.nextMonthGoals || []
   }
 
+  // 獲取顯示的困難或挑戰
+  const getDisplayChallenges = () => {
+    if (monthlySummary?.manualChallenges) {
+      return monthlySummary.manualChallenges
+    }
+    return monthlySummary?.workChallenges || []
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -618,27 +737,45 @@ export default function ReportDashboard() {
             </div>
             <h1 className="text-4xl font-bold text-black">週報進度整理系統</h1>
           </div>
-          <p className="text-xl text-gray-600">2025年7月份工作進度追蹤與管理</p>
+          <p className="text-xl text-gray-600">
+            {monthOptions.find(option => option.value === selectedMonth)?.label || "2025年7月"} 工作進度追蹤與管理
+          </p>
         </div>
 
-        {/* 週次選擇 */}
-        <div className="flex justify-center mb-8">
-          <div className="flex flex-wrap gap-2 bg-gray-100 rounded-lg p-2 border border-gray-200">
-            {weeklyReports.map((report) => (
-              <Button
-                key={report.weekRange}
-                size="sm"
-                variant={selectedWeek === report.weekRange ? "default" : "ghost"}
-                onClick={() => handleWeekChange(report.weekRange)}
-                className={`${
-                  selectedWeek === report.weekRange
-                    ? "bg-red-600 text-white hover:bg-red-700"
-                    : "text-gray-700 hover:text-black hover:bg-gray-200"
-                }`}
-              >
-                {report.weekRange}
-              </Button>
-            ))}
+        {/* 月份和週次選擇 */}
+        <div className="flex justify-center mb-8 gap-4">
+          {/* 月份選擇 */}
+          <div className="flex items-center gap-2">
+            <Label className="text-sm font-medium text-gray-700">選擇月份：</Label>
+            <Select value={selectedMonth} onValueChange={handleMonthChange}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="選擇月份" />
+              </SelectTrigger>
+              <SelectContent>
+                {monthOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* 週次選擇 */}
+          <div className="flex items-center gap-2">
+            <Label className="text-sm font-medium text-gray-700">選擇週次：</Label>
+            <Select value={selectedWeek} onValueChange={handleWeekChange}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="選擇週次" />
+              </SelectTrigger>
+              <SelectContent>
+                {getWeekOptions(selectedMonth).map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
@@ -675,7 +812,9 @@ export default function ReportDashboard() {
         {/* 內容區域 */}
         <div className="space-y-6">
           {/* 週報詳情 */}
-          {activeTab === "weekly" && currentWeekData && (
+          {activeTab === "weekly" && (
+            <>
+              {currentWeekData ? (
             <Card className="shadow-lg border border-gray-200 bg-white">
               <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
                 <CardTitle className="flex items-center gap-2 text-2xl">
@@ -750,19 +889,46 @@ export default function ReportDashboard() {
                 </div>
               </CardContent>
             </Card>
+              ) : (
+                <Card className="shadow-lg border border-gray-200 bg-white">
+                  <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
+                    <CardTitle className="flex items-center gap-2 text-2xl">
+                      <Calendar className="h-6 w-6" />
+                      {selectedWeek} 週報詳情
+                    </CardTitle>
+                    <CardDescription className="text-red-100">
+                      本週各專案項目完成狀況
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-6 bg-white">
+                    <div className="text-center py-12">
+                      <div className="text-gray-400 mb-4">
+                        <FileText className="h-16 w-16 mx-auto" />
+                      </div>
+                      <h3 className="text-lg font-medium text-gray-600 mb-2">暫無數據</h3>
+                      <p className="text-sm text-gray-500">
+                        該週次目前沒有相關的專案數據
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </>
           )}
 
           {/* 月度摘要 */}
           {activeTab === "monthly" && (
             <>
               {/* 月度統計 */}
-              {monthlySummary ? (
+              {monthlySummary && getDisplayStats().totalProjects > 0 ? (
                 <Card className="shadow-lg border border-gray-200 bg-white">
                   <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <BarChart3 className="h-6 w-6" />
-                        <CardTitle className="text-2xl">2025-07 月度統計</CardTitle>
+                        <CardTitle className="text-2xl">
+                          {monthOptions.find(option => option.value === selectedMonth)?.label || "2025年7月"} 月度統計
+                        </CardTitle>
                       </div>
                       {!isEditing ? (
                         <Button
@@ -798,7 +964,7 @@ export default function ReportDashboard() {
                       )}
                     </div>
                     <CardDescription className="text-red-100">
-                      2025年7月份整體工作統計數據
+                      {monthOptions.find(option => option.value === selectedMonth)?.label || "2025年7月"} 整體工作統計數據
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="p-6 bg-white">
@@ -982,8 +1148,98 @@ export default function ReportDashboard() {
                 </Card>
               )}
 
-              {/* 下月目標 */}
+              {/* 工作困難或挑戰 */}
               {monthlySummary && (
+                <Card className="shadow-lg border border-gray-200 bg-white">
+                  <CardHeader className="bg-gradient-to-r from-orange-600 to-orange-500 text-white rounded-t-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <AlertTriangle className="h-6 w-6" />
+                        <CardTitle className="text-2xl">工作困難或挑戰</CardTitle>
+                      </div>
+                      {isEditing && (
+                        <Button
+                          onClick={addChallenge}
+                          variant="outline"
+                          size="sm"
+                          className="text-white border-white hover:bg-white hover:text-orange-600"
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          添加
+                        </Button>
+                      )}
+                    </div>
+                    <CardDescription className="text-orange-100">
+                      本月工作中遇到的困難與挑戰
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-6 bg-white">
+                    <div className="space-y-6">
+                      {(isEditing ? editChallenges : getDisplayChallenges()).map((challenge, index) => (
+                        <div key={index} className="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                          {isEditing ? (
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-2">
+                                <AlertTriangle className="h-5 w-5 text-orange-600" />
+                                <Input
+                                  value={challenge.title}
+                                  onChange={(e) => updateChallenge(index, "title", e.target.value)}
+                                  placeholder="困難或挑戰標題"
+                                  className="flex-1"
+                                />
+                                <Button
+                                  onClick={() => removeChallenge(index)}
+                                  variant="outline"
+                                  size="sm"
+                                  className="text-red-600 border-red-200 hover:bg-red-50"
+                                >
+                                  <X className="h-4 w-4" />
+                                </Button>
+                              </div>
+                              <Textarea
+                                value={challenge.description}
+                                onChange={(e) => updateChallenge(index, "description", e.target.value)}
+                                placeholder="困難或挑戰描述"
+                                className="min-h-[60px]"
+                              />
+                              <div className="space-y-2">
+                                <Label className="text-sm text-gray-600 flex items-center gap-1">
+                                  <Info className="h-3 w-3" />
+                                  解決方案或後續處理
+                                </Label>
+                                <Textarea
+                                  value={challenge.details || ""}
+                                  onChange={(e) => updateChallenge(index, "details", e.target.value)}
+                                  placeholder="解決方案或後續處理（可選）"
+                                  className="min-h-[80px]"
+                                />
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="space-y-3">
+                              <div className="flex items-start gap-3">
+                                <AlertTriangle className="h-5 w-5 text-orange-600 mt-0.5 flex-shrink-0" />
+                                <div className="flex-1">
+                                  <h4 className="font-semibold text-black mb-1">{challenge.title}</h4>
+                                  <p className="text-gray-700 mb-2">{challenge.description}</p>
+                                  {challenge.details && (
+                                    <div className="p-3 bg-white rounded border border-orange-200">
+                                      <p className="text-sm text-gray-600">{challenge.details}</p>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* 下月目標 */}
+              {monthlySummary && getDisplayGoals().length > 0 && (
                 <Card className="shadow-lg border border-gray-200 bg-white">
                   <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
                     <div className="flex items-center justify-between">
@@ -1038,10 +1294,178 @@ export default function ReportDashboard() {
                   </CardContent>
                 </Card>
               )}
+
+              {/* 語音轉文字辭庫更新統計 */}
+              <VoiceToTextStats />
+
+              {/* 知識庫擴充統計 */}
+              <KnowledgeBaseStats />
+
             </>
           )}
         </div>
       </div>
     </div>
+  )
+}
+
+const VoiceToTextStats = () => {
+  const weeklyData = [
+    { week: "7/7-7/13", total: 0, new: 0 },
+    { week: "7/14-7/20", total: 203, new: 6 },
+    { week: "7/21-7/27", total: 309, new: 97 }
+  ]
+
+  const totalGrowth = weeklyData[weeklyData.length - 1].total - weeklyData[0].total
+  const totalNew = weeklyData.reduce((sum, data) => sum + data.new, 0)
+
+  return (
+    <Card className="shadow-lg border border-gray-200 bg-white">
+      <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-t-lg">
+        <div className="flex items-center gap-2">
+          <Mic className="h-6 w-6" />
+          <CardTitle className="text-2xl">語音轉文字辭庫更新統計</CardTitle>
+        </div>
+        <CardDescription className="text-blue-100">
+          自定義辭庫更新進度追蹤
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-6 bg-white">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <div className="text-3xl font-bold text-blue-600 mb-2">{weeklyData[weeklyData.length - 1].total}</div>
+            <div className="text-sm text-gray-600">辭庫總數</div>
+          </div>
+          <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+            <div className="text-3xl font-bold text-green-600 mb-2">{totalNew}</div>
+            <div className="text-sm text-gray-600">本月新增</div>
+          </div>
+          <div className="text-center p-4 bg-purple-50 rounded-lg border border-purple-200">
+            <div className="text-3xl font-bold text-purple-600 mb-2">{totalGrowth}</div>
+            <div className="text-sm text-gray-600">淨增長</div>
+          </div>
+        </div>
+        
+        <div className="space-y-4">
+          <h4 className="font-semibold text-gray-800 mb-3">週度更新詳情</h4>
+          {weeklyData.map((data, index) => (
+            <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-semibold text-blue-600">{index + 1}</span>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-800">{data.week}</div>
+                  <div className="text-sm text-gray-600">辭庫總數: {data.total}</div>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-lg font-semibold text-green-600">+{data.new}</div>
+                <div className="text-sm text-gray-600">新增</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
+          <div className="flex items-center gap-2 mb-2">
+            <TrendingUp className="h-5 w-5 text-green-600" />
+            <h5 className="font-semibold text-gray-800">更新趨勢分析</h5>
+          </div>
+          <p className="text-sm text-gray-700">
+            辭庫從初始狀態快速擴充至309個詞條，增長率達{Math.round((totalGrowth / weeklyData[0].total) * 100)}%，
+            顯示語音轉文字系統的持續優化與完善。
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+const KnowledgeBaseStats = () => {
+  const knowledgeBaseData = [
+    {
+      category: "社福資源資料庫",
+      description: "新增社福資源資料庫",
+      details: "建立完整的社福資源分類體系，包含各類補助、服務項目等"
+    },
+    {
+      category: "工讀生案例分類知識庫",
+      description: "補充135篇文章",
+      details: "涵蓋各類工讀生相關案例，提供實用的參考資料"
+    },
+    {
+      category: "新增文章",
+      description: "新增7篇文章",
+      details: "持續擴充知識庫內容，提升內容豐富度"
+    },
+    {
+      category: "上架審核",
+      description: "上架審核通過文章",
+      details: "建立內容審核機制，確保知識庫內容品質"
+    }
+  ]
+
+  const totalArticles = 135 + 7 // 工讀生案例 + 新增文章
+  const contentIncrease = 40 // 內容豐富度提升百分比
+
+  return (
+    <Card className="shadow-lg border border-gray-200 bg-white">
+      <CardHeader className="bg-gradient-to-r from-green-600 to-green-500 text-white rounded-t-lg">
+        <div className="flex items-center gap-2">
+          <Database className="h-6 w-6" />
+          <CardTitle className="text-2xl">知識庫擴充統計</CardTitle>
+        </div>
+        <CardDescription className="text-green-100">
+          知識庫內容擴充與品質提升統計
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-6 bg-white">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+            <div className="text-3xl font-bold text-green-600 mb-2">{totalArticles}</div>
+            <div className="text-sm text-gray-600">總文章數</div>
+          </div>
+          <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <div className="text-3xl font-bold text-blue-600 mb-2">4</div>
+            <div className="text-sm text-gray-600">資料庫類別</div>
+          </div>
+          <div className="text-center p-4 bg-purple-50 rounded-lg border border-purple-200">
+            <div className="text-3xl font-bold text-purple-600 mb-2">{contentIncrease}%</div>
+            <div className="text-sm text-gray-600">內容豐富度提升</div>
+          </div>
+        </div>
+        
+        <div className="space-y-4">
+          <h4 className="font-semibold text-gray-800 mb-3">擴充項目詳情</h4>
+          {knowledgeBaseData.map((item, index) => (
+            <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+              <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <span className="text-sm font-semibold text-green-600">{index + 1}</span>
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <Database className="h-4 w-4 text-green-600" />
+                  <h5 className="font-semibold text-gray-800">{item.category}</h5>
+                </div>
+                <p className="text-gray-700 mb-1">{item.description}</p>
+                <p className="text-sm text-gray-600">{item.details}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
+          <div className="flex items-center gap-2 mb-2">
+            <TrendingUp className="h-5 w-5 text-green-600" />
+            <h5 className="font-semibold text-gray-800">擴充成果分析</h5>
+          </div>
+          <p className="text-sm text-gray-700">
+            知識庫內容豐富度提升{contentIncrease}%，新增社福資源資料庫和工讀生案例分類，
+            建立完整的內容審核機制，為用戶提供更全面、更優質的知識服務。
+          </p>
+        </div>
+      </CardContent>
+    </Card>
   )
 }
