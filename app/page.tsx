@@ -27,6 +27,7 @@ import {
   Plus,
   Info,
   RefreshCw,
+  Download,
 } from "lucide-react"
 
 // 數據類型定義
@@ -508,7 +509,15 @@ const defaultWeeklyReports: WeeklyReport[] = [
 ]
 
 export default function ReportDashboard() {
-  const [weeklyReports] = useState<WeeklyReport[]>(defaultWeeklyReports)
+  // 從 localStorage 讀取保存的資料，如果沒有則使用預設資料
+  const [weeklyReports, setWeeklyReports] = useState<WeeklyReport[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('weeklyReports')
+      return saved ? JSON.parse(saved) : defaultWeeklyReports
+    }
+    return defaultWeeklyReports
+  })
+  
   const [selectedWeek, setSelectedWeek] = useState<string>("7/21-7/27")
   const [activeTab, setActiveTab] = useState<string>("weekly")
   const [selectedMonth, setSelectedMonth] = useState<string>("2025-07")
@@ -584,38 +593,77 @@ export default function ReportDashboard() {
   
   // 語音轉文字辭庫編輯狀態
   const [isVoiceToTextEditing, setIsVoiceToTextEditing] = useState(false)
-  const [editVoiceToTextData, setEditVoiceToTextData] = useState([
-    { week: "6月", total: 170, new: 0 },
-    { week: "7/7-7/13", total: 170, new: 0 },
-    { week: "7/14-7/20", total: 203, new: 6 },
-    { week: "7/21-7/27", total: 309, new: 97 },
-    { week: "7/28-8/3", total: 350, new: 41 }
-  ])
+  const [editVoiceToTextData, setEditVoiceToTextData] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('voiceToTextData')
+      return saved ? JSON.parse(saved) : [
+        { week: "6月", total: 170, new: 0 },
+        { week: "7/7-7/13", total: 170, new: 0 },
+        { week: "7/14-7/20", total: 203, new: 6 },
+        { week: "7/21-7/27", total: 309, new: 97 },
+        { week: "7/28-8/3", total: 350, new: 41 }
+      ]
+    }
+    return [
+      { week: "6月", total: 170, new: 0 },
+      { week: "7/7-7/13", total: 170, new: 0 },
+      { week: "7/14-7/20", total: 203, new: 6 },
+      { week: "7/21-7/27", total: 309, new: 97 },
+      { week: "7/28-8/3", total: 350, new: 41 }
+    ]
+  })
   
   // 知識庫編輯狀態
   const [isKnowledgeBaseEditing, setIsKnowledgeBaseEditing] = useState(false)
-  const [editKnowledgeBaseData, setEditKnowledgeBaseData] = useState([
-    {
-      category: "社福資源資料庫",
-      description: "新增社福資源資料庫",
-      details: "建立完整的社福資源分類體系，包含各類補助、服務項目等"
-    },
-    {
-      category: "工讀生案例分類知識庫",
-      description: "補充135篇文章",
-      details: "涵蓋各類工讀生相關案例，提供實用的參考資料"
-    },
-    {
-      category: "新增文章",
-      description: "新增7篇文章",
-      details: "持續擴充知識庫內容，提升內容豐富度"
-    },
-    {
-      category: "上架審核",
-      description: "上架審核通過文章",
-      details: "建立內容審核機制，確保知識庫內容品質"
+  const [editKnowledgeBaseData, setEditKnowledgeBaseData] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('knowledgeBaseData')
+      return saved ? JSON.parse(saved) : [
+        {
+          category: "社福資源資料庫",
+          description: "新增社福資源資料庫",
+          details: "建立完整的社福資源分類體系，包含各類補助、服務項目等"
+        },
+        {
+          category: "工讀生案例分類知識庫",
+          description: "補充135篇文章",
+          details: "涵蓋各類工讀生相關案例，提供實用的參考資料"
+        },
+        {
+          category: "新增文章",
+          description: "新增7篇文章",
+          details: "持續擴充知識庫內容，提升內容豐富度"
+        },
+        {
+          category: "上架審核",
+          description: "上架審核通過文章",
+          details: "建立內容審核機制，確保知識庫內容品質"
+        }
+      ]
     }
-  ])
+    return [
+      {
+        category: "社福資源資料庫",
+        description: "新增社福資源資料庫",
+        details: "建立完整的社福資源分類體系，包含各類補助、服務項目等"
+      },
+      {
+        category: "工讀生案例分類知識庫",
+        description: "補充135篇文章",
+        details: "涵蓋各類工讀生相關案例，提供實用的參考資料"
+      },
+      {
+        category: "新增文章",
+        description: "新增7篇文章",
+        details: "持續擴充知識庫內容，提升內容豐富度"
+      },
+      {
+        category: "上架審核",
+        description: "上架審核通過文章",
+        details: "建立內容審核機制，確保知識庫內容品質"
+      }
+    ]
+  })
 
   // 添加調試日誌
   const handleWeekChange = (week: string) => {
@@ -637,6 +685,33 @@ export default function ReportDashboard() {
       setSelectedWeek(weekOptions[0].value)
     }
   }
+
+  // 載入保存的月度摘要資料
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedMonthlySummary = localStorage.getItem('monthlySummary')
+      const savedEditStats = localStorage.getItem('editStats')
+      const savedEditAchievements = localStorage.getItem('editAchievements')
+      const savedEditChallenges = localStorage.getItem('editChallenges')
+      const savedEditGoals = localStorage.getItem('editGoals')
+      
+      if (savedMonthlySummary) {
+        setMonthlySummary(JSON.parse(savedMonthlySummary))
+      }
+      if (savedEditStats) {
+        setEditStats(JSON.parse(savedEditStats))
+      }
+      if (savedEditAchievements) {
+        setEditAchievements(JSON.parse(savedEditAchievements))
+      }
+      if (savedEditChallenges) {
+        setEditChallenges(JSON.parse(savedEditChallenges))
+      }
+      if (savedEditGoals) {
+        setEditGoals(JSON.parse(savedEditGoals))
+      }
+    }
+  }, [])
 
   // 計算月度摘要
   useEffect(() => {
@@ -785,6 +860,16 @@ export default function ReportDashboard() {
         manualGoals: editGoals,
       }
       setMonthlySummary(updatedSummary)
+      
+      // 保存到 localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('monthlySummary', JSON.stringify(updatedSummary))
+        localStorage.setItem('editStats', JSON.stringify(editStats))
+        localStorage.setItem('editAchievements', JSON.stringify(editAchievements))
+        localStorage.setItem('editChallenges', JSON.stringify(editChallenges))
+        localStorage.setItem('editGoals', JSON.stringify(editGoals))
+      }
+      
       setIsEditing(false)
     }
   }
@@ -820,7 +905,13 @@ export default function ReportDashboard() {
         ? { ...report, projects: editWeeklyProjects }
         : report
     )
-    // 這裡可以添加保存到localStorage或API的邏輯
+    
+    // 保存到 localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('weeklyReports', JSON.stringify(updatedReports))
+    }
+    
+    setWeeklyReports(updatedReports)
     setIsWeeklyEditing(false)
   }
 
@@ -963,6 +1054,10 @@ export default function ReportDashboard() {
   }
 
   const handleVoiceToTextSave = () => {
+    // 保存到 localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('voiceToTextData', JSON.stringify(editVoiceToTextData))
+    }
     setIsVoiceToTextEditing(false)
   }
 
@@ -999,6 +1094,10 @@ export default function ReportDashboard() {
   }
 
   const handleKnowledgeBaseSave = () => {
+    // 保存到 localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('knowledgeBaseData', JSON.stringify(editKnowledgeBaseData))
+    }
     setIsKnowledgeBaseEditing(false)
   }
 
@@ -1145,6 +1244,45 @@ export default function ReportDashboard() {
           <p className="text-xl text-gray-600">
             {monthOptions.find(option => option.value === selectedMonth)?.label || "2025年7月"} 工作進度追蹤與管理
           </p>
+          <div className="mt-4 flex justify-center gap-4">
+            <Button
+              onClick={() => {
+                if (confirm('確定要重置所有資料到預設狀態嗎？這將清除所有本地保存的編輯內容。')) {
+                  localStorage.clear()
+                  window.location.reload()
+                }
+              }}
+              variant="outline"
+              size="sm"
+              className="text-red-600 border-red-200 hover:bg-red-50"
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              重置資料
+            </Button>
+            <Button
+              onClick={() => {
+                const data = {
+                  weeklyReports,
+                  voiceToTextData: editVoiceToTextData,
+                  knowledgeBaseData: editKnowledgeBaseData,
+                  monthlySummary
+                }
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+                const url = URL.createObjectURL(blob)
+                const a = document.createElement('a')
+                a.href = url
+                a.download = `週報資料_${new Date().toISOString().split('T')[0]}.json`
+                a.click()
+                URL.revokeObjectURL(url)
+              }}
+              variant="outline"
+              size="sm"
+              className="text-blue-600 border-blue-200 hover:bg-blue-50"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              匯出資料
+            </Button>
+          </div>
         </div>
 
         {/* 月份和週次選擇 */}
