@@ -11,7 +11,7 @@
 - **編輯按鈕** (4個位置)
   - 月度統計卡片標題欄
   - 週度報告編輯模式
-  - 主要成果編輯模式
+  - 七月份執行狀況編輯模式
   - 下月目標編輯模式
   - 樣式：`text-white border-white hover:bg-white hover:text-red-600 font-medium`
 
@@ -26,7 +26,7 @@
   - 樣式：`text-white border-white hover:bg-white hover:text-gray-600 font-medium`
 
 - **添加按鈕** (3個位置)
-  - 主要成果卡片
+  - 七月份執行狀況卡片
   - 下月目標卡片
   - 週度報告編輯模式
   - 樣式：`text-white border-white hover:bg-white hover:text-red-600 font-medium`

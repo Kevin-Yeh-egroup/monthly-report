@@ -1657,14 +1657,14 @@ export default function ReportDashboard() {
                 </Card>
               )}
 
-              {/* 主要成果 */}
+              {/* 七月份執行狀況 */}
               {monthlySummary && (
                 <Card className="shadow-lg border border-gray-200 bg-white">
                   <CardHeader className="bg-gradient-to-r from-red-600 to-red-500 text-white rounded-t-lg">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <TrendingUp className="h-6 w-6" />
-                        <CardTitle className="text-2xl">主要成果</CardTitle>
+                        <CardTitle className="text-2xl">七月份執行狀況</CardTitle>
                       </div>
                       {isEditing && (
                         <Button
