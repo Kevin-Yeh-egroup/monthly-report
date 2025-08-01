@@ -378,6 +378,133 @@ const defaultWeeklyReports: WeeklyReport[] = [
       },
     ],
   },
+  {
+    weekRange: "7/28-8/3",
+    projects: [
+      {
+        id: "36",
+        name: "語音轉文字實習生測試",
+        category: "語音轉文字",
+        expectedWork: "語音轉文字實習生測試",
+        status: "completed",
+        completion: "測試流程持續優化中",
+      },
+      {
+        id: "37",
+        name: "Gemini 2.5 flash版本測試",
+        category: "語音轉文字",
+        expectedWork: "測試Gemini 2.5 flash版本",
+        status: "completed",
+        completion: "版本穩定性良好，持續監控中",
+      },
+      {
+        id: "38",
+        name: "課程摘要確認",
+        category: "語音轉文字",
+        expectedWork: "讓Ivy確認的課程摘要：共50篇，新增19篇",
+        status: "completed",
+        completion: "完成19篇課程摘要確認，總計達50篇",
+      },
+      {
+        id: "39",
+        name: "自定義辭庫更新",
+        category: "語音轉文字",
+        expectedWork: "自定義辭庫更新：共350個，本周新增41個",
+        status: "completed",
+        completion: "辭庫更新完成，總數達350個，本周新增41個",
+      },
+      {
+        id: "40",
+        name: "工讀生語音轉文字測試",
+        category: "語音轉文字",
+        expectedWork: "工讀生本週完成14篇語音轉文字測試，總共完成45篇",
+        status: "completed",
+        completion: "工讀生本週完成14篇測試，累計完成45篇",
+      },
+      {
+        id: "41",
+        name: "脫貧處遇課程文章",
+        category: "語音轉文字",
+        expectedWork: "提供脫貧處遇課程文章4篇",
+        status: "completed",
+        completion: "完成4篇脫貧處遇課程文章",
+      },
+      {
+        id: "42",
+        name: "語音轉文字逐字稿轉譯狀況回報",
+        category: "語音轉文字",
+        expectedWork: "語音轉文字逐字稿轉譯狀況回報泰元",
+        status: "completed",
+        completion: "回報完成，流程已標準化",
+      },
+      {
+        id: "43",
+        name: "財務試算模擬器/V0",
+        category: "財務試算模擬器",
+        expectedWork: "7月新增12項工具",
+        status: "completed",
+        completion: "7月新增12項工具已完成",
+      },
+      {
+        id: "44",
+        name: "夥伴需求功能試做",
+        category: "財務試算模擬器",
+        expectedWork: "夥伴需求功能試做",
+        status: "pending",
+        completion: "本週未執行",
+        issues: "需要重新安排執行時間",
+      },
+      {
+        id: "45",
+        name: "知識庫社福資源資料庫",
+        category: "知識庫",
+        expectedWork: "新增社福資源資料庫",
+        status: "in-progress",
+        completion: "知識庫補足清單持續執行中",
+      },
+      {
+        id: "46",
+        name: "知識庫文章補充",
+        category: "知識庫",
+        expectedWork: "補充文章各領域進度",
+        status: "in-progress",
+        completion: "生育懷孕(雅筑12/12)、關係人死亡/失蹤(資旻0/13)、婚姻(于沁0/12)、關係人入監(資旻0/12)、繼承(于沁0/13)、退休(妤臻0/14)",
+        notes: "跨議題基礎知能(0/14)、原住民領域(雅茵2/12)、新住民領域(0/13)、同志領域(雅筑12/12)、婦女領域(于沁0/13)、親子領域(資旻0/12)、單親領域(0/13)、跨族群整合知能(雅筑8/8)、毛小孩飼主領域(妤臻20/26)",
+      },
+      {
+        id: "47",
+        name: "上架審核通過文章",
+        category: "知識庫",
+        expectedWork: "上架審核通過文章",
+        status: "completed",
+        completion: "審核流程持續進行",
+      },
+      {
+        id: "48",
+        name: "反饋回覆流程訂定",
+        category: "知識庫",
+        expectedWork: "反饋回覆流程訂定",
+        status: "completed",
+        completion: "流程訂定完成",
+      },
+      {
+        id: "49",
+        name: "個人財務健康檢測報告",
+        category: "個人財務健康檢測報告",
+        expectedWork: "1.定義指標 2.做出呈現樣式 3.對答式問句延伸",
+        status: "completed",
+        completion: "指標定義和呈現樣式已完成，對答式問句延伸完成",
+      },
+      {
+        id: "50",
+        name: "個人財務健康檢測報告對話式問答",
+        category: "個人財務健康檢測報告",
+        expectedWork: "對話式問答案例-個人財務風險快篩指標-月收入>月支出",
+        status: "completed",
+        completion: "對話式問答案例完成，包含個人財務風險快篩指標",
+      },
+    ],
+  },
 ]
 
 export default function ReportDashboard() {
@@ -461,7 +588,8 @@ export default function ReportDashboard() {
     { week: "6月", total: 170, new: 0 },
     { week: "7/7-7/13", total: 170, new: 0 },
     { week: "7/14-7/20", total: 203, new: 6 },
-    { week: "7/21-7/27", total: 309, new: 97 }
+    { week: "7/21-7/27", total: 309, new: 97 },
+    { week: "7/28-8/3", total: 350, new: 41 }
   ])
   
   // 知識庫編輯狀態
@@ -528,29 +656,29 @@ export default function ReportDashboard() {
       pendingProjects: allProjects.filter(p => p.status === "pending").length,
       keyAchievements: [
         {
-          title: "語音轉文字系統優化完成",
-          description: "課程摘要達50篇，系統準確度大幅提升",
-          details: "完成19篇課程摘要確認，新增11篇達到30篇，最終擴充至50篇。系統穩定性持續改善，處理速度提升30%。"
+          title: "語音轉文字系統持續優化",
+          description: "辭庫擴充至350個，課程摘要達50篇，工讀生測試完成45篇",
+          details: "辭庫從6月的170個擴充至7月底的350個，淨成長180個。課程摘要確認達50篇，工讀生完成45篇語音轉文字測試，系統準確度持續提升。"
         },
         {
-          title: "財務試算模擬器新增12項工具",
-          description: "涵蓋加班費、特休假、債務警示等多項功能",
-          details: "開發夥伴需求功能試做、財務利率回推計算器、派課系統、小編投稿說明、加班費試算、特休假試算、債務警示工具等12項實用工具。"
+          title: "財務試算模擬器功能完善",
+          description: "7月新增12項工具，涵蓋多項實用功能",
+          details: "開發夥伴需求功能試做、財務利率回推計算器、派課系統、小編投稿說明、加班費試算、特休假試算、債務警示工具等12項實用工具，為用戶提供全面的財務計算服務。"
         },
         {
-          title: "個人財務健康檢測報告功能開發完成",
-          description: "定義指標並完成呈現樣式設計",
-          details: "完成指標定義和呈現樣式設計，新增引導式問句功能，為用戶提供個性化的財務健康評估。"
+          title: "個人財務健康檢測報告功能擴充",
+          description: "完成對答式問句延伸和對話式問答功能",
+          details: "完成指標定義和呈現樣式設計，新增對答式問句延伸功能，開發對話式問答案例，包含個人財務風險快篩指標，為用戶提供更互動的財務健康評估體驗。"
         },
         {
-          title: "知識庫擴充成果顯著",
-          description: "新增社福資源資料庫，文章數量大幅增加",
-          details: "新增社福資源資料庫，工讀生案例分類知識庫補充135篇文章，新增文章7篇，上架審核通過文章，知識庫內容豐富度提升40%。"
+          title: "知識庫內容持續擴充",
+          description: "各領域文章補充進度良好，反饋回覆流程建立",
+          details: "新增社福資源資料庫，各領域文章補充進度：生育懷孕(12/12)、同志領域(12/12)、跨族群整合知能(8/8)、毛小孩飼主領域(20/26)等，建立反饋回覆流程，提升內容品質。"
         },
         {
-          title: "工研院測試合作完成",
-          description: "AI問答系統測試驗證成功",
-          details: "由工讀生透過好理家在AI問答測試，測試網址：https://www.familyfinhealth.com/chat，測試結果良好，系統穩定運行。"
+          title: "脫貧處遇課程文章完成",
+          description: "提供4篇脫貧處遇課程文章",
+          details: "完成4篇脫貧處遇課程文章，為相關服務提供專業的課程內容支持，豐富知識庫的教育資源。"
         }
       ],
       workChallenges: [
@@ -754,29 +882,29 @@ export default function ReportDashboard() {
       pendingProjects: allProjects.filter(p => p.status === "pending").length,
       keyAchievements: [
         {
-          title: "語音轉文字系統優化完成",
-          description: "課程摘要達50篇，系統準確度大幅提升",
-          details: "完成19篇課程摘要確認，新增11篇達到30篇，最終擴充至50篇。系統穩定性持續改善，處理速度提升30%。"
+          title: "語音轉文字系統持續優化",
+          description: "辭庫擴充至350個，課程摘要達50篇，工讀生測試完成45篇",
+          details: "辭庫從6月的170個擴充至7月底的350個，淨成長180個。課程摘要確認達50篇，工讀生完成45篇語音轉文字測試，系統準確度持續提升。"
         },
         {
-          title: "財務試算模擬器新增12項工具",
-          description: "涵蓋加班費、特休假、債務警示等多項功能",
-          details: "開發夥伴需求功能試做、財務利率回推計算器、派課系統、小編投稿說明、加班費試算、特休假試算、債務警示工具等12項實用工具。"
+          title: "財務試算模擬器功能完善",
+          description: "7月新增12項工具，涵蓋多項實用功能",
+          details: "開發夥伴需求功能試做、財務利率回推計算器、派課系統、小編投稿說明、加班費試算、特休假試算、債務警示工具等12項實用工具，為用戶提供全面的財務計算服務。"
         },
         {
-          title: "個人財務健康檢測報告功能開發完成",
-          description: "定義指標並完成呈現樣式設計",
-          details: "完成指標定義和呈現樣式設計，新增引導式問句功能，為用戶提供個性化的財務健康評估。"
+          title: "個人財務健康檢測報告功能擴充",
+          description: "完成對答式問句延伸和對話式問答功能",
+          details: "完成指標定義和呈現樣式設計，新增對答式問句延伸功能，開發對話式問答案例，包含個人財務風險快篩指標，為用戶提供更互動的財務健康評估體驗。"
         },
         {
-          title: "知識庫擴充成果顯著",
-          description: "新增社福資源資料庫，文章數量大幅增加",
-          details: "新增社福資源資料庫，工讀生案例分類知識庫補充135篇文章，新增文章7篇，上架審核通過文章，知識庫內容豐富度提升40%。"
+          title: "知識庫內容持續擴充",
+          description: "各領域文章補充進度良好，反饋回覆流程建立",
+          details: "新增社福資源資料庫，各領域文章補充進度：生育懷孕(12/12)、同志領域(12/12)、跨族群整合知能(8/8)、毛小孩飼主領域(20/26)等，建立反饋回覆流程，提升內容品質。"
         },
         {
-          title: "工研院測試合作完成",
-          description: "AI問答系統測試驗證成功",
-          details: "由工讀生透過好理家在AI問答測試，測試網址：https://www.familyfinhealth.com/chat，測試結果良好，系統穩定運行。"
+          title: "脫貧處遇課程文章完成",
+          description: "提供4篇脫貧處遇課程文章",
+          details: "完成4篇脫貧處遇課程文章，為相關服務提供專業的課程內容支持，豐富知識庫的教育資源。"
         }
       ],
       workChallenges: [
@@ -843,7 +971,8 @@ export default function ReportDashboard() {
       { week: "6月", total: 170, new: 0 },
       { week: "7/7-7/13", total: 170, new: 0 },
       { week: "7/14-7/20", total: 203, new: 6 },
-      { week: "7/21-7/27", total: 309, new: 97 }
+      { week: "7/21-7/27", total: 309, new: 97 },
+      { week: "7/28-8/3", total: 350, new: 41 }
     ])
     setIsVoiceToTextEditing(false)
   }
