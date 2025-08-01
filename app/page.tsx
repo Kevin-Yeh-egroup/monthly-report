@@ -28,6 +28,7 @@ import {
   Info,
   RefreshCw,
   Download,
+  Upload,
 } from "lucide-react"
 
 // 數據類型定義
@@ -71,6 +72,189 @@ interface MonthlySummary {
   manualAchievements?: Achievement[]
   manualChallenges?: Achievement[]
   manualGoals?: string[]
+}
+
+// CSV 匯出匯入輔助函數
+const escapeCSV = (str: string): string => {
+  if (str.includes(',') || str.includes('"') || str.includes('\n')) {
+    return `"${str.replace(/"/g, '""')}"`
+  }
+  return str
+}
+
+const exportWeeklyReportsToCSV = (weeklyReports: WeeklyReport[]): string => {
+  const headers = ['週次', '專案ID', '專案名稱', '類別', '預期工作', '狀態', '完成狀況', '問題', '備註']
+  const rows = [headers.join(',')]
+  
+  weeklyReports.forEach(report => {
+    report.projects.forEach(project => {
+      const row = [
+        escapeCSV(report.weekRange),
+        escapeCSV(project.id),
+        escapeCSV(project.name),
+        escapeCSV(project.category),
+        escapeCSV(project.expectedWork),
+        escapeCSV(project.status),
+        escapeCSV(project.completion),
+        escapeCSV(project.issues || ''),
+        escapeCSV(project.notes || '')
+      ]
+      rows.push(row.join(','))
+    })
+  })
+  
+  // 添加 UTF-8 BOM 確保 Excel 正確識別編碼
+  const BOM = '\uFEFF'
+  return BOM + rows.join('\n')
+}
+
+const exportVoiceToTextToCSV = (voiceToTextData: { week: string; total: number; new: number }[]): string => {
+  const headers = ['週次', '辭庫總數', '新增數量']
+  const rows = [headers.join(',')]
+  
+  voiceToTextData.forEach(data => {
+    const row = [
+      escapeCSV(data.week),
+      data.total.toString(),
+      data.new.toString()
+    ]
+    rows.push(row.join(','))
+  })
+  
+  // 添加 UTF-8 BOM 確保 Excel 正確識別編碼
+  const BOM = '\uFEFF'
+  return BOM + rows.join('\n')
+}
+
+const exportKnowledgeBaseToCSV = (knowledgeBaseData: { category: string; description: string; details: string }[]): string => {
+  const headers = ['分類', '描述', '詳細說明']
+  const rows = [headers.join(',')]
+  
+  knowledgeBaseData.forEach(data => {
+    const row = [
+      escapeCSV(data.category),
+      escapeCSV(data.description),
+      escapeCSV(data.details)
+    ]
+    rows.push(row.join(','))
+  })
+  
+  // 添加 UTF-8 BOM 確保 Excel 正確識別編碼
+  const BOM = '\uFEFF'
+  return BOM + rows.join('\n')
+}
+
+const importWeeklyReportsFromCSV = (csvContent: string): WeeklyReport[] | null => {
+  try {
+    // 移除 UTF-8 BOM 如果存在
+    let content = csvContent
+    if (content.charCodeAt(0) === 0xFEFF) {
+      content = content.slice(1)
+    }
+    
+    const lines = content.split('\n').filter(line => line.trim())
+    if (lines.length < 2) return null
+    
+    const headers = lines[0].split(',').map(h => h.trim())
+    const weeklyReportsMap = new Map<string, Project[]>()
+    
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''))
+      if (values.length >= 6) {
+        const weekRange = values[0]
+        const project: Project = {
+          id: values[1],
+          name: values[2],
+          category: values[3],
+          expectedWork: values[4],
+          status: values[5] as "completed" | "in-progress" | "pending",
+          completion: values[6] || '',
+          issues: values[7] || undefined,
+          notes: values[8] || undefined
+        }
+        
+        if (!weeklyReportsMap.has(weekRange)) {
+          weeklyReportsMap.set(weekRange, [])
+        }
+        weeklyReportsMap.get(weekRange)!.push(project)
+      }
+    }
+    
+    const weeklyReports: WeeklyReport[] = []
+    weeklyReportsMap.forEach((projects, weekRange) => {
+      weeklyReports.push({
+        weekRange,
+        projects
+      })
+    })
+    
+    return weeklyReports
+  } catch (error) {
+    console.error('CSV 匯入錯誤:', error)
+    return null
+  }
+}
+
+const importVoiceToTextFromCSV = (csvContent: string): { week: string; total: number; new: number }[] | null => {
+  try {
+    // 移除 UTF-8 BOM 如果存在
+    let content = csvContent
+    if (content.charCodeAt(0) === 0xFEFF) {
+      content = content.slice(1)
+    }
+    
+    const lines = content.split('\n').filter(line => line.trim())
+    if (lines.length < 2) return null
+    
+    const voiceToTextData: { week: string; total: number; new: number }[] = []
+    
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''))
+      if (values.length >= 3) {
+        voiceToTextData.push({
+          week: values[0],
+          total: parseInt(values[1]) || 0,
+          new: parseInt(values[2]) || 0
+        })
+      }
+    }
+    
+    return voiceToTextData
+  } catch (error) {
+    console.error('CSV 匯入錯誤:', error)
+    return null
+  }
+}
+
+const importKnowledgeBaseFromCSV = (csvContent: string): { category: string; description: string; details: string }[] | null => {
+  try {
+    // 移除 UTF-8 BOM 如果存在
+    let content = csvContent
+    if (content.charCodeAt(0) === 0xFEFF) {
+      content = content.slice(1)
+    }
+    
+    const lines = content.split('\n').filter(line => line.trim())
+    if (lines.length < 2) return null
+    
+    const knowledgeBaseData: { category: string; description: string; details: string }[] = []
+    
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''))
+      if (values.length >= 3) {
+        knowledgeBaseData.push({
+          category: values[0],
+          description: values[1],
+          details: values[2]
+        })
+      }
+    }
+    
+    return knowledgeBaseData
+  } catch (error) {
+    console.error('CSV 匯入錯誤:', error)
+    return null
+  }
 }
 
 // 預設數據
@@ -1261,27 +1445,234 @@ export default function ReportDashboard() {
             </Button>
             <Button
               onClick={() => {
-                const data = {
-                  weeklyReports,
-                  voiceToTextData: editVoiceToTextData,
-                  knowledgeBaseData: editKnowledgeBaseData,
-                  monthlySummary
-                }
-                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
-                const url = URL.createObjectURL(blob)
-                const a = document.createElement('a')
-                a.href = url
-                a.download = `週報資料_${new Date().toISOString().split('T')[0]}.json`
-                a.click()
-                URL.revokeObjectURL(url)
+                // 匯出週報資料為 CSV
+                const weeklyReportsCSV = exportWeeklyReportsToCSV(weeklyReports)
+                const weeklyBlob = new Blob([weeklyReportsCSV], { type: 'text/csv;charset=utf-8;' })
+                const weeklyUrl = URL.createObjectURL(weeklyBlob)
+                const weeklyLink = document.createElement('a')
+                weeklyLink.href = weeklyUrl
+                weeklyLink.download = `週報資料_${new Date().toISOString().split('T')[0]}.csv`
+                weeklyLink.click()
+                URL.revokeObjectURL(weeklyUrl)
+
+                // 匯出語音轉文字資料為 CSV
+                const voiceToTextCSV = exportVoiceToTextToCSV(editVoiceToTextData)
+                const voiceBlob = new Blob([voiceToTextCSV], { type: 'text/csv;charset=utf-8;' })
+                const voiceUrl = URL.createObjectURL(voiceBlob)
+                const voiceLink = document.createElement('a')
+                voiceLink.href = voiceUrl
+                voiceLink.download = `語音轉文字統計_${new Date().toISOString().split('T')[0]}.csv`
+                voiceLink.click()
+                URL.revokeObjectURL(voiceUrl)
+
+                // 匯出知識庫資料為 CSV
+                const knowledgeBaseCSV = exportKnowledgeBaseToCSV(editKnowledgeBaseData)
+                const kbBlob = new Blob([knowledgeBaseCSV], { type: 'text/csv;charset=utf-8;' })
+                const kbUrl = URL.createObjectURL(kbBlob)
+                const kbLink = document.createElement('a')
+                kbLink.href = kbUrl
+                kbLink.download = `知識庫統計_${new Date().toISOString().split('T')[0]}.csv`
+                kbLink.click()
+                URL.revokeObjectURL(kbUrl)
+
+                alert('已匯出三個 CSV 檔案：週報資料、語音轉文字統計、知識庫統計')
               }}
               variant="outline"
               size="sm"
               className="text-blue-600 border-blue-200 hover:bg-blue-50"
             >
               <Download className="h-4 w-4 mr-2" />
-              匯出資料
+              匯出資料(CSV)
             </Button>
+                        <Button
+              onClick={() => {
+                const input = document.createElement('input')
+                input.type = 'file'
+                input.accept = '.csv'
+                input.multiple = true
+                input.onchange = (e) => {
+                  const files = (e.target as HTMLInputElement).files
+                  if (files && files.length > 0) {
+                    // 自動備份當前資料
+                    const backupData = {
+                      weeklyReports,
+                      voiceToTextData: editVoiceToTextData,
+                      knowledgeBaseData: editKnowledgeBaseData,
+                      monthlySummary,
+                      backupTime: new Date().toISOString()
+                    }
+                    const backupBlob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' })
+                    const backupUrl = URL.createObjectURL(backupBlob)
+                    const backupLink = document.createElement('a')
+                    backupLink.href = backupUrl
+                    backupLink.download = `備份資料_${new Date().toISOString().split('T')[0]}_${new Date().toISOString().split('T')[1].split('.')[0]}.json`
+                    backupLink.click()
+                    URL.revokeObjectURL(backupUrl)
+                    
+                    let processedFiles = 0
+                    const totalFiles = files.length
+                    
+                    Array.from(files).forEach((file) => {
+                      const reader = new FileReader()
+                      reader.onload = (e) => {
+                        try {
+                          let csvContent = e.target?.result as string
+                          // 移除 UTF-8 BOM 如果存在
+                          if (csvContent.charCodeAt(0) === 0xFEFF) {
+                            csvContent = csvContent.slice(1)
+                          }
+                          const fileName = file.name.toLowerCase()
+                          
+                          if (fileName.includes('週報') || fileName.includes('weekly')) {
+                            const importedWeeklyReports = importWeeklyReportsFromCSV(csvContent)
+                            if (importedWeeklyReports) {
+                              setWeeklyReports(importedWeeklyReports)
+                              localStorage.setItem('weeklyReports', JSON.stringify(importedWeeklyReports))
+                            }
+                          } else if (fileName.includes('語音') || fileName.includes('voice')) {
+                            const importedVoiceToText = importVoiceToTextFromCSV(csvContent)
+                            if (importedVoiceToText) {
+                              setEditVoiceToTextData(importedVoiceToText)
+                              localStorage.setItem('voiceToTextData', JSON.stringify(importedVoiceToText))
+                            }
+                          } else if (fileName.includes('知識庫') || fileName.includes('knowledge')) {
+                            const importedKnowledgeBase = importKnowledgeBaseFromCSV(csvContent)
+                            if (importedKnowledgeBase) {
+                              setEditKnowledgeBaseData(importedKnowledgeBase)
+                              localStorage.setItem('knowledgeBaseData', JSON.stringify(importedKnowledgeBase))
+                            }
+                          }
+                          
+                          processedFiles++
+                          if (processedFiles === totalFiles) {
+                            alert('資料匯入完成！')
+                          }
+                        } catch (error) {
+                          alert(`檔案 ${file.name} 格式錯誤，請檢查 CSV 格式。`)
+                        }
+                      }
+                      reader.readAsText(file)
+                    })
+                  }
+                }
+                input.click()
+              }}
+              variant="outline"
+              size="sm"
+              className="text-green-600 border-green-200 hover:bg-green-50"
+            >
+              <Upload className="h-4 w-4 mr-2" />
+              匯入資料(CSV)
+            </Button>
+            <Button
+              onClick={() => {
+                // 下載週報資料範本
+                const weeklyTemplate = exportWeeklyReportsToCSV([
+                  {
+                    weekRange: "範例週次",
+                    projects: [
+                      {
+                        id: "1",
+                        name: "範例專案",
+                        category: "範例類別",
+                        expectedWork: "預期工作內容",
+                        status: "completed",
+                        completion: "完成狀況描述",
+                        issues: "問題或挑戰",
+                        notes: "備註說明"
+                      }
+                    ]
+                  }
+                ])
+                const weeklyTemplateBlob = new Blob([weeklyTemplate], { type: 'text/csv;charset=utf-8;' })
+                const weeklyTemplateUrl = URL.createObjectURL(weeklyTemplateBlob)
+                const weeklyTemplateLink = document.createElement('a')
+                weeklyTemplateLink.href = weeklyTemplateUrl
+                weeklyTemplateLink.download = '週報資料範本.csv'
+                weeklyTemplateLink.click()
+                URL.revokeObjectURL(weeklyTemplateUrl)
+
+                // 下載語音轉文字範本
+                const voiceTemplate = exportVoiceToTextToCSV([
+                  { week: "範例週次", total: 0, new: 0 }
+                ])
+                const voiceTemplateBlob = new Blob([voiceTemplate], { type: 'text/csv;charset=utf-8;' })
+                const voiceTemplateUrl = URL.createObjectURL(voiceTemplateBlob)
+                const voiceTemplateLink = document.createElement('a')
+                voiceTemplateLink.href = voiceTemplateUrl
+                voiceTemplateLink.download = '語音轉文字統計範本.csv'
+                voiceTemplateLink.click()
+                URL.revokeObjectURL(voiceTemplateUrl)
+
+                // 下載知識庫範本
+                const kbTemplate = exportKnowledgeBaseToCSV([
+                  {
+                    category: "範例分類",
+                    description: "範例描述",
+                    details: "範例詳細說明"
+                  }
+                ])
+                const kbTemplateBlob = new Blob([kbTemplate], { type: 'text/csv;charset=utf-8;' })
+                const kbTemplateUrl = URL.createObjectURL(kbTemplateBlob)
+                const kbTemplateLink = document.createElement('a')
+                kbTemplateLink.href = kbTemplateUrl
+                kbTemplateLink.download = '知識庫統計範本.csv'
+                kbTemplateLink.click()
+                URL.revokeObjectURL(kbTemplateUrl)
+
+                alert('已下載三個 CSV 範本檔案：週報資料範本、語音轉文字統計範本、知識庫統計範本')
+              }}
+              variant="outline"
+              size="sm"
+              className="text-purple-600 border-purple-200 hover:bg-purple-50"
+            >
+              <FileText className="h-4 w-4 mr-2" />
+              下載範本(CSV)
+            </Button>
+          </div>
+        </div>
+
+        {/* 資料管理說明 */}
+        <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200">
+          <div className="flex items-center gap-2 mb-3">
+            <Info className="h-5 w-5 text-blue-600" />
+            <h3 className="font-semibold text-gray-800">資料管理說明</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
+            <div>
+              <h4 className="font-medium text-gray-800 mb-2">📤 匯出功能</h4>
+              <ul className="space-y-1">
+                <li>• <strong>匯出資料(CSV)</strong>：將資料匯出為三個 CSV 檔案</li>
+                <li>• <strong>下載範本(CSV)</strong>：下載標準格式的 CSV 範本檔案</li>
+                <li>• CSV 格式方便在 Excel 中編輯</li>
+                <li>• 建議定期匯出資料作為備份</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium text-gray-800 mb-2">📥 匯入功能</h4>
+              <ul className="space-y-1">
+                <li>• <strong>匯入資料(CSV)</strong>：從 CSV 檔案匯入資料（支援多檔案同時匯入）</li>
+                <li>• 支援從範本檔案開始編輯</li>
+                <li>• 匯入前會自動備份當前資料</li>
+                <li>• 根據檔案名稱自動識別資料類型</li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-3 p-3 bg-yellow-50 rounded border border-yellow-200">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-4 w-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+              <div className="text-sm text-yellow-800">
+                <strong>注意：</strong>匯入資料會覆蓋當前的所有編輯內容，請確保已備份重要資料。CSV 檔案請使用 UTF-8 編碼，並確保欄位格式正確。所有資料會自動保存到瀏覽器本地，重新整理頁面不會遺失資料。
+              </div>
+            </div>
+          </div>
+          <div className="mt-2 p-3 bg-blue-50 rounded border border-blue-200">
+            <div className="flex items-start gap-2">
+              <Info className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+              <div className="text-sm text-blue-800">
+                <strong>編碼說明：</strong>下載的 CSV 檔案已自動添加 UTF-8 BOM 標記，確保在 Excel 等軟體中正確顯示中文字符。如果仍然出現亂碼，請在 Excel 中選擇「資料」→「從文字/CSV」匯入，並選擇 UTF-8 編碼。
+              </div>
+            </div>
           </div>
         </div>
 
