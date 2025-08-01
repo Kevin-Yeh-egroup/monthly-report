@@ -694,13 +694,7 @@ const defaultWeeklyReports: WeeklyReport[] = [
 
 export default function ReportDashboard() {
   // 從 localStorage 讀取保存的資料，如果沒有則使用預設資料
-  const [weeklyReports, setWeeklyReports] = useState<WeeklyReport[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('weeklyReports')
-      return saved ? JSON.parse(saved) : defaultWeeklyReports
-    }
-    return defaultWeeklyReports
-  })
+  const [weeklyReports, setWeeklyReports] = useState<WeeklyReport[]>(defaultWeeklyReports)
   
   const [selectedWeek, setSelectedWeek] = useState<string>("7/21-7/27")
   const [activeTab, setActiveTab] = useState<string>("weekly")
@@ -777,123 +771,267 @@ export default function ReportDashboard() {
   
   // 語音轉文字辭庫編輯狀態
   const [isVoiceToTextEditing, setIsVoiceToTextEditing] = useState(false)
-  const [editVoiceToTextData, setEditVoiceToTextData] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('voiceToTextData')
-      return saved ? JSON.parse(saved) : [
-        { week: "6月", total: 170, new: 0 },
-        { week: "7/7-7/13", total: 170, new: 0 },
-        { week: "7/14-7/20", total: 203, new: 6 },
-        { week: "7/21-7/27", total: 309, new: 97 },
-        { week: "7/28-8/3", total: 350, new: 41 }
-      ]
-    }
-    return [
-      { week: "6月", total: 170, new: 0 },
-      { week: "7/7-7/13", total: 170, new: 0 },
-      { week: "7/14-7/20", total: 203, new: 6 },
-      { week: "7/21-7/27", total: 309, new: 97 },
-      { week: "7/28-8/3", total: 350, new: 41 }
-    ]
-  })
+  const [editVoiceToTextData, setEditVoiceToTextData] = useState([
+    { week: "6月", total: 170, new: 0 },
+    { week: "7/7-7/13", total: 170, new: 0 },
+    { week: "7/14-7/20", total: 203, new: 6 },
+    { week: "7/21-7/27", total: 309, new: 97 },
+    { week: "7/28-8/3", total: 350, new: 41 }
+  ])
   
   // 知識庫編輯狀態
   const [isKnowledgeBaseEditing, setIsKnowledgeBaseEditing] = useState(false)
-  const [editKnowledgeBaseData, setEditKnowledgeBaseData] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('knowledgeBaseData')
-      return saved ? JSON.parse(saved) : [
-        {
-          category: "社福資源資料庫",
-          description: "新增社福資源資料庫",
-          details: "建立完整的社福資源分類體系，包含各類補助、服務項目等"
-        },
-        {
-          category: "工讀生案例分類知識庫",
-          description: "補充135篇文章",
-          details: "涵蓋各類工讀生相關案例，提供實用的參考資料"
-        },
-        {
-          category: "新增文章",
-          description: "新增7篇文章",
-          details: "持續擴充知識庫內容，提升內容豐富度"
-        },
-        {
-          category: "上架審核",
-          description: "上架審核通過文章",
-          details: "建立內容審核機制，確保知識庫內容品質"
-        }
-      ]
+  const [editKnowledgeBaseData, setEditKnowledgeBaseData] = useState([
+    {
+      category: "社福資源資料庫",
+      description: "新增社福資源資料庫",
+      details: "建立完整的社福資源分類體系，包含各類補助、服務項目等"
+    },
+    {
+      category: "工讀生案例分類知識庫",
+      description: "補充135篇文章",
+      details: "涵蓋各類工讀生相關案例，提供實用的參考資料"
+    },
+    {
+      category: "新增文章",
+      description: "新增7篇文章",
+      details: "持續擴充知識庫內容，提升內容豐富度"
+    },
+    {
+      category: "上架審核",
+      description: "上架審核通過文章",
+      details: "建立內容審核機制，確保知識庫內容品質"
     }
-    return [
-      {
-        category: "社福資源資料庫",
-        description: "新增社福資源資料庫",
-        details: "建立完整的社福資源分類體系，包含各類補助、服務項目等"
-      },
-      {
-        category: "工讀生案例分類知識庫",
-        description: "補充135篇文章",
-        details: "涵蓋各類工讀生相關案例，提供實用的參考資料"
-      },
-      {
-        category: "新增文章",
-        description: "新增7篇文章",
-        details: "持續擴充知識庫內容，提升內容豐富度"
-      },
-      {
-        category: "上架審核",
-        description: "上架審核通過文章",
-        details: "建立內容審核機制，確保知識庫內容品質"
-      }
-    ]
-  })
+  ])
 
   // 添加調試日誌
   const handleWeekChange = (week: string) => {
     console.log("週次變更:", week)
     setSelectedWeek(week)
+    // 保存到 localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selectedWeek', week)
+    }
   }
 
   const handleTabChange = (tab: string) => {
     console.log("標籤變更:", tab)
     setActiveTab(tab)
+    // 保存到 localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('activeTab', tab)
+    }
   }
 
   const handleMonthChange = (month: string) => {
     console.log("月份變更:", month)
     setSelectedMonth(month)
+    // 保存到 localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selectedMonth', month)
+    }
     // 當月份變更時，重置週次選擇為該月份的第一週
     const weekOptions = getWeekOptions(month)
     if (weekOptions.length > 0) {
-      setSelectedWeek(weekOptions[0].value)
+      const firstWeek = weekOptions[0].value
+      setSelectedWeek(firstWeek)
+      // 保存新的週次選擇
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('selectedWeek', firstWeek)
+      }
     }
   }
 
-  // 載入保存的月度摘要資料
+  // 調試：檢查載入的資料
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedMonthlySummary = localStorage.getItem('monthlySummary')
-      const savedEditStats = localStorage.getItem('editStats')
-      const savedEditAchievements = localStorage.getItem('editAchievements')
-      const savedEditChallenges = localStorage.getItem('editChallenges')
-      const savedEditGoals = localStorage.getItem('editGoals')
+      // 調試：檢查所有保存的資料
+      console.log('=== 載入的 localStorage 資料 ===')
+      console.log('weeklyReports:', localStorage.getItem('weeklyReports'))
+      console.log('voiceToTextData:', localStorage.getItem('voiceToTextData'))
+      console.log('knowledgeBaseData:', localStorage.getItem('knowledgeBaseData'))
+      console.log('editStats:', localStorage.getItem('editStats'))
+      console.log('editAchievements:', localStorage.getItem('editAchievements'))
+      console.log('editGoals:', localStorage.getItem('editGoals'))
+      console.log('editChallenges:', localStorage.getItem('editChallenges'))
+      console.log('monthlySummary:', localStorage.getItem('monthlySummary'))
       
+      // 調試：檢查當前狀態
+      console.log('=== 當前狀態 ===')
+      console.log('selectedWeek:', selectedWeek)
+      console.log('selectedMonth:', selectedMonth)
+      console.log('weeklyReports length:', weeklyReports.length)
+      console.log('editVoiceToTextData length:', editVoiceToTextData.length)
+      console.log('editKnowledgeBaseData length:', editKnowledgeBaseData.length)
+      console.log('monthlySummary:', monthlySummary)
+    }
+  }, [])
+
+  // 自動保存編輯狀態
+  useEffect(() => {
+    if (typeof window !== 'undefined' && isEditing) {
+      localStorage.setItem('editStats', JSON.stringify(editStats))
+      localStorage.setItem('editAchievements', JSON.stringify(editAchievements))
+      localStorage.setItem('editChallenges', JSON.stringify(editChallenges))
+      localStorage.setItem('editGoals', JSON.stringify(editGoals))
+    }
+  }, [editStats, editAchievements, editChallenges, editGoals, isEditing])
+
+  // 頁面卸載前保存資料
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (typeof window !== 'undefined') {
+        // 保存所有當前資料
+        localStorage.setItem('weeklyReports', JSON.stringify(weeklyReports))
+        localStorage.setItem('voiceToTextData', JSON.stringify(editVoiceToTextData))
+        localStorage.setItem('knowledgeBaseData', JSON.stringify(editKnowledgeBaseData))
+        
+        if (monthlySummary) {
+          localStorage.setItem('monthlySummary', JSON.stringify(monthlySummary))
+        }
+        
+        if (isEditing) {
+          localStorage.setItem('editStats', JSON.stringify(editStats))
+          localStorage.setItem('editAchievements', JSON.stringify(editAchievements))
+          localStorage.setItem('editChallenges', JSON.stringify(editChallenges))
+          localStorage.setItem('editGoals', JSON.stringify(editGoals))
+        }
+        
+        if (isWeeklyEditing) {
+          localStorage.setItem('editWeeklyProjects', JSON.stringify(editWeeklyProjects))
+        }
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+  }, [weeklyReports, editVoiceToTextData, editKnowledgeBaseData, monthlySummary, isEditing, editStats, editAchievements, editChallenges, editGoals, isWeeklyEditing, editWeeklyProjects])
+
+  // 定期自動保存（每30秒）
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem('weeklyReports', JSON.stringify(weeklyReports))
+          localStorage.setItem('voiceToTextData', JSON.stringify(editVoiceToTextData))
+          localStorage.setItem('knowledgeBaseData', JSON.stringify(editKnowledgeBaseData))
+          
+          if (monthlySummary) {
+            localStorage.setItem('monthlySummary', JSON.stringify(monthlySummary))
+          }
+          
+          if (isEditing) {
+            localStorage.setItem('editStats', JSON.stringify(editStats))
+            localStorage.setItem('editAchievements', JSON.stringify(editAchievements))
+            localStorage.setItem('editChallenges', JSON.stringify(editChallenges))
+            localStorage.setItem('editGoals', JSON.stringify(editGoals))
+          }
+          
+          if (isWeeklyEditing) {
+            localStorage.setItem('editWeeklyProjects', JSON.stringify(editWeeklyProjects))
+          }
+          
+          console.log('資料已自動保存')
+        } catch (error) {
+          console.warn('自動保存失敗:', error)
+        }
+      }
+    }, 30000) // 30秒
+
+    return () => clearInterval(interval)
+  }, [weeklyReports, editVoiceToTextData, editKnowledgeBaseData, monthlySummary, isEditing, editStats, editAchievements, editChallenges, editGoals, isWeeklyEditing, editWeeklyProjects])
+
+  // 在客戶端載入時從 localStorage 恢復數據
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // 恢復週報數據
+      const savedWeeklyReports = localStorage.getItem('weeklyReports')
+      if (savedWeeklyReports) {
+        setWeeklyReports(JSON.parse(savedWeeklyReports))
+      }
+
+      // 恢復導航狀態
+      const savedSelectedWeek = localStorage.getItem('selectedWeek')
+      if (savedSelectedWeek) {
+        setSelectedWeek(savedSelectedWeek)
+      }
+
+      const savedActiveTab = localStorage.getItem('activeTab')
+      if (savedActiveTab) {
+        setActiveTab(savedActiveTab)
+      }
+
+      const savedSelectedMonth = localStorage.getItem('selectedMonth')
+      if (savedSelectedMonth) {
+        setSelectedMonth(savedSelectedMonth)
+      }
+
+      // 恢復月度摘要
+      const savedMonthlySummary = localStorage.getItem('monthlySummary')
       if (savedMonthlySummary) {
         setMonthlySummary(JSON.parse(savedMonthlySummary))
       }
+
+      // 恢復編輯狀態
+      const savedIsEditing = localStorage.getItem('isEditing')
+      if (savedIsEditing === 'true') {
+        setIsEditing(true)
+      }
+
+      const savedIsWeeklyEditing = localStorage.getItem('isWeeklyEditing')
+      if (savedIsWeeklyEditing === 'true') {
+        setIsWeeklyEditing(true)
+      }
+
+      const savedIsVoiceToTextEditing = localStorage.getItem('isVoiceToTextEditing')
+      if (savedIsVoiceToTextEditing === 'true') {
+        setIsVoiceToTextEditing(true)
+      }
+
+      const savedIsKnowledgeBaseEditing = localStorage.getItem('isKnowledgeBaseEditing')
+      if (savedIsKnowledgeBaseEditing === 'true') {
+        setIsKnowledgeBaseEditing(true)
+      }
+
+      // 恢復編輯數據
+      const savedEditStats = localStorage.getItem('editStats')
       if (savedEditStats) {
         setEditStats(JSON.parse(savedEditStats))
       }
+
+      const savedEditAchievements = localStorage.getItem('editAchievements')
       if (savedEditAchievements) {
         setEditAchievements(JSON.parse(savedEditAchievements))
       }
-      if (savedEditChallenges) {
-        setEditChallenges(JSON.parse(savedEditChallenges))
-      }
+
+      const savedEditGoals = localStorage.getItem('editGoals')
       if (savedEditGoals) {
         setEditGoals(JSON.parse(savedEditGoals))
       }
+
+      const savedEditChallenges = localStorage.getItem('editChallenges')
+      if (savedEditChallenges) {
+        setEditChallenges(JSON.parse(savedEditChallenges))
+      }
+
+      const savedEditWeeklyProjects = localStorage.getItem('editWeeklyProjects')
+      if (savedEditWeeklyProjects) {
+        setEditWeeklyProjects(JSON.parse(savedEditWeeklyProjects))
+      }
+
+      const savedEditVoiceToTextData = localStorage.getItem('voiceToTextData')
+      if (savedEditVoiceToTextData) {
+        setEditVoiceToTextData(JSON.parse(savedEditVoiceToTextData))
+      }
+
+      const savedEditKnowledgeBaseData = localStorage.getItem('knowledgeBaseData')
+      if (savedEditKnowledgeBaseData) {
+        setEditKnowledgeBaseData(JSON.parse(savedEditKnowledgeBaseData))
+      }
+
+      console.log('數據已從 localStorage 恢復')
     }
   }, [])
 
@@ -1054,7 +1192,7 @@ export default function ReportDashboard() {
         localStorage.setItem('editGoals', JSON.stringify(editGoals))
       }
       
-      setIsEditing(false)
+      setEditingState(false)
     }
   }
 
@@ -1071,14 +1209,24 @@ export default function ReportDashboard() {
       setEditChallenges([...monthlySummary.workChallenges])
       setEditGoals([...monthlySummary.nextMonthGoals])
     }
-    setIsEditing(false)
+    setEditingState(false)
+  }
+
+  // 設置編輯狀態並保存到 localStorage
+  const setEditingState = (isEditing: boolean, isWeeklyEditing: boolean = false) => {
+    setIsEditing(isEditing)
+    setIsWeeklyEditing(isWeeklyEditing)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('isEditing', isEditing.toString())
+      localStorage.setItem('isWeeklyEditing', isWeeklyEditing.toString())
+    }
   }
 
   // 週報編輯功能
   const handleWeeklyEdit = () => {
     if (currentWeekData) {
       setEditWeeklyProjects([...currentWeekData.projects])
-      setIsWeeklyEditing(true)
+      setEditingState(false, true)
     }
   }
 
@@ -1096,24 +1244,34 @@ export default function ReportDashboard() {
     }
     
     setWeeklyReports(updatedReports)
-    setIsWeeklyEditing(false)
+    setEditingState(false, false)
   }
 
   const handleWeeklyCancel = () => {
     if (currentWeekData) {
       setEditWeeklyProjects([...currentWeekData.projects])
     }
-    setIsWeeklyEditing(false)
+    setEditingState(false, false)
   }
 
   const updateWeeklyProject = (projectId: string, field: keyof Project, value: string) => {
-    setEditWeeklyProjects(prev => 
-      prev.map(project => 
+    setEditWeeklyProjects(prev => {
+      const updated = prev.map(project => 
         project.id === projectId 
           ? { ...project, [field]: value }
           : project
       )
-    )
+      // 自動保存到 localStorage
+      if (typeof window !== 'undefined') {
+        const updatedReports = weeklyReports.map(report => 
+          report.weekRange === selectedWeek 
+            ? { ...report, projects: updated }
+            : report
+        )
+        localStorage.setItem('weeklyReports', JSON.stringify(updatedReports))
+      }
+      return updated
+    })
   }
 
   const addWeeklyProject = () => {
@@ -1127,11 +1285,35 @@ export default function ReportDashboard() {
       issues: "",
       notes: ""
     }
-    setEditWeeklyProjects([...editWeeklyProjects, newProject])
+    setEditWeeklyProjects(prev => {
+      const updated = [...prev, newProject]
+      // 自動保存到 localStorage
+      if (typeof window !== 'undefined') {
+        const updatedReports = weeklyReports.map(report => 
+          report.weekRange === selectedWeek 
+            ? { ...report, projects: updated }
+            : report
+        )
+        localStorage.setItem('weeklyReports', JSON.stringify(updatedReports))
+      }
+      return updated
+    })
   }
 
   const removeWeeklyProject = (projectId: string) => {
-    setEditWeeklyProjects(prev => prev.filter(project => project.id !== projectId))
+    setEditWeeklyProjects(prev => {
+      const updated = prev.filter(project => project.id !== projectId)
+      // 自動保存到 localStorage
+      if (typeof window !== 'undefined') {
+        const updatedReports = weeklyReports.map(report => 
+          report.weekRange === selectedWeek 
+            ? { ...report, projects: updated }
+            : report
+        )
+        localStorage.setItem('weeklyReports', JSON.stringify(updatedReports))
+      }
+      return updated
+    })
   }
 
   // 月度摘要重新整理功能
@@ -1235,6 +1417,9 @@ export default function ReportDashboard() {
   // 語音轉文字辭庫編輯功能
   const handleVoiceToTextEdit = () => {
     setIsVoiceToTextEditing(true)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('isVoiceToTextEditing', 'true')
+    }
   }
 
   const handleVoiceToTextSave = () => {
@@ -1243,6 +1428,9 @@ export default function ReportDashboard() {
       localStorage.setItem('voiceToTextData', JSON.stringify(editVoiceToTextData))
     }
     setIsVoiceToTextEditing(false)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('isVoiceToTextEditing', 'false')
+    }
   }
 
   const handleVoiceToTextCancel = () => {
@@ -1254,27 +1442,52 @@ export default function ReportDashboard() {
       { week: "7/28-8/3", total: 350, new: 41 }
     ])
     setIsVoiceToTextEditing(false)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('isVoiceToTextEditing', 'false')
+    }
   }
 
   const updateVoiceToTextData = (index: number, field: 'week' | 'total' | 'new', value: string | number) => {
-    setEditVoiceToTextData(prev => 
-      prev.map((item, i) => 
+    setEditVoiceToTextData(prev => {
+      const updated = prev.map((item, i) => 
         i === index ? { ...item, [field]: value } : item
       )
-    )
+      // 自動保存到 localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('voiceToTextData', JSON.stringify(updated))
+      }
+      return updated
+    })
   }
 
   const addVoiceToTextWeek = () => {
-    setEditVoiceToTextData(prev => [...prev, { week: "", total: 0, new: 0 }])
+    setEditVoiceToTextData(prev => {
+      const updated = [...prev, { week: "", total: 0, new: 0 }]
+      // 自動保存到 localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('voiceToTextData', JSON.stringify(updated))
+      }
+      return updated
+    })
   }
 
   const removeVoiceToTextWeek = (index: number) => {
-    setEditVoiceToTextData(prev => prev.filter((_, i) => i !== index))
+    setEditVoiceToTextData(prev => {
+      const updated = prev.filter((_, i) => i !== index)
+      // 自動保存到 localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('voiceToTextData', JSON.stringify(updated))
+      }
+      return updated
+    })
   }
 
   // 知識庫編輯功能
   const handleKnowledgeBaseEdit = () => {
     setIsKnowledgeBaseEditing(true)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('isKnowledgeBaseEditing', 'true')
+    }
   }
 
   const handleKnowledgeBaseSave = () => {
@@ -1283,6 +1496,9 @@ export default function ReportDashboard() {
       localStorage.setItem('knowledgeBaseData', JSON.stringify(editKnowledgeBaseData))
     }
     setIsKnowledgeBaseEditing(false)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('isKnowledgeBaseEditing', 'false')
+    }
   }
 
   const handleKnowledgeBaseCancel = () => {
@@ -1309,22 +1525,44 @@ export default function ReportDashboard() {
       }
     ])
     setIsKnowledgeBaseEditing(false)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('isKnowledgeBaseEditing', 'false')
+    }
   }
 
   const updateKnowledgeBaseData = (index: number, field: 'category' | 'description' | 'details', value: string) => {
-    setEditKnowledgeBaseData(prev => 
-      prev.map((item, i) => 
+    setEditKnowledgeBaseData(prev => {
+      const updated = prev.map((item, i) => 
         i === index ? { ...item, [field]: value } : item
       )
-    )
+      // 自動保存到 localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('knowledgeBaseData', JSON.stringify(updated))
+      }
+      return updated
+    })
   }
 
   const addKnowledgeBaseItem = () => {
-    setEditKnowledgeBaseData(prev => [...prev, { category: "", description: "", details: "" }])
+    setEditKnowledgeBaseData(prev => {
+      const updated = [...prev, { category: "", description: "", details: "" }]
+      // 自動保存到 localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('knowledgeBaseData', JSON.stringify(updated))
+      }
+      return updated
+    })
   }
 
   const removeKnowledgeBaseItem = (index: number) => {
-    setEditKnowledgeBaseData(prev => prev.filter((_, i) => i !== index))
+    setEditKnowledgeBaseData(prev => {
+      const updated = prev.filter((_, i) => i !== index)
+      // 自動保存到 localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('knowledgeBaseData', JSON.stringify(updated))
+      }
+      return updated
+    })
   }
 
   // 添加成就
@@ -1392,25 +1630,43 @@ export default function ReportDashboard() {
 
   // 獲取顯示的成就
   const getDisplayAchievements = () => {
+    // 如果有編輯的成就，優先顯示編輯的成就
+    if (editAchievements.length > 0) {
+      return editAchievements
+    }
+    // 如果有保存的手動成就，顯示手動成就
     if (monthlySummary?.manualAchievements) {
       return monthlySummary.manualAchievements
     }
+    // 最後顯示預設成就
     return monthlySummary?.keyAchievements || []
   }
 
   // 獲取顯示的目標
   const getDisplayGoals = () => {
+    // 如果有編輯的目標，優先顯示編輯的目標
+    if (editGoals.length > 0) {
+      return editGoals
+    }
+    // 如果有保存的手動目標，顯示手動目標
     if (monthlySummary?.manualGoals) {
       return monthlySummary.manualGoals
     }
+    // 最後顯示預設目標
     return monthlySummary?.nextMonthGoals || []
   }
 
   // 獲取顯示的困難或挑戰
   const getDisplayChallenges = () => {
+    // 如果有編輯的挑戰，優先顯示編輯的挑戰
+    if (editChallenges.length > 0) {
+      return editChallenges
+    }
+    // 如果有保存的手動挑戰，顯示手動挑戰
     if (monthlySummary?.manualChallenges) {
       return monthlySummary.manualChallenges
     }
+    // 最後顯示預設挑戰
     return monthlySummary?.workChallenges || []
   }
 
@@ -1442,6 +1698,73 @@ export default function ReportDashboard() {
             >
               <RefreshCw className="h-4 w-4 mr-2" />
               重置資料
+            </Button>
+            <Button
+              onClick={() => {
+                console.log('=== 當前 localStorage 內容 ===')
+                console.log('weeklyReports:', localStorage.getItem('weeklyReports'))
+                console.log('voiceToTextData:', localStorage.getItem('voiceToTextData'))
+                console.log('knowledgeBaseData:', localStorage.getItem('knowledgeBaseData'))
+                console.log('editStats:', localStorage.getItem('editStats'))
+                console.log('editAchievements:', localStorage.getItem('editAchievements'))
+                console.log('editGoals:', localStorage.getItem('editGoals'))
+                console.log('editChallenges:', localStorage.getItem('editChallenges'))
+                console.log('monthlySummary:', localStorage.getItem('monthlySummary'))
+                
+                console.log('=== 當前狀態 ===')
+                console.log('monthlySummary state:', monthlySummary)
+                console.log('editAchievements state:', editAchievements)
+                console.log('getDisplayAchievements():', getDisplayAchievements())
+                console.log('isEditing:', isEditing)
+                
+                alert('已將詳細資訊輸出到瀏覽器控制台，請按 F12 查看')
+              }}
+              variant="outline"
+              size="sm"
+              className="text-orange-600 border-orange-200 hover:bg-orange-50"
+            >
+              <Info className="h-4 w-4 mr-2" />
+              檢查資料
+            </Button>
+            <Button
+              onClick={() => {
+                // 強制保存所有當前資料
+                if (typeof window !== 'undefined') {
+                  localStorage.setItem('weeklyReports', JSON.stringify(weeklyReports))
+                  localStorage.setItem('voiceToTextData', JSON.stringify(editVoiceToTextData))
+                  localStorage.setItem('knowledgeBaseData', JSON.stringify(editKnowledgeBaseData))
+                  
+                  if (monthlySummary) {
+                    localStorage.setItem('monthlySummary', JSON.stringify(monthlySummary))
+                  }
+                  
+                  localStorage.setItem('editStats', JSON.stringify(editStats))
+                  localStorage.setItem('editAchievements', JSON.stringify(editAchievements))
+                  localStorage.setItem('editChallenges', JSON.stringify(editChallenges))
+                  localStorage.setItem('editGoals', JSON.stringify(editGoals))
+                  
+                  alert('已強制保存所有資料到 localStorage')
+                }
+              }}
+              variant="outline"
+              size="sm"
+              className="text-blue-600 border-blue-200 hover:bg-blue-50"
+            >
+              <Save className="h-4 w-4 mr-2" />
+              強制保存
+            </Button>
+            <Button
+              onClick={() => {
+                // 手動觸發月度摘要計算
+                handleRefreshMonthlySummary()
+                alert('已重新計算月度摘要')
+              }}
+              variant="outline"
+              size="sm"
+              className="text-purple-600 border-purple-200 hover:bg-purple-50"
+            >
+              <RefreshCw className="h-4 w-4 mr-2" />
+              重新計算摘要
             </Button>
             <Button
               onClick={() => {
@@ -1634,9 +1957,15 @@ export default function ReportDashboard() {
 
         {/* 資料管理說明 */}
         <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200">
-          <div className="flex items-center gap-2 mb-3">
-            <Info className="h-5 w-5 text-blue-600" />
-            <h3 className="font-semibold text-gray-800">資料管理說明</h3>
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <Info className="h-5 w-5 text-blue-600" />
+              <h3 className="font-semibold text-gray-800">資料管理說明</h3>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-green-600">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span>自動保存已啟用</span>
+            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
             <div>
@@ -1662,7 +1991,15 @@ export default function ReportDashboard() {
             <div className="flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-yellow-600 mt-0.5 flex-shrink-0" />
               <div className="text-sm text-yellow-800">
-                <strong>注意：</strong>匯入資料會覆蓋當前的所有編輯內容，請確保已備份重要資料。CSV 檔案請使用 UTF-8 編碼，並確保欄位格式正確。所有資料會自動保存到瀏覽器本地，重新整理頁面不會遺失資料。
+                <strong>注意：</strong>匯入資料會覆蓋當前的所有編輯內容，請確保已備份重要資料。CSV 檔案請使用 UTF-8 編碼，並確保欄位格式正確。
+              </div>
+            </div>
+          </div>
+          <div className="mt-2 p-3 bg-green-50 rounded border border-green-200">
+            <div className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+              <div className="text-sm text-green-800">
+                <strong>自動保存功能：</strong>所有編輯內容會自動保存到瀏覽器本地儲存，包括即時保存、定期保存（每30秒）和頁面關閉前保存。重新整理頁面後資料不會遺失，請放心編輯。
               </div>
             </div>
           </div>
@@ -2002,7 +2339,7 @@ export default function ReportDashboard() {
                               重新整理
                             </Button>
                             <Button
-                              onClick={() => setIsEditing(true)}
+                              onClick={() => setEditingState(true)}
                               variant="outline"
                               size="sm"
                               className="text-white border-white hover:bg-white hover:text-red-600"
