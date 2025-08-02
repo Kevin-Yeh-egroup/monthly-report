@@ -1,0 +1,15 @@
+{
+    "terminal.integrated.sendKeybindingsToShell": true,
+    "editor.acceptSuggestionOnEnter": "on",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": false
+    },
+    "editor.tabCompletion": "on",
+    "editor.wordBasedSuggestions": "on",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.cursorBlinking": "solid",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "workbench.action.enableProposedApi": true
+}

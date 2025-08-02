@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ctrl 鍵測試工具</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-area {
+            border: 2px solid #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            min-height: 100px;
+            background-color: #fafafa;
+        }
+        .key-log {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .shortcut-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .shortcut-item {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Ctrl 鍵測試工具</h1>
+        <p>這個工具可以幫助您測試 Ctrl 鍵組合是否正常工作。</p>
+        
+        <div class="status info">
+            <strong>使用說明：</strong> 在下面的測試區域中輸入文字，然後嘗試使用各種 Ctrl 快捷鍵。
+        </div>
+
+        <div class="test-area" id="testArea" contenteditable="true">
+            請在這裡輸入一些文字來測試 Ctrl 快捷鍵...
+        </div>
+
+        <div class="status" id="status">等待測試...</div>
+
+        <h3>測試的快捷鍵：</h3>
+        <div class="shortcut-list">
+            <div class="shortcut-item">Ctrl + C (複製)</div>
+            <div class="shortcut-item">Ctrl + V (貼上)</div>
+            <div class="shortcut-item">Ctrl + X (剪下)</div>
+            <div class="shortcut-item">Ctrl + Z (復原)</div>
+            <div class="shortcut-item">Ctrl + A (全選)</div>
+            <div class="shortcut-item">Ctrl + F (搜尋)</div>
+            <div class="shortcut-item">Ctrl + B (粗體)</div>
+            <div class="shortcut-item">Ctrl + I (斜體)</div>
+        </div>
+
+        <button onclick="clearLog()">清除日誌</button>
+        <button onclick="testCopyPaste()">測試複製貼上</button>
+        <button onclick="testSelectAll()">測試全選</button>
+
+        <h3>按鍵日誌：</h3>
+        <div class="key-log" id="keyLog"></div>
+    </div>
+
+    <script>
+        const testArea = document.getElementById('testArea');
+        const status = document.getElementById('status');
+        const keyLog = document.getElementById('keyLog');
+        let keyHistory = [];
+
+        // 監聽鍵盤事件
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+            const ctrl = event.ctrlKey;
+            const shift = event.shiftKey;
+            const alt = event.altKey;
+            
+            let keyCombo = '';
+            if (ctrl) keyCombo += 'Ctrl + ';
+            if (shift) keyCombo += 'Shift + ';
+            if (alt) keyCombo += 'Alt + ';
+            keyCombo += key.toUpperCase();
+
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${keyCombo}`;
+            
+            keyHistory.push(logEntry);
+            updateKeyLog();
+            
+            // 更新狀態
+            if (ctrl) {
+                status.textContent = `檢測到 Ctrl 組合鍵: ${keyCombo}`;
+                status.className = 'status success';
+            } else {
+                status.textContent = `按下: ${keyCombo}`;
+                status.className = 'status info';
+            }
+
+            // 測試特定快捷鍵
+            testSpecificShortcuts(event);
+        });
+
+        function updateKeyLog() {
+            keyLog.innerHTML = keyHistory.slice(-10).join('<br>');
+            keyLog.scrollTop = keyLog.scrollHeight;
+        }
+
+        function clearLog() {
+            keyHistory = [];
+            updateKeyLog();
+            status.textContent = '日誌已清除';
+            status.className = 'status info';
+        }
+
+        function testSpecificShortcuts(event) {
+            if (event.ctrlKey) {
+                switch(event.key.toLowerCase()) {
+                    case 'c':
+                        status.textContent = '✅ Ctrl + C 正常工作 (複製)';
+                        status.className = 'status success';
+                        break;
+                    case 'v':
+                        status.textContent = '✅ Ctrl + V 正常工作 (貼上)';
+                        status.className = 'status success';
+                        break;
+                    case 'x':
+                        status.textContent = '✅ Ctrl + X 正常工作 (剪下)';
+                        status.className = 'status success';
+                        break;
+                    case 'z':
+                        status.textContent = '✅ Ctrl + Z 正常工作 (復原)';
+                        status.className = 'status success';
+                        break;
+                    case 'a':
+                        status.textContent = '✅ Ctrl + A 正常工作 (全選)';
+                        status.className = 'status success';
+                        break;
+                    case 'f':
+                        status.textContent = '✅ Ctrl + F 正常工作 (搜尋)';
+                        status.className = 'status success';
+                        break;
+                }
+            }
+        }
+
+        function testCopyPaste() {
+            testArea.focus();
+            testArea.select();
+            status.textContent = '請嘗試按 Ctrl + C 複製，然後按 Ctrl + V 貼上';
+            status.className = 'status info';
+        }
+
+        function testSelectAll() {
+            testArea.focus();
+            status.textContent = '請嘗試按 Ctrl + A 全選文字';
+            status.className = 'status info';
+        }
+
+        // 檢測瀏覽器支援
+        window.addEventListener('load', function() {
+            const userAgent = navigator.userAgent;
+            const isChrome = userAgent.includes('Chrome');
+            const isFirefox = userAgent.includes('Firefox');
+            const isEdge = userAgent.includes('Edge');
+            
+            let browserInfo = '';
+            if (isChrome) browserInfo = 'Chrome';
+            else if (isFirefox) browserInfo = 'Firefox';
+            else if (isEdge) browserInfo = 'Edge';
+            else browserInfo = '其他瀏覽器';
+            
+            console.log(`檢測到瀏覽器: ${browserInfo}`);
+            console.log(`User Agent: ${userAgent}`);
+        });
+    </script>
+</body>
+</html> 
