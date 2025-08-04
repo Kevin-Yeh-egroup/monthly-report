@@ -1053,7 +1053,7 @@ export default function ReportDashboard() {
       pendingProjects: allProjects.filter(p => p.status === "pending").length,
       keyAchievements: [
         {
-          title: "知識庫文章上架",
+          title: "語音轉文字功能優化",
           description: "技術：泰元，管理：先博，合作：小編、工讀生",
           details: [
             "辭庫從6月的170個擴充至7月底的350個，淨成長180個。",
@@ -1393,7 +1393,7 @@ export default function ReportDashboard() {
       pendingProjects: allProjects.filter(p => p.status === "pending").length,
       keyAchievements: [
         {
-          title: "知識庫文章上架",
+          title: "語音轉文字功能優化",
           description: "技術：泰元，管理：先博，合作：小編、工讀生",
           details: [
             "辭庫從6月的170個擴充至7月底的350個，淨成長180個。",
