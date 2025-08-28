@@ -690,15 +690,175 @@ const defaultWeeklyReports: WeeklyReport[] = [
       },
     ],
   },
+  // 8月份資料
+  {
+    weekRange: "8/4-8/10",
+    projects: [
+      {
+        id: "august_1",
+        name: "語音轉文字實習生測試",
+        category: "語音轉文字",
+        expectedWork: "測試Gemini 2.5 flash版本",
+        status: "completed",
+        completion: "工讀生本週完成14篇語音轉文字測試，總共完成45篇",
+      },
+      {
+        id: "august_2",
+        name: "課程摘要確認",
+        category: "語音轉文字",
+        expectedWork: "讓Ivy確認的課程摘要",
+        status: "completed",
+        completion: "共68篇，新增19篇",
+      },
+      {
+        id: "august_3",
+        name: "自定義辭庫更新",
+        category: "語音轉文字",
+        expectedWork: "辭庫維護與擴充",
+        status: "completed",
+        completion: "共350個，本週新增41個",
+      },
+      {
+        id: "august_4",
+        name: "財務試算模擬器工具開發",
+        category: "財務試算模擬器/V0",
+        expectedWork: "新增工具功能",
+        status: "completed",
+        completion: "7月新增12項工具",
+      },
+      {
+        id: "august_5",
+        name: "知識庫管理",
+        category: "知識庫",
+        expectedWork: "新增資料庫內容",
+        status: "completed",
+        completion: "新增社福資源資料庫",
+      },
+      {
+        id: "august_6",
+        name: "個人財務健康檢測報告",
+        category: "個人財務健康檢測報告",
+        expectedWork: "定義指標、做出呈現樣式",
+        status: "completed",
+        completion: "完成指標定義、呈現樣式、對答式問句延伸",
+      },
+    ],
+  },
+  {
+    weekRange: "8/11-8/17",
+    projects: [
+      {
+        id: "august_7",
+        name: "語音轉文字實習生測試",
+        category: "語音轉文字",
+        expectedWork: "測試Gemini 2.5 flash版本",
+        status: "completed",
+        completion: "工讀生本週完成11篇語音轉文字測試，總共完成73篇",
+      },
+      {
+        id: "august_8",
+        name: "課程摘要確認",
+        category: "語音轉文字",
+        expectedWork: "讓Ivy確認的課程摘要",
+        status: "completed",
+        completion: "共69篇，新增1篇",
+      },
+      {
+        id: "august_9",
+        name: "自定義辭庫更新",
+        category: "語音轉文字",
+        expectedWork: "辭庫維護與擴充",
+        status: "completed",
+        completion: "共361個辭彙",
+      },
+      {
+        id: "august_10",
+        name: "財務試算模擬器開發",
+        category: "財務試算模擬器/V0",
+        expectedWork: "功能開發測試",
+        status: "completed",
+        completion: "本週製作1項，工讀生雅筑加入測試",
+      },
+      {
+        id: "august_11",
+        name: "知識庫文章補充",
+        category: "知識庫",
+        expectedWork: "補充文章內容",
+        status: "completed",
+        completion: "關係人入監、親子領域完成，文章共757篇",
+      },
+      {
+        id: "august_12",
+        name: "教育訓練專案",
+        category: "新增專案",
+        expectedWork: "工讀生教育訓練、星展基金會訓練",
+        status: "completed",
+        completion: "制定教育訓練計畫，完成訓練大綱及簡報製作",
+      },
+    ],
+  },
+  {
+    weekRange: "8/18-8/24",
+    projects: [
+      {
+        id: "august_13",
+        name: "語音轉文字持續測試",
+        category: "語音轉文字",
+        expectedWork: "課程摘要優化",
+        status: "completed",
+        completion: "共72篇，新增3篇",
+      },
+      {
+        id: "august_14",
+        name: "自定義辭庫擴充",
+        category: "語音轉文字",
+        expectedWork: "辭庫維護與擴充",
+        status: "completed",
+        completion: "共393個辭彙",
+      },
+      {
+        id: "august_15",
+        name: "財務試算模擬器優化",
+        category: "財務試算模擬器/V0",
+        expectedWork: "功能優化",
+        status: "completed",
+        completion: "8項小工具修正及上架準備",
+      },
+      {
+        id: "august_16",
+        name: "知識庫品質提升",
+        category: "知識庫",
+        expectedWork: "文章審核與檢查",
+        status: "completed",
+        completion: "同志領域12篇完成，初步審核工讀生生成文章",
+      },
+      {
+        id: "august_17",
+        name: "電子報製作",
+        category: "知識庫",
+        expectedWork: "電子報第一期",
+        status: "completed",
+        completion: "電子報第一期初稿完成，內容確認中",
+      },
+      {
+        id: "august_18",
+        name: "2025 IT Matters AI Selected獎",
+        category: "新增專案",
+        expectedWork: "資料整理蒐集",
+        status: "in-progress",
+        completion: "已指定主要窗口，資料整理蒐集進行中",
+      },
+    ],
+  },
 ]
 
 export default function ReportDashboard() {
   // 從 localStorage 讀取保存的資料，如果沒有則使用預設資料
   const [weeklyReports, setWeeklyReports] = useState<WeeklyReport[]>(defaultWeeklyReports)
   
-  const [selectedWeek, setSelectedWeek] = useState<string>("7/21-7/27")
+  const [selectedWeek, setSelectedWeek] = useState<string>("8/4-8/10")
   const [activeTab, setActiveTab] = useState<string>("weekly")
-  const [selectedMonth, setSelectedMonth] = useState<string>("2025-07")
+  const [selectedMonth, setSelectedMonth] = useState<string>("2025-08")
   const [monthlySummary, setMonthlySummary] = useState<MonthlySummary | null>(null)
   
   // 月份選項
@@ -776,7 +936,10 @@ export default function ReportDashboard() {
     { week: "7/7-7/13", total: 170, new: 0 },
     { week: "7/14-7/20", total: 203, new: 6 },
     { week: "7/21-7/27", total: 309, new: 97 },
-    { week: "7/28-8/3", total: 350, new: 41 }
+    { week: "7/28-8/3", total: 350, new: 41 },
+    { week: "8/4-8/10", total: 350, new: 0 },
+    { week: "8/11-8/17", total: 361, new: 11 },
+    { week: "8/18-8/24", total: 393, new: 32 }
   ])
   
   // 知識庫編輯狀態
@@ -1547,7 +1710,10 @@ export default function ReportDashboard() {
       { week: "7/7-7/13", total: 170, new: 0 },
       { week: "7/14-7/20", total: 203, new: 6 },
       { week: "7/21-7/27", total: 309, new: 97 },
-      { week: "7/28-8/3", total: 350, new: 41 }
+      { week: "7/28-8/3", total: 350, new: 41 },
+      { week: "8/4-8/10", total: 350, new: 0 },
+      { week: "8/11-8/17", total: 361, new: 11 },
+      { week: "8/18-8/24", total: 393, new: 32 }
     ])
     setIsVoiceToTextEditing(false)
     if (typeof window !== 'undefined') {
