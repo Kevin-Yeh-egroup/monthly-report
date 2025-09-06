@@ -153,7 +153,7 @@ const saveToLocalStorage = (key: string, data: any) => {
 
 #### 動態標題更新
 - **月度統計**：`{selectedMonth} 月度統計`
-- **七月份執行狀況**：`{selectedMonth} 月份達成的重要成果`
+- **八月份執行狀況**：`{selectedMonth} 月份達成的重要成果`
 - **下月目標**：智能顯示下個月的目標時間
 
 ### 改進效果

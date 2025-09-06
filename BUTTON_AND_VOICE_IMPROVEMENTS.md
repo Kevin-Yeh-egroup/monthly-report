@@ -28,7 +28,7 @@
    - 樣式：`text-white border-white hover:bg-white hover:text-gray-600 font-medium`
 
 4. **添加按鈕**
-   - 位置：七月份執行狀況和下月目標卡片
+   - 位置：八月份執行狀況和下月目標卡片
    - 樣式：`text-white border-white hover:bg-white hover:text-red-600 font-medium`
 
 ### 改進效果
