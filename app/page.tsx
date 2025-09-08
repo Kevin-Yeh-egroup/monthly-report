@@ -932,12 +932,12 @@ export default function ReportDashboard() {
   // 語音轉文字辭庫編輯狀態
   const [isVoiceToTextEditing, setIsVoiceToTextEditing] = useState(false)
   const [editVoiceToTextData, setEditVoiceToTextData] = useState([
-    { week: "7月底", total: 350, new: 0 },
+    { week: "7月", total: 350, new: 0 },
     { week: "8/4-8/10", total: 350, new: 0 },
     { week: "8/11-8/17", total: 361, new: 11 },
     { week: "8/18-8/24", total: 393, new: 32 },
     { week: "8/25-8/31", total: 644, new: 251 },
-    { week: "9/1-9/5", total: 798, new: 154 }
+    { week: "9/1-9/7", total: 798, new: 154 }
   ])
   
   // 知識庫編輯狀態
@@ -1192,17 +1192,10 @@ export default function ReportDashboard() {
         setEditWeeklyProjects(JSON.parse(savedEditWeeklyProjects))
       }
 
-      // 強制使用最新的語音轉文字數據
-      const latestVoiceToTextData = [
-        { week: "7月底", total: 350, new: 0 },
-        { week: "8/4-8/10", total: 350, new: 0 },
-        { week: "8/11-8/17", total: 361, new: 11 },
-        { week: "8/18-8/24", total: 393, new: 32 },
-        { week: "8/25-8/31", total: 644, new: 251 },
-        { week: "9/1-9/5", total: 798, new: 154 }
-      ]
-      setEditVoiceToTextData(latestVoiceToTextData)
-      localStorage.setItem('voiceToTextData', JSON.stringify(latestVoiceToTextData))
+      const savedEditVoiceToTextData = localStorage.getItem('voiceToTextData')
+      if (savedEditVoiceToTextData) {
+        setEditVoiceToTextData(JSON.parse(savedEditVoiceToTextData))
+      }
 
       const savedEditKnowledgeBaseData = localStorage.getItem('knowledgeBaseData')
       if (savedEditKnowledgeBaseData) {
@@ -1298,22 +1291,21 @@ export default function ReportDashboard() {
       ],
       workChallenges: [
         {
-          title: "產出內容被退回好幾次",
-          description: "過於依賴AI、沒有掌握好該不同類型文件需要的角度與內容需求",
+          title: "原住民領域文章補充進度較慢",
+          description: "原住民領域文章僅完成2/12篇，需要持續補充中",
           details: [
-            "1. 思考此工作內容背後的動機、需求",
-            "2. 在AI生成後，需在留意與前面思考的內容是否符合，是否偏題",
-            "3. 將工作經驗拆解並進行紀錄",
-            "4. 做完可利用AI重新檢查"
+            "1. 原住民領域文章：2/12篇完成，持續補充中",
+            "2. 工讀生領域與事件引導式問答資訊蒐集整理進行中",
+            "3. 雅筑：創業、醫療需求者領域文章製作中",
+            "4. 需要加強原住民領域的內容深度與廣度"
           ]
         }
       ],
       nextMonthGoals: [
-        "好理家在宣傳、增加閱讀數及使用數",
-        "逐字稿正確率測試",
-        "小工具修正與試做",
-        "引導式問答資訊蒐集測試",
-        "家庭經濟圖譜及家系圖測試"
+        "持續完善原住民領域文章補充",
+        "深化工讀生實際產出成果",
+        "優化個人財務健康檢測系統使用體驗",
+        "推進IT Matters AI Selected獎後續流程"
       ]
     }
     
@@ -1624,22 +1616,21 @@ export default function ReportDashboard() {
       ],
       workChallenges: [
         {
-          title: "產出內容被退回好幾次",
-          description: "過於依賴AI、沒有掌握好該不同類型文件需要的角度與內容需求",
+          title: "原住民領域文章補充進度較慢",
+          description: "原住民領域文章僅完成2/12篇，需要持續補充中",
           details: [
-            "1. 思考此工作內容背後的動機、需求",
-            "2. 在AI生成後，需在留意與前面思考的內容是否符合，是否偏題",
-            "3. 將工作經驗拆解並進行紀錄",
-            "4. 做完可利用AI重新檢查"
+            "1. 原住民領域文章：2/12篇完成，持續補充中",
+            "2. 工讀生領域與事件引導式問答資訊蒐集整理進行中",
+            "3. 雅筑：創業、醫療需求者領域文章製作中",
+            "4. 需要加強原住民領域的內容深度與廣度"
           ]
         }
       ],
       nextMonthGoals: [
-        "好理家在宣傳、增加閱讀數及使用數",
-        "逐字稿正確率測試",
-        "小工具修正與試做",
-        "引導式問答資訊蒐集測試",
-        "家庭經濟圖譜及家系圖測試"
+        "持續完善原住民領域文章補充",
+        "深化工讀生實際產出成果",
+        "優化個人財務健康檢測系統使用體驗",
+        "推進IT Matters AI Selected獎後續流程"
       ]
     }
     
@@ -1693,12 +1684,14 @@ export default function ReportDashboard() {
 
   const handleVoiceToTextCancel = () => {
     setEditVoiceToTextData([
-      { week: "7月底", total: 350, new: 0 },
+      { week: "6月", total: 170, new: 0 },
+      { week: "7/7-7/13", total: 170, new: 0 },
+      { week: "7/14-7/20", total: 203, new: 6 },
+      { week: "7/21-7/27", total: 309, new: 97 },
+      { week: "7/28-8/3", total: 350, new: 41 },
       { week: "8/4-8/10", total: 350, new: 0 },
       { week: "8/11-8/17", total: 361, new: 11 },
-      { week: "8/18-8/24", total: 393, new: 32 },
-      { week: "8/25-8/31", total: 644, new: 251 },
-      { week: "9/1-9/5", total: 798, new: 154 }
+      { week: "8/18-8/24", total: 393, new: 32 }
     ])
     setIsVoiceToTextEditing(false)
     if (typeof window !== 'undefined') {
@@ -3178,9 +3171,9 @@ const VoiceToTextStats = ({
   onAddWeek: () => void
   onRemoveWeek: (index: number) => void
 }) => {
-  const julyTotal = weeklyData[0].total // 7月辭庫總數
-  const septemberTotal = weeklyData[weeklyData.length - 1].total // 9月初辭庫總數
-  const netGrowth = septemberTotal - julyTotal // 淨成長數
+  const juneTotal = weeklyData[0].total // 6月辭庫總數
+  const julyTotal = weeklyData[weeklyData.length - 1].total // 7月辭庫總數
+  const netGrowth = julyTotal - juneTotal // 淨成長數
   const totalNew = weeklyData.reduce((sum, data) => sum + data.new, 0)
 
   return (
@@ -3232,11 +3225,11 @@ const VoiceToTextStats = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
             <div className="text-3xl font-bold text-blue-600 mb-2">{weeklyData[weeklyData.length - 1].total}</div>
-            <div className="text-sm text-gray-600">9月初辭庫總數</div>
+            <div className="text-sm text-gray-600">辭庫總數</div>
           </div>
           <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
-            <div className="text-3xl font-bold text-green-600 mb-2">{julyTotal}</div>
-            <div className="text-sm text-gray-600">7月底辭庫總數</div>
+            <div className="text-3xl font-bold text-green-600 mb-2">{juneTotal}</div>
+            <div className="text-sm text-gray-600">上個月辭庫總數</div>
           </div>
           <div className="text-center p-4 bg-purple-50 rounded-lg border border-purple-200">
             <div className="text-3xl font-bold text-purple-600 mb-2">{netGrowth}</div>
@@ -3333,8 +3326,8 @@ const VoiceToTextStats = ({
             <h5 className="font-semibold text-gray-800">更新趨勢分析</h5>
           </div>
           <p className="text-sm text-gray-700">
-            辭庫從7月底的{julyTotal}個詞條擴充至9月初的{septemberTotal}個詞條，淨成長{netGrowth}個詞條，
-            增長率達{Math.round((netGrowth / julyTotal) * 100)}%，顯示語音轉文字系統的持續優化與完善。
+            辭庫從6月的{juneTotal}個詞條擴充至7月的{julyTotal}個詞條，淨成長{netGrowth}個詞條，
+            增長率達{Math.round((netGrowth / juneTotal) * 100)}%，顯示語音轉文字系統的持續優化與完善。
           </p>
         </div>
       </CardContent>
@@ -3361,8 +3354,8 @@ const KnowledgeBaseStats = ({
   onAddItem: () => void
   onRemoveItem: (index: number) => void
 }) => {
-  const totalArticles = 848 // 8月總文章數
-  const previousMonthArticles = 538 // 7月總文章數
+  const totalArticles = 538 // 7月總文章數
+  const previousMonthArticles = 236 // 6月總文章數
   const monthlyIncrease = totalArticles - previousMonthArticles // 本月增加文章數
 
   // 詳細分類數據
@@ -3371,74 +3364,73 @@ const KnowledgeBaseStats = ({
       category: "主要問題彙編",
       icon: "📋",
       topics: [
-        { name: "債務", july: 97, august: 134, increase: 37 },
-        { name: "政府救助資源", july: 101, august: 125, increase: 24 },
-        { name: "罹病求助", july: 65, august: 66, increase: 1 },
-        { name: "民間社會資源", july: 15, august: 17, increase: 2 }
+        { name: "債務", june: 39, july: 97, increase: 58 },
+        { name: "政府救助資源", june: 52, july: 101, increase: 49 },
+        { name: "罹病求助", june: 12, july: 65, increase: 53 },
+        { name: "民間社會資源", june: 6, july: 15, increase: 9 }
       ]
     },
     {
       category: "不同對象需求",
       icon: "👥",
       topics: [
-        { name: "身心障礙領域", july: 57, august: 57, increase: 0 },
-        { name: "兒少領域", july: 55, august: 63, increase: 8 },
-        { name: "成人領域", july: 62, august: 62, increase: 0 },
-        { name: "銀髮族領域", july: 53, august: 54, increase: 1 },
-        { name: "同志領域", july: 4, august: 16, increase: 12 },
-        { name: "婦女領域", july: 14, august: 28, increase: 14 },
-        { name: "原住民領域", july: 7, august: 19, increase: 12 },
-        { name: "新住民領域", july: 14, august: 32, increase: 18 },
-        { name: "單親領域", july: 24, august: 38, increase: 14 },
-        { name: "親子領域", july: 27, august: 45, increase: 18 },
-        { name: "醫療需求者領域", july: 26, august: 27, increase: 1 },
-        { name: "毛小孩領域", july: 0, august: 25, increase: 25 }
+        { name: "身心障礙領域", june: 21, july: 57, increase: 36 },
+        { name: "兒少領域", june: 16, july: 55, increase: 39 },
+        { name: "成人領域", june: 23, july: 62, increase: 39 },
+        { name: "銀髮族領域", june: 11, july: 53, increase: 42 },
+        { name: "同志領域", june: 2, july: 4, increase: 2 },
+        { name: "婦女領域", june: 2, july: 14, increase: 12 },
+        { name: "原住民領域", june: 0, july: 7, increase: 7 },
+        { name: "新住民領域", june: 0, july: 14, increase: 14 },
+        { name: "單親領域", june: 0, july: 24, increase: 24 },
+        { name: "親子領域", june: 2, july: 27, increase: 25 },
+        { name: "醫療需求者領域", june: 5, july: 26, increase: 21 }
       ]
     },
     {
       category: "家庭重大事件",
       icon: "🏠",
       topics: [
-        { name: "生育懷孕", july: 16, august: 33, increase: 17 },
-        { name: "銀髮族照顧", july: 50, august: 54, increase: 4 },
-        { name: "關係人死亡/失蹤", july: 8, august: 22, increase: 14 },
-        { name: "關係人身障", july: 53, august: 53, increase: 0 },
-        { name: "婚姻", july: 17, august: 33, increase: 16 },
-        { name: "意外", july: 47, august: 50, increase: 3 },
-        { name: "就業", july: 82, august: 98, increase: 16 },
-        { name: "詐騙", july: 13, august: 16, increase: 3 },
-        { name: "關係人入監", july: 19, august: 32, increase: 13 },
-        { name: "買車", july: 9, august: 13, increase: 4 },
-        { name: "買房", july: 11, august: 23, increase: 12 },
-        { name: "繼承", july: 7, august: 21, increase: 14 },
-        { name: "創業", july: 33, august: 36, increase: 3 },
-        { name: "退休", july: 13, august: 30, increase: 17 }
+        { name: "生育懷孕", june: 5, july: 16, increase: 11 },
+        { name: "銀髮族照顧", june: 11, july: 50, increase: 39 },
+        { name: "關係人死亡/失蹤", june: 3, july: 8, increase: 5 },
+        { name: "關係人身障", june: 16, july: 53, increase: 37 },
+        { name: "婚姻", june: 7, july: 17, increase: 10 },
+        { name: "意外", june: 17, july: 47, increase: 30 },
+        { name: "就業", june: 12, july: 82, increase: 70 },
+        { name: "詐騙", june: 10, july: 13, increase: 3 },
+        { name: "關係人入監", june: 2, july: 19, increase: 17 },
+        { name: "買車", june: 2, july: 9, increase: 7 },
+        { name: "買房", june: 5, july: 11, increase: 6 },
+        { name: "繼承", june: 4, july: 7, increase: 3 },
+        { name: "創業", june: 16, july: 33, increase: 17 },
+        { name: "退休", june: 3, july: 13, increase: 10 }
       ]
     },
     {
       category: "評估與輔導觀點",
       icon: "🎓",
       topics: [
-        { name: "專業知能", july: 36, august: 56, increase: 20 },
-        { name: "工作坊", july: 4, august: 4, increase: 0 },
-        { name: "課程摘要", july: 11, august: 14, increase: 3 },
-        { name: "研討會", july: 3, august: 3, increase: 0 },
-        { name: "影片專區", july: 4, august: 6, increase: 2 }
+        { name: "專業知能", june: 34, july: 36, increase: 2 },
+        { name: "工作坊", june: 3, july: 4, increase: 1 },
+        { name: "課程摘要", june: 3, july: 11, increase: 8 },
+        { name: "研討會", june: 3, july: 3, increase: 0 },
+        { name: "影片專區", june: 0, july: 4, increase: 4 }
       ]
     },
     {
       category: "財務管理與規劃",
       icon: "💰",
       topics: [
-        { name: "管理技巧", july: 97, august: 116, increase: 19 }
+        { name: "管理技巧", june: 28, july: 97, increase: 69 }
       ]
     },
     {
       category: "政策法規",
       icon: "📜",
       topics: [
-        { name: "法規", july: 41, august: 46, increase: 5 },
-        { name: "政策", july: 3, august: 11, increase: 8 }
+        { name: "法規", june: 30, july: 41, increase: 11 },
+        { name: "政策", june: 0, july: 3, increase: 3 }
       ]
     }
   ]
@@ -3492,11 +3484,11 @@ const KnowledgeBaseStats = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
             <div className="text-3xl font-bold text-green-600 mb-2">{totalArticles}</div>
-            <div className="text-sm text-gray-600">8月總文章數</div>
+            <div className="text-sm text-gray-600">7月總文章數</div>
           </div>
           <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
             <div className="text-3xl font-bold text-blue-600 mb-2">{previousMonthArticles}</div>
-            <div className="text-sm text-gray-600">7月總文章數</div>
+            <div className="text-sm text-gray-600">6月總文章數</div>
           </div>
           <div className="text-center p-4 bg-purple-50 rounded-lg border border-purple-200">
             <div className="text-3xl font-bold text-purple-600 mb-2">{monthlyIncrease}</div>
@@ -3527,10 +3519,10 @@ const KnowledgeBaseStats = ({
                       <h5 className="font-bold text-gray-800 text-xl">{category.category}</h5>
                       <div className="flex items-center gap-4 mt-1">
                         <span className="text-sm font-medium text-gray-600">
-                          7月: <span className="text-blue-600 font-bold">{category.topics.reduce((sum, topic) => sum + topic.july, 0)}</span>篇
+                          6月: <span className="text-blue-600 font-bold">{category.topics.reduce((sum, topic) => sum + topic.june, 0)}</span>篇
                         </span>
                         <span className="text-sm font-medium text-gray-600">
-                          8月: <span className="text-green-600 font-bold">{category.topics.reduce((sum, topic) => sum + topic.august, 0)}</span>篇
+                          7月: <span className="text-green-600 font-bold">{category.topics.reduce((sum, topic) => sum + topic.july, 0)}</span>篇
                         </span>
                         <span className="text-sm font-medium text-gray-600">
                           增加: <span className="text-purple-600 font-bold">+{category.topics.reduce((sum, topic) => sum + topic.increase, 0)}</span>篇
@@ -3566,14 +3558,14 @@ const KnowledgeBaseStats = ({
                         </div>
                       </div>
                       <div className="flex items-center justify-between text-sm text-gray-700 mb-2">
-                        <span className="font-medium">7月: {topic.july}</span>
+                        <span className="font-medium">6月: {topic.june}</span>
                         <span className="text-gray-400 text-lg">→</span>
-                        <span className="font-medium">8月: {topic.august}</span>
+                        <span className="font-medium">7月: {topic.july}</span>
                       </div>
                       {topic.increase > 0 && (
                         <div className="mt-3 p-2 bg-green-50 rounded border border-green-200">
                           <div className="text-sm font-semibold text-green-700">
-                            增長率: {Math.round((topic.increase / topic.july) * 100)}%
+                            增長率: {Math.round((topic.increase / topic.june) * 100)}%
                           </div>
                         </div>
                       )}
@@ -3624,7 +3616,7 @@ const KnowledgeBaseStats = ({
           </div>
           <div className="space-y-3 text-sm text-gray-700">
             <p>
-              <strong>整體增長：</strong>知識庫文章數從7月的{previousMonthArticles}篇增加到8月的{totalArticles}篇，
+              <strong>整體增長：</strong>知識庫文章數從6月的{previousMonthArticles}篇增加到7月的{totalArticles}篇，
               本月新增{monthlyIncrease}篇文章，增長率達{Math.round((monthlyIncrease / previousMonthArticles) * 100)}%。
             </p>
             <p>
@@ -3632,8 +3624,8 @@ const KnowledgeBaseStats = ({
               家庭重大事件、評估與輔導觀點、財務管理與規劃、政策法規等領域。
             </p>
             <p>
-              <strong>重點增長領域：</strong>債務問題增長最多（+37篇），其次是政府救助資源（+24篇）、
-              毛小孩領域（+25篇）、專業知能（+20篇）等，顯示知識庫內容更加全面和實用。
+              <strong>重點增長領域：</strong>就業相關文章增長最多（+70篇），其次是財務管理技巧（+69篇）、
+              債務問題（+58篇）、罹病求助（+53篇）等，顯示知識庫內容更加全面和實用。
             </p>
             <p>
               <strong>新增服務對象：</strong>新增原住民、新住民、單親等領域的專業內容，
