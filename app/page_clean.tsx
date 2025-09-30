@@ -179,16 +179,6 @@ export default function ReportDashboard() {
               details: "整合各級政府社福資源、補助申請指南、福利政策說明等資訊"
             },
             {
-              category: "罹病求助",
-              description: "疾病求助資源：66篇",
-              details: "慢性病、急症、罕見疾病等醫療資源與求助管道資訊"
-            },
-            {
-              category: "民間社會資源",
-              description: "民間組織資源：17篇",
-              details: "各類民間慈善機構、社會福利組織的服務項目與申請資訊"
-            },
-            {
               category: "身心障礙領域",
               description: "身心障礙相關知識：58篇",
               details: "身心障礙者權益、福利資源、照護技巧與社會支持系統"
@@ -199,164 +189,9 @@ export default function ReportDashboard() {
               details: "兒童保護、少年福利、兒少權益保障等專業知識與資源"
             },
             {
-              category: "成人領域",
-              description: "成人福利與權益：64篇",
-              details: "成人保護、社會福利、權益保障等相關知識與服務資訊"
-            },
-            {
               category: "銀髮族領域",
               description: "銀髮族福利資源：57篇",
               details: "老人福利、長期照護、退休生活規劃等銀髮族相關資訊"
-            },
-            {
-              category: "同志領域",
-              description: "同志權益與福利：17篇",
-              details: "LGBTQ+族群權益保障、福利資源、社會支持等專業知識"
-            },
-            {
-              category: "婦女領域",
-              description: "婦女權益與福利：29篇",
-              details: "婦女保護、性別平等、婦女福利資源等相關資訊"
-            },
-            {
-              category: "原住民領域",
-              description: "原住民福利資源：19篇",
-              details: "原住民傳統文化保護、福利資源、權益保障等專業知識"
-            },
-            {
-              category: "新住民領域",
-              description: "新住民福利服務：33篇",
-              details: "新住民適應輔導、福利資源、權益保障等相關資訊"
-            },
-            {
-              category: "單親領域",
-              description: "單親家庭支援：38篇",
-              details: "單親家庭福利、兒童照護、經濟補助等專業知識與資源"
-            },
-            {
-              category: "親子領域",
-              description: "親子關係與教育：52篇",
-              details: "親職教育、親子溝通、家庭關係調適等專業知識"
-            },
-            {
-              category: "醫療需求者領域",
-              description: "醫療資源與服務：30篇",
-              details: "醫療補助、醫療資源取得、病患權益等相關資訊"
-            },
-            {
-              category: "毛小孩領域",
-              description: "寵物福利與權益：25篇",
-              details: "寵物飼養、動物福利、寵物醫療資源等相關知識"
-            },
-            {
-              category: "生育懷孕",
-              description: "生育與懷孕支援：38篇",
-              details: "生育補助、孕期照護、新生兒福利等相關資源與知識"
-            },
-            {
-              category: "銀髮族照顧",
-              description: "銀髮照護服務：58篇",
-              details: "老人照護技巧、長期照護資源、照護者支持等專業知識"
-            },
-            {
-              category: "關係人死亡/失蹤",
-              description: "喪失與失蹤支援：23篇",
-              details: "喪親輔導、失蹤人口協尋、相關福利資源等資訊"
-            },
-            {
-              category: "關係人身障",
-              description: "身心障礙家屬支援：54篇",
-              details: "身心障礙者家庭支持、照護資源、家屬權益等知識"
-            },
-            {
-              category: "婚姻",
-              description: "婚姻與家庭關係：37篇",
-              details: "婚姻諉詢、家庭關係調適、離婚相關福利等資訊"
-            },
-            {
-              category: "意外",
-              description: "意外事故處理：51篇",
-              details: "意外傷害處理、事故求助、相關福利資源等知識"
-            },
-            {
-              category: "就業",
-              description: "就業與職業發展：112篇",
-              details: "就業服務、職業訓練、職場權益保障等相關資訊"
-            },
-            {
-              category: "詐騙",
-              description: "詐騙防範與求助：18篇",
-              details: "詐騙識別、防範技巧、受害求助資源等專業知識"
-            },
-            {
-              category: "關係人入監",
-              description: "監所相關福利：33篇",
-              details: "監所探視、受刑人福利、家庭支持資源等資訊"
-            },
-            {
-              category: "買車",
-              description: "購車相關知識：18篇",
-              details: "購車貸款、車輛保險、購車補助等相關資訊"
-            },
-            {
-              category: "買房",
-              description: "購屋相關知識：33篇",
-              details: "購屋貸款、房屋補助、購屋權益保障等資訊"
-            },
-            {
-              category: "繼承",
-              description: "繼承與財產規劃：24篇",
-              details: "遺產繼承、財產規劃、繼承稅務等專業知識"
-            },
-            {
-              category: "創業",
-              description: "創業與經營管理：40篇",
-              details: "創業貸款、經營管理、創業輔導資源等資訊"
-            },
-            {
-              category: "退休",
-              description: "退休規劃與福利：32篇",
-              details: "退休金規劃、退休生活、退休福利資源等知識"
-            },
-            {
-              category: "專業知能",
-              description: "專業技能發展：62篇",
-              details: "職業技能訓練、專業認證、技能提升資源等資訊"
-            },
-            {
-              category: "工作坊",
-              description: "工作坊與研習活動：6篇",
-              details: "社工專業工作坊、技能研習、專業交流活動等資訊"
-            },
-            {
-              category: "課程摘要",
-              description: "課程內容摘要：14篇",
-              details: "專業課程內容整理、重點摘要、學習資源等知識"
-            },
-            {
-              category: "影片專區",
-              description: "影音學習資源：6篇",
-              details: "專業教學影片、案例分析影片、學習資源等內容"
-            },
-            {
-              category: "研討會",
-              description: "學術研討會資訊：3篇",
-              details: "社工相關學術研討會、專業交流會議等活動資訊"
-            },
-            {
-              category: "管理技巧",
-              description: "管理與領導技能：160篇",
-              details: "組織管理、團隊領導、專案管理等專業知識與技巧"
-            },
-            {
-              category: "法規",
-              description: "相關法規與政策：51篇",
-              details: "社福相關法規、政策解讀、權益保障等專業資訊"
-            },
-            {
-              category: "政策",
-              description: "政策分析與解讀：20篇",
-              details: "社福政策分析、政策影響評估、政策宣導等內容"
             }
           ]
         }
@@ -375,7 +210,7 @@ export default function ReportDashboard() {
         }
     }
   }
-  
+
   // 月份選項
   const monthOptions = [
     { value: "2025-07", label: "2025年7月" },
@@ -385,7 +220,7 @@ export default function ReportDashboard() {
     { value: "2025-11", label: "2025年11月" },
     { value: "2025-12", label: "2025年12月" },
   ]
-  
+
   // 週次選項 - 根據月份動態生成
   const getWeekOptions = (month: string) => {
     const weekOptions = {
@@ -428,7 +263,7 @@ export default function ReportDashboard() {
     }
     return weekOptions[month as keyof typeof weekOptions] || weekOptions["2025-07"]
   }
-  
+
   // 處理週次變更
   const handleWeekChange = (week: string) => {
     setSelectedWeek(week)
@@ -534,8 +369,8 @@ export default function ReportDashboard() {
 
   // 處理知識庫編輯
   const handleKnowledgeBaseEdit = () => {
-        setIsKnowledgeBaseEditing(true)
-      }
+    setIsKnowledgeBaseEditing(true)
+  }
 
   // 處理知識庫保存
   const handleKnowledgeBaseSave = () => {
@@ -556,12 +391,12 @@ export default function ReportDashboard() {
     // 重新計算月度摘要
     const monthWeekOptions = getWeekOptions(selectedMonth)
     const monthWeekRanges = monthWeekOptions.map(option => option.value)
-    const filteredReports = weeklyReports.filter(report => 
+    const filteredReports = weeklyReports.filter(report =>
       monthWeekRanges.includes(report.weekRange)
     )
-    
+
     const allProjects = filteredReports.flatMap(report => report.projects)
-    
+
     const summary: MonthlySummary = {
       totalProjects: allProjects.length,
       completedProjects: allProjects.filter(p => p.status === "completed").length,
@@ -574,7 +409,8 @@ export default function ReportDashboard() {
           details: [
             "辭庫至9月底的940個，全月成長142個（15.9%成長）。",
             "課程摘要至9月底的78篇，全月新增3篇。",
-            "語音轉文字實習生測試持續進行"
+            "語音轉文字實習生測試持續進行",
+            "Gemini 2.5 flash版本測試優化"
           ]
         },
         {
@@ -596,7 +432,7 @@ export default function ReportDashboard() {
           details: [
             "知識庫總文章數達942篇，涵蓋38個專業領域",
             "社福資源資料庫持續擴充，各領域文章數量顯著成長",
-            "星展志工投稿機制穩定運行（目前共15位投稿，23篇文章）",
+            "星展志工投稿機制穩定運行（全月44位投稿，68篇文章）",
             "電子報預備四期完成，季刊債務名詞參考提供",
             "9月份稿件整理完成，建立完善內容管理流程",
             "知識庫補足清單持續完善，多領域內容均衡發展"
@@ -611,14 +447,6 @@ export default function ReportDashboard() {
         {
           title: "團隊擴張適應",
           description: "新進人員需要時間熟悉工作流程與系統操作"
-        },
-        {
-          title: "如何清晰的敘述目標與需求",
-          description: "需要更清晰地表達工作目標和需求",
-          details: [
-            "將大目標再切成小的階段性目標",
-            "將達成結果數據化"
-          ]
         }
       ],
       nextMonthGoals: [
@@ -629,9 +457,9 @@ export default function ReportDashboard() {
         "強化團隊協作與培訓機制"
       ]
     }
-    
+
     setMonthlySummary(summary)
-    
+
     // 初始化編輯數據
     setEditStats({
       totalProjects: summary.totalProjects,
@@ -699,8 +527,8 @@ export default function ReportDashboard() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
             <FileText className="h-8 w-8 text-blue-600" />
-            </div>
-            <h1 className="text-4xl font-bold text-black">週報進度整理系統</h1>
+          </div>
+          <h1 className="text-4xl font-bold text-black">週報進度整理系統</h1>
           <p className="text-xl text-gray-600">
             {monthOptions.find(option => option.value === selectedMonth)?.label || "2025年9月"} 工作進度追蹤與管理
           </p>
@@ -742,7 +570,7 @@ export default function ReportDashboard() {
                 ))}
               </SelectContent>
             </Select>
-        </div>
+          </div>
 
           <div className="flex gap-2">
             <Button
@@ -763,222 +591,153 @@ export default function ReportDashboard() {
         </div>
 
         {/* 內容區域 */}
-          {activeTab === "weekly" && (
-                <div className="space-y-6">
+        {activeTab === "weekly" && (
+          <div className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>週報內容</CardTitle>
                 <CardDescription>
                   {selectedWeek} 的工作內容
-                    </CardDescription>
-                  </CardHeader>
+                </CardDescription>
+              </CardHeader>
               <CardContent>
                 <p className="text-gray-600">這裡將顯示週報的詳細內容...</p>
-                  </CardContent>
-                </Card>
+              </CardContent>
+            </Card>
           </div>
-          )}
+        )}
 
-          {activeTab === "monthly" && (
+        {activeTab === "monthly" && (
           <div className="space-y-6">
-              {/* 月度統計 */}
+            {/* 月度統計 */}
             {monthlySummary && getDisplayStats().totalProjects > 0 && (
-                <Card className="shadow-lg border border-gray-200 bg-white">
+              <Card className="shadow-lg border border-gray-200 bg-white">
                 <CardHeader className="bg-gradient-to-r from-green-600 to-green-500 text-white rounded-t-lg">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <BarChart3 className="h-6 w-6" />
-                        <CardTitle className="text-2xl">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <BarChart3 className="h-6 w-6" />
+                      <CardTitle className="text-2xl">
                         {monthOptions.find(option => option.value === selectedMonth)?.label || "2025年9月"} 月度統計
-                        </CardTitle>
-                      </div>
-                      </div>
+                      </CardTitle>
+                    </div>
+                  </div>
                   <CardDescription className="text-green-100">
                     {monthOptions.find(option => option.value === selectedMonth)?.label || "2025年9月"} 整體工作統計數據
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-6 bg-white">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                      <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="p-6 bg-white">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
                       <div className="text-3xl font-bold text-gray-600 mb-2">{getDisplayStats().totalProjects}</div>
-                            <div className="text-sm text-gray-600">總專案數</div>
-                      </div>
-                      <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
-                            <div className="text-3xl font-bold text-green-600 mb-2">{getDisplayStats().completedProjects}</div>
-                            <div className="text-sm text-gray-600">已完成</div>
-                              </div>
+                      <div className="text-sm text-gray-600">總專案數</div>
+                    </div>
+                    <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+                      <div className="text-3xl font-bold text-green-600 mb-2">{getDisplayStats().completedProjects}</div>
+                      <div className="text-sm text-gray-600">已完成</div>
+                    </div>
                     <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
                       <div className="text-3xl font-bold text-blue-600 mb-2">{getDisplayStats().inProgressProjects}</div>
-                            <div className="text-sm text-gray-600">進行中</div>
-                              </div>
+                      <div className="text-sm text-gray-600">進行中</div>
+                    </div>
                     <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
                       <div className="text-3xl font-bold text-orange-600 mb-2">{getDisplayStats().pendingProjects}</div>
-                            <div className="text-sm text-gray-600">待處理</div>
-                              </div>
+                      <div className="text-sm text-gray-600">待處理</div>
                     </div>
-                  </CardContent>
-                </Card>
-              )}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* 月度執行狀況 */}
-              {monthlySummary && (
-                <Card className="shadow-lg border border-gray-200 bg-white">
+            {monthlySummary && (
+              <Card className="shadow-lg border border-gray-200 bg-white">
                 <CardHeader className={`text-white rounded-t-lg ${selectedMonth === '2025-09' ? 'bg-gradient-to-r from-green-600 to-green-500' : 'bg-gradient-to-r from-red-600 to-red-500'}`}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <TrendingUp className="h-6 w-6" />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="h-6 w-6" />
                       <CardTitle className="text-2xl">
                         {monthOptions.find(option => option.value === selectedMonth)?.label.replace('2025年', '')}月份執行狀況
                       </CardTitle>
-                      </div>
                     </div>
+                  </div>
                   <CardDescription className="text-white opacity-90">
                     {monthOptions.find(option => option.value === selectedMonth)?.label}達成的重要成果
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-6 bg-white">
-                    <div className="space-y-6">
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="p-6 bg-white">
+                  <div className="space-y-6">
                     {getDisplayAchievements().map((achievement, index) => (
-                        <div key={index} className="p-4 bg-green-50 rounded-lg border border-green-200">
+                      <div key={index} className="p-4 bg-green-50 rounded-lg border border-green-200">
                         <div className="flex items-center gap-2 mb-2">
-                                <CheckCircle className="h-5 w-5 text-green-600" />
+                          <CheckCircle className="h-5 w-5 text-green-600" />
                           <h4 className="font-semibold text-gray-800">{achievement.title}</h4>
-                              </div>
+                        </div>
                         <p className="text-sm text-gray-600 mb-2">{achievement.description}</p>
-                                  {Array.isArray(achievement.details) ? (
+                        {Array.isArray(achievement.details) ? (
                           <ul className="text-sm text-gray-600 space-y-1">
                             {achievement.details.map((detail, idx) => (
                               <li key={idx} className="flex items-start gap-2">
                                 <span className="text-green-500 mt-1">•</span>
-                                              {detail}
+                                {detail}
                               </li>
-                                          ))}
+                            ))}
                           </ul>
-                                      ) : (
-                                        <p className="text-sm text-gray-600">{achievement.details}</p>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
-            {/* 語音轉文字辭庫更新統計 */}
-                <Card className="shadow-lg border border-gray-200 bg-white">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-t-lg">
-                      <div className="flex items-center gap-2">
-                  <Mic className="h-6 w-6" />
-                  <CardTitle className="text-2xl">語音轉文字辭庫更新統計</CardTitle>
+                        ) : (
+                          <p className="text-sm text-gray-600">{achievement.details}</p>
+                        )}
                       </div>
-                <CardDescription className="text-blue-100">
-                  辭庫成長趨勢與數據統計
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-6 bg-white">
-                <div className="text-center mb-4">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">{editVoiceToTextData[editVoiceToTextData.length - 1]?.total || 0}</div>
-                  <div className="text-sm text-gray-600">9月底辭庫總數</div>
-                              </div>
-                <div className="text-sm text-gray-600">
-                  辭庫從7月底的350個擴充至9月底的940個，淨成長590個，增長率達169%。
-                    </div>
-                  </CardContent>
-                </Card>
-
-            {/* 知識庫擴充統計 */}
-                <Card className="shadow-lg border border-gray-200 bg-white">
-              <CardHeader className="bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-t-lg">
-                      <div className="flex items-center gap-2">
-                  <Database className="h-6 w-6" />
-                  <CardTitle className="text-2xl">知識庫擴充統計</CardTitle>
-                      </div>
-                <CardDescription className="text-purple-100">
-                  知識庫內容擴充與品質提升統計
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-6 bg-white">
-                <div className="text-center mb-4">
-                  <div className="text-3xl font-bold text-purple-600 mb-2">942</div>
-                  <div className="text-sm text-gray-600">9月底總文章數</div>
-                            </div>
-                <div className="text-sm text-gray-600">
-                  知識庫從8月的757篇增加到9月的942篇，月增185篇，增長率達24.4%。
-                    </div>
-                  </CardContent>
-                </Card>
-
-            {/* 工作困難與挑戰 */}
-            {getDisplayChallenges().length > 0 && (
-    <Card className="shadow-lg border border-gray-200 bg-white">
-                <CardHeader className="bg-gradient-to-r from-orange-600 to-orange-500 text-white rounded-t-lg">
-          <div className="flex items-center gap-2">
-                    <AlertTriangle className="h-6 w-6" />
-                    <CardTitle className="text-2xl">工作困難與挑戰</CardTitle>
-          </div>
-                  <CardDescription className="text-orange-100">
-                    工作過程中遇到的主要困難與挑戰
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="p-6 bg-white">
-        <div className="space-y-4">
-                    {getDisplayChallenges().map((challenge, index) => (
-                      <div key={index} className="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                        <div className="flex items-center gap-2 mb-2">
-                          <AlertTriangle className="h-5 w-5 text-orange-600" />
-                          <h4 className="font-semibold text-gray-800">{challenge.title}</h4>
-          </div>
-                        <p className="text-sm text-gray-600">{challenge.description}</p>
-                        {challenge.details && (
-                          <div className="mt-2 text-sm text-gray-600">
-                            {Array.isArray(challenge.details) ? (
-                              <ul className="space-y-1">
-                                {challenge.details.map((detail, idx) => (
-                                  <li key={idx} className="flex items-start gap-2">
-                                    <span className="text-orange-500 mt-1">•</span>
-                                    {detail}
-                                  </li>
-                                ))}
-                              </ul>
-                            ) : (
-                              <p>{challenge.details}</p>
-                            )}
-                    </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-            )}
-
-            {/* 下月目標與規劃 */}
-            {getDisplayGoals().length > 0 && (
-    <Card className="shadow-lg border border-gray-200 bg-white">
-                <CardHeader className="bg-gradient-to-r from-indigo-600 to-indigo-500 text-white rounded-t-lg">
-          <div className="flex items-center gap-2">
-                    <Target className="h-6 w-6" />
-                    <CardTitle className="text-2xl">下月目標與規劃</CardTitle>
-          </div>
-                  <CardDescription className="text-indigo-100">
-                    下個月的工作重點與目標規劃
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="p-6 bg-white">
-                  <div className="space-y-3">
-                    {getDisplayGoals().map((goal, index) => (
-                      <div key={index} className="flex items-start gap-3 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
-                        <Target className="h-5 w-5 text-indigo-600 mt-0.5 flex-shrink-0" />
-                        <p className="text-sm text-gray-700">{goal}</p>
-          </div>
                     ))}
-          </div>
+                  </div>
                 </CardContent>
               </Card>
             )}
-                        </div>
-                      )}
-                    </div>
+
+            {/* 語音轉文字辭庫更新統計 */}
+            <Card className="shadow-lg border border-gray-200 bg-white">
+              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-t-lg">
+                <div className="flex items-center gap-2">
+                  <Mic className="h-6 w-6" />
+                  <CardTitle className="text-2xl">語音轉文字辭庫更新統計</CardTitle>
                 </div>
+                <CardDescription className="text-blue-100">
+                  辭庫成長趨勢與數據統計
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-6 bg-white">
+                <div className="text-center mb-4">
+                  <div className="text-3xl font-bold text-blue-600 mb-2">{editVoiceToTextData[editVoiceToTextData.length - 1]?.total || 0}</div>
+                  <div className="text-sm text-gray-600">9月底辭庫總數</div>
+                </div>
+                <div className="text-sm text-gray-600">
+                  辭庫從7月底的350個擴充至9月底的940個，淨成長590個，增長率達169%。
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 知識庫擴充統計 */}
+            <Card className="shadow-lg border border-gray-200 bg-white">
+              <CardHeader className="bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-t-lg">
+                <div className="flex items-center gap-2">
+                  <Database className="h-6 w-6" />
+                  <CardTitle className="text-2xl">知識庫擴充統計</CardTitle>
+                </div>
+                <CardDescription className="text-purple-100">
+                  知識庫內容擴充與品質提升統計
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-6 bg-white">
+                <div className="text-center mb-4">
+                  <div className="text-3xl font-bold text-purple-600 mb-2">942</div>
+                  <div className="text-sm text-gray-600">9月底總文章數</div>
+                </div>
+                <div className="text-sm text-gray-600">
+                  知識庫從8月的757篇增加到9月的942篇，月增185篇，增長率達24.4%。
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
