@@ -693,32 +693,38 @@ export default function ReportDashboard() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <div className="container mx-auto px-4 py-12">
         {/* 標題區域 */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <FileText className="h-8 w-8 text-blue-600" />
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full shadow-lg">
+              <FileText className="h-10 w-10 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-black">週報進度整理系統</h1>
-          <p className="text-xl text-gray-600">
+          </div>
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-4">
+            週報進度整理系統
+          </h1>
+          <p className="text-2xl text-gray-600 font-medium">
             {monthOptions.find(option => option.value === selectedMonth)?.label || "2025年9月"} 工作進度追蹤與管理
           </p>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 mx-auto mt-6 rounded-full"></div>
         </div>
 
         {/* 導航區域 */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
-          <div className="flex-1">
-            <Label htmlFor="month-select" className="text-sm font-medium text-gray-700">
-              選擇月份
-            </Label>
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 mb-12">
+          <div className="flex flex-col lg:flex-row gap-6 items-end">
+            <div className="flex-1">
+              <Label htmlFor="month-select" className="text-base font-semibold text-gray-800 mb-3 block">
+                📅 選擇月份
+              </Label>
             <Select value={selectedMonth} onValueChange={handleMonthChange}>
-              <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full h-12 text-lg border-2 border-gray-200 rounded-xl focus:border-blue-500 transition-colors">
                 <SelectValue placeholder="選擇月份" />
               </SelectTrigger>
-              <SelectContent>
+                <SelectContent className="rounded-xl">
                 {monthOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
+                    <SelectItem key={option.value} value={option.value} className="text-lg py-3">
                     {option.label}
                   </SelectItem>
                 ))}
@@ -726,17 +732,17 @@ export default function ReportDashboard() {
             </Select>
           </div>
 
-          <div className="flex-1">
-            <Label htmlFor="week-select" className="text-sm font-medium text-gray-700">
-              選擇週次
-            </Label>
+            <div className="flex-1">
+              <Label htmlFor="week-select" className="text-base font-semibold text-gray-800 mb-3 block">
+                📋 選擇週次
+              </Label>
             <Select value={selectedWeek} onValueChange={handleWeekChange}>
-              <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full h-12 text-lg border-2 border-gray-200 rounded-xl focus:border-blue-500 transition-colors">
                 <SelectValue placeholder="選擇週次" />
               </SelectTrigger>
-              <SelectContent>
+                <SelectContent className="rounded-xl">
                 {getWeekOptions(selectedMonth).map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
+                    <SelectItem key={option.value} value={option.value} className="text-lg py-3">
                     {option.label}
                   </SelectItem>
                 ))}
@@ -744,119 +750,227 @@ export default function ReportDashboard() {
             </Select>
         </div>
 
-          <div className="flex gap-2">
+            <div className="flex gap-3">
             <Button
-              variant={activeTab === "weekly" ? "default" : "outline"}
+                variant={activeTab === "weekly" ? "default" : "outline"}
               onClick={() => handleTabChange("weekly")}
-              className="flex-1"
+                className={`h-12 px-8 text-lg font-semibold rounded-xl transition-all duration-200 ${
+                activeTab === "weekly"
+                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg transform scale-105"
+                    : "border-2 border-gray-200 hover:border-blue-400 hover:bg-blue-50"
+              }`}
             >
-              週報
+                📊 週報
             </Button>
             <Button
-              variant={activeTab === "monthly" ? "default" : "outline"}
+                variant={activeTab === "monthly" ? "default" : "outline"}
               onClick={() => handleTabChange("monthly")}
-              className="flex-1"
+                className={`h-12 px-8 text-lg font-semibold rounded-xl transition-all duration-200 ${
+                activeTab === "monthly"
+                    ? "bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-lg transform scale-105"
+                    : "border-2 border-gray-200 hover:border-purple-400 hover:bg-purple-50"
+              }`}
             >
-              月度摘要
+                📈 月度摘要
             </Button>
+            </div>
           </div>
         </div>
 
         {/* 內容區域 */}
           {activeTab === "weekly" && (
-                <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>週報內容</CardTitle>
-                <CardDescription>
-                  {selectedWeek} 的工作內容
+          <div className="space-y-8">
+            <Card className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-white bg-opacity-20 rounded-lg">
+                    <Calendar className="h-6 w-6" />
+                  </div>
+                                    <div>
+                    <CardTitle className="text-2xl">週報內容</CardTitle>
+                    <CardDescription className="text-blue-100">
+                      {selectedWeek} 的工作內容
                     </CardDescription>
-                  </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">這裡將顯示週報的詳細內容...</p>
+                      </div>
+                    </div>
+              </CardHeader>
+              <CardContent className="p-8">
+                <p className="text-gray-600 text-lg">這裡將顯示週報的詳細內容...</p>
                   </CardContent>
                 </Card>
           </div>
           )}
 
           {activeTab === "monthly" && (
-          <div className="space-y-6">
-              {/* 月度統計 */}
-            {monthlySummary && getDisplayStats().totalProjects > 0 && (
-                <Card className="shadow-lg border border-gray-200 bg-white">
-                <CardHeader className="bg-gradient-to-r from-green-600 to-green-500 text-white rounded-t-lg">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <BarChart3 className="h-6 w-6" />
-                        <CardTitle className="text-2xl">
-                        {monthOptions.find(option => option.value === selectedMonth)?.label || "2025年9月"} 月度統計
-                        </CardTitle>
-                      </div>
-                      </div>
-                  <CardDescription className="text-green-100">
-                    {monthOptions.find(option => option.value === selectedMonth)?.label || "2025年9月"} 整體工作統計數據
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-6 bg-white">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                      <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
-                      <div className="text-3xl font-bold text-gray-600 mb-2">{getDisplayStats().totalProjects}</div>
-                            <div className="text-sm text-gray-600">總專案數</div>
-                      </div>
-                      <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
-                            <div className="text-3xl font-bold text-green-600 mb-2">{getDisplayStats().completedProjects}</div>
-                            <div className="text-sm text-gray-600">已完成</div>
-                              </div>
-                    <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
-                      <div className="text-3xl font-bold text-blue-600 mb-2">{getDisplayStats().inProgressProjects}</div>
-                            <div className="text-sm text-gray-600">進行中</div>
-                              </div>
-                    <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
-                      <div className="text-3xl font-bold text-orange-600 mb-2">{getDisplayStats().pendingProjects}</div>
-                            <div className="text-sm text-gray-600">待處理</div>
-                              </div>
+            <div className="space-y-8">
+              {/* 儀表板樣式月度摘要 */}
+              <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+                {/* 儀表板標題 */}
+                <div className="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 text-white p-8">
+                  <div className="flex items-center gap-4">
+                    <div className="p-4 bg-white bg-opacity-10 rounded-2xl">
+                      <BarChart3 className="h-12 w-12" />
                     </div>
-                  </CardContent>
-                </Card>
-              )}
+                    <div>
+                      <h2 className="text-4xl font-bold mb-2">
+                        {monthOptions.find(option => option.value === selectedMonth)?.label || "2025年9月"} 工作儀表板
+                      </h2>
+                      <p className="text-blue-100 text-xl">
+                        完整的工作進度追蹤與數據分析
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* KPI 指標區域 */}
+                <div className="p-8 bg-gray-50">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                    <div className="w-2 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full"></div>
+                    關鍵績效指標 (KPI)
+                  </h3>
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-3 bg-blue-100 rounded-lg">
+                          <BarChart3 className="h-6 w-6 text-blue-600" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-500">總計</span>
+                      </div>
+                      <div className="text-3xl font-bold text-gray-900 mb-1">{getDisplayStats().totalProjects}</div>
+                      <div className="text-sm text-gray-600">總專案數</div>
+                    </div>
+
+                    <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-3 bg-green-100 rounded-lg">
+                          <CheckCircle className="h-6 w-6 text-green-600" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-500">完成</span>
+                      </div>
+                      <div className="text-3xl font-bold text-green-600 mb-1">{getDisplayStats().completedProjects}</div>
+                      <div className="text-sm text-gray-600">已完成項目</div>
+                    </div>
+
+                    <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-3 bg-yellow-100 rounded-lg">
+                          <TrendingUp className="h-6 w-6 text-yellow-600" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-500">進行中</span>
+                      </div>
+                      <div className="text-3xl font-bold text-blue-600 mb-1">{getDisplayStats().inProgressProjects}</div>
+                      <div className="text-sm text-gray-600">進行中項目</div>
+                    </div>
+
+                    <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="p-3 bg-orange-100 rounded-lg">
+                          <AlertTriangle className="h-6 w-6 text-orange-600" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-500">待處理</span>
+                      </div>
+                      <div className="text-3xl font-bold text-orange-600 mb-1">{getDisplayStats().pendingProjects}</div>
+                      <div className="text-sm text-gray-600">待處理項目</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 主要成就展示 */}
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                    <div className="w-2 h-8 bg-gradient-to-b from-green-500 to-emerald-600 rounded-full"></div>
+                    主要工作成果
+                  </h3>
+                  <div className="space-y-6">
+                    {getDisplayAchievements().map((achievement, index) => (
+                      <div key={index} className="bg-gradient-to-r from-slate-50 to-gray-50 rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div className="flex items-start gap-4">
+                          <div className="flex items-center justify-center w-12 h-12 bg-green-500 rounded-full flex-shrink-0">
+                            <CheckCircle className="h-7 w-7 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="text-xl font-bold text-gray-800 mb-2">{achievement.title}</h4>
+                            <p className="text-base text-gray-600 mb-4 leading-relaxed">{achievement.description}</p>
+                            {Array.isArray(achievement.details) && (
+                              <div className="space-y-3">
+                                {achievement.details.map((detail, idx) => (
+                                  <div key={idx} className="flex items-start gap-3 p-3 bg-white rounded-lg border border-gray-100">
+                                    <div className="flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full flex-shrink-0 mt-0.5">
+                                      <span className="text-blue-600 font-bold text-sm">{idx + 1}</span>
+                                    </div>
+                                    <p className="text-gray-700 leading-relaxed">{detail}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
 
             {/* 月度執行狀況 */}
               {monthlySummary && (
-                <Card className="shadow-lg border border-gray-200 bg-white">
-                <CardHeader className={`text-white rounded-t-lg ${selectedMonth === '2025-09' ? 'bg-gradient-to-r from-green-600 to-green-500' : 'bg-gradient-to-r from-red-600 to-red-500'}`}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <TrendingUp className="h-6 w-6" />
-                      <CardTitle className="text-2xl">
+              <Card className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 text-white">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-white bg-opacity-20 rounded-xl">
+                      <TrendingUp className="h-8 w-8" />
+                      </div>
+                    <div>
+                      <CardTitle className="text-3xl font-bold">
                         {monthOptions.find(option => option.value === selectedMonth)?.label.replace('2025年', '')}月份執行狀況
                       </CardTitle>
-                      </div>
-                    </div>
-                  <CardDescription className="text-white opacity-90">
-                    {monthOptions.find(option => option.value === selectedMonth)?.label}達成的重要成果
+                      <CardDescription className="text-green-100 text-lg mt-1">
+                        {monthOptions.find(option => option.value === selectedMonth)?.label}達成的重要成果
                     </CardDescription>
+                    </div>
+                  </div>
                   </CardHeader>
                   <CardContent className="p-6 bg-white">
-                    <div className="space-y-6">
-                    {getDisplayAchievements().map((achievement, index) => (
-                        <div key={index} className="p-4 bg-green-50 rounded-lg border border-green-200">
-                        <div className="flex items-center gap-2 mb-2">
-                                <CheckCircle className="h-5 w-5 text-green-600" />
-                          <h4 className="font-semibold text-gray-800">{achievement.title}</h4>
+                    <div className="space-y-8">
+                      {getDisplayAchievements().map((achievement, index) => (
+                        <div key={index} className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200 shadow-sm hover:shadow-md transition-shadow duration-200">
+                          {/* 主要成就標題 */}
+                          <div className="p-6 border-b border-green-100">
+                            <div className="flex items-center gap-3 mb-3">
+                              <div className="flex items-center justify-center w-10 h-10 bg-green-500 rounded-full">
+                                <CheckCircle className="h-6 w-6 text-white" />
                               </div>
-                        <p className="text-sm text-gray-600 mb-2">{achievement.description}</p>
-                                  {Array.isArray(achievement.details) ? (
-                          <ul className="text-sm text-gray-600 space-y-1">
-                            {achievement.details.map((detail, idx) => (
-                              <li key={idx} className="flex items-start gap-2">
-                                <span className="text-green-500 mt-1">•</span>
-                                              {detail}
-                              </li>
+                              <h3 className="text-2xl font-bold text-gray-800 leading-tight">
+                                {achievement.title}
+                              </h3>
+                                      </div>
+                            <p className="text-lg text-gray-700 leading-relaxed ml-13">
+                              {achievement.description}
+                            </p>
+                                </div>
+
+                          {/* 詳細內容區域 */}
+                          <div className="p-6">
+                            <div className="ml-13">
+                              {Array.isArray(achievement.details) ? (
+                                <div className="space-y-4">
+                                  {achievement.details.map((detail, idx) => (
+                                    <div key={idx} className="flex items-start gap-3 p-3 bg-white rounded-lg border border-green-100 hover:border-green-200 transition-colors">
+                                      <div className="flex items-center justify-center w-6 h-6 bg-green-100 rounded-full flex-shrink-0 mt-0.5">
+                                        <span className="text-green-600 font-bold text-sm">{idx + 1}</span>
+                              </div>
+                                <div className="flex-1">
+                                        <p className="text-lg text-gray-700 leading-relaxed">{detail}</p>
+                                      </div>
+                                            </div>
                                           ))}
-                          </ul>
+                                        </div>
                                       ) : (
-                                        <p className="text-sm text-gray-600">{achievement.details}</p>
-                          )}
+                                <div className="p-4 bg-white rounded-lg border border-green-100">
+                                  <p className="text-gray-700 leading-relaxed">{achievement.details}</p>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
                         </div>
                       ))}
                     </div>
@@ -865,85 +979,115 @@ export default function ReportDashboard() {
               )}
 
             {/* 語音轉文字辭庫更新統計 */}
-                <Card className="shadow-lg border border-gray-200 bg-white">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-t-lg">
-                      <div className="flex items-center gap-2">
-                  <Mic className="h-6 w-6" />
-                  <CardTitle className="text-2xl">語音轉文字辭庫更新統計</CardTitle>
+            <Card className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white">
+                <div className="flex items-center gap-4">
+                  <div className="p-4 bg-white bg-opacity-20 rounded-2xl">
+                    <Mic className="h-10 w-10" />
                       </div>
-                <CardDescription className="text-blue-100">
-                  辭庫成長趨勢與數據統計
+                  <div>
+                    <CardTitle className="text-4xl font-bold">語音轉文字辭庫更新統計</CardTitle>
+                    <CardDescription className="text-blue-100 text-xl mt-2">
+                      辭庫成長趨勢與數據統計
                     </CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-6 bg-white">
-                <div className="text-center mb-4">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">{editVoiceToTextData[editVoiceToTextData.length - 1]?.total || 0}</div>
-                  <div className="text-sm text-gray-600">9月底辭庫總數</div>
                               </div>
-                <div className="text-sm text-gray-600">
-                  辭庫從7月底的350個擴充至9月底的940個，淨成長590個，增長率達169%。
+                                      </div>
+              </CardHeader>
+              <CardContent className="p-10 bg-white">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center w-40 h-40 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full shadow-2xl mb-6">
+                    <span className="text-5xl font-bold text-white">{editVoiceToTextData[editVoiceToTextData.length - 1]?.total || 0}</span>
+                                </div>
+                  <div className="text-3xl font-semibold text-gray-800 mb-3">9月底辭庫總數</div>
+                  <div className="text-2xl text-gray-600 leading-relaxed">
+                    辭庫從7月底的350個擴充至9月底的940個<br />
+                    <span className="font-bold text-blue-600 text-2xl">淨成長590個，增長率達169%</span>
+                              </div>
                     </div>
                   </CardContent>
                 </Card>
 
             {/* 知識庫擴充統計 */}
-                <Card className="shadow-lg border border-gray-200 bg-white">
-              <CardHeader className="bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-t-lg">
-                      <div className="flex items-center gap-2">
-                  <Database className="h-6 w-6" />
-                  <CardTitle className="text-2xl">知識庫擴充統計</CardTitle>
+            <Card className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 text-white">
+                <div className="flex items-center gap-4">
+                  <div className="p-4 bg-white bg-opacity-20 rounded-2xl">
+                    <Database className="h-10 w-10" />
                       </div>
-                <CardDescription className="text-purple-100">
-                  知識庫內容擴充與品質提升統計
+                  <div>
+                    <CardTitle className="text-4xl font-bold">知識庫擴充統計</CardTitle>
+                    <CardDescription className="text-purple-100 text-xl mt-2">
+                      知識庫內容擴充與品質提升統計
                     </CardDescription>
+                  </div>
+                </div>
                   </CardHeader>
-                  <CardContent className="p-6 bg-white">
-                <div className="text-center mb-4">
-                  <div className="text-3xl font-bold text-purple-600 mb-2">942</div>
-                  <div className="text-sm text-gray-600">9月底總文章數</div>
+              <CardContent className="p-10 bg-white">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center w-40 h-40 bg-gradient-to-r from-violet-500 to-purple-600 rounded-full shadow-2xl mb-6">
+                    <span className="text-5xl font-bold text-white">942</span>
                             </div>
-                <div className="text-sm text-gray-600">
-                  知識庫從8月的757篇增加到9月的942篇，月增185篇，增長率達24.4%。
+                  <div className="text-3xl font-semibold text-gray-800 mb-3">9月底總文章數</div>
+                  <div className="text-2xl text-gray-600 leading-relaxed">
+                    知識庫從8月的757篇增加到9月的942篇<br />
+                    <span className="font-bold text-purple-600 text-2xl">月增185篇，增長率達24.4%</span>
+                        </div>
                     </div>
                   </CardContent>
                 </Card>
 
             {/* 工作困難與挑戰 */}
             {getDisplayChallenges().length > 0 && (
-    <Card className="shadow-lg border border-gray-200 bg-white">
-                <CardHeader className="bg-gradient-to-r from-orange-600 to-orange-500 text-white rounded-t-lg">
-          <div className="flex items-center gap-2">
-                    <AlertTriangle className="h-6 w-6" />
-                    <CardTitle className="text-2xl">工作困難與挑戰</CardTitle>
-          </div>
-                  <CardDescription className="text-orange-100">
-                    工作過程中遇到的主要困難與挑戰
-        </CardDescription>
+              <Card className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 text-white">
+                  <div className="flex items-center gap-4">
+                    <div className="p-4 bg-white bg-opacity-20 rounded-2xl">
+                      <AlertTriangle className="h-10 w-10" />
+        </div>
+                    <div>
+                      <CardTitle className="text-4xl font-bold">工作困難與挑戰</CardTitle>
+                      <CardDescription className="text-orange-100 text-xl mt-2">
+                        工作過程中遇到的主要困難與挑戰
+                      </CardDescription>
+      </div>
+    </div>
       </CardHeader>
-      <CardContent className="p-6 bg-white">
-        <div className="space-y-4">
+                <CardContent className="p-8 bg-white">
+                  <div className="space-y-6">
                     {getDisplayChallenges().map((challenge, index) => (
-                      <div key={index} className="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                        <div className="flex items-center gap-2 mb-2">
-                          <AlertTriangle className="h-5 w-5 text-orange-600" />
-                          <h4 className="font-semibold text-gray-800">{challenge.title}</h4>
+                      <div key={index} className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-200 shadow-sm">
+                        <div className="p-6 border-b border-orange-100">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="flex items-center justify-center w-10 h-10 bg-orange-500 rounded-full">
+                              <AlertTriangle className="h-6 w-6 text-white" />
           </div>
-                        <p className="text-sm text-gray-600">{challenge.description}</p>
+                            <h4 className="text-2xl font-bold text-gray-800">{challenge.title}</h4>
+          </div>
+                          <p className="text-lg text-gray-700 leading-relaxed ml-13">
+                            {challenge.description}
+                          </p>
+          </div>
                         {challenge.details && (
-                          <div className="mt-2 text-sm text-gray-600">
-                            {Array.isArray(challenge.details) ? (
-                              <ul className="space-y-1">
-                                {challenge.details.map((detail, idx) => (
-                                  <li key={idx} className="flex items-start gap-2">
-                                    <span className="text-orange-500 mt-1">•</span>
-                                    {detail}
-                                  </li>
-                                ))}
-                              </ul>
-                            ) : (
-                              <p>{challenge.details}</p>
-                            )}
+                          <div className="p-6">
+                            <div className="ml-13">
+                              {Array.isArray(challenge.details) ? (
+                                <div className="space-y-3">
+                                  {challenge.details.map((detail, idx) => (
+                                    <div key={idx} className="flex items-start gap-3 p-3 bg-white rounded-lg border border-orange-100">
+                                      <div className="flex items-center justify-center w-6 h-6 bg-orange-100 rounded-full flex-shrink-0 mt-0.5">
+                                        <span className="text-orange-600 font-bold text-sm">{idx + 1}</span>
+        </div>
+                                      <p className="text-lg text-gray-700 leading-relaxed">{detail}</p>
+          </div>
+                                  ))}
+                </div>
+              ) : (
+                                <div className="p-4 bg-white rounded-lg border border-orange-100">
+                                  <p className="text-gray-700 leading-relaxed">{challenge.details}</p>
                     </div>
+                              )}
+                    </div>
+                  </div>
               )}
             </div>
           ))}
@@ -954,25 +1098,37 @@ export default function ReportDashboard() {
 
             {/* 下月目標與規劃 */}
             {getDisplayGoals().length > 0 && (
-    <Card className="shadow-lg border border-gray-200 bg-white">
-                <CardHeader className="bg-gradient-to-r from-indigo-600 to-indigo-500 text-white rounded-t-lg">
-          <div className="flex items-center gap-2">
-                    <Target className="h-6 w-6" />
-                    <CardTitle className="text-2xl">下月目標與規劃</CardTitle>
-          </div>
-                  <CardDescription className="text-indigo-100">
-                    下個月的工作重點與目標規劃
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="p-6 bg-white">
-                  <div className="space-y-3">
+              <Card className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 text-white">
+                  <div className="flex items-center gap-4">
+                    <div className="p-4 bg-white bg-opacity-20 rounded-2xl">
+                      <Target className="h-10 w-10" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-4xl font-bold">下月目標與規劃</CardTitle>
+                      <CardDescription className="text-blue-100 text-xl mt-2">
+                        下個月的工作重點與目標規劃
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-8 bg-white">
+                  <div className="space-y-4">
                     {getDisplayGoals().map((goal, index) => (
-                      <div key={index} className="flex items-start gap-3 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
-                        <Target className="h-5 w-5 text-indigo-600 mt-0.5 flex-shrink-0" />
-                        <p className="text-sm text-gray-700">{goal}</p>
-          </div>
+                      <div key={index} className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl border border-indigo-200 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="p-6">
+                          <div className="flex items-start gap-4">
+                            <div className="flex items-center justify-center w-10 h-10 bg-indigo-500 rounded-full flex-shrink-0">
+                              <Target className="h-6 w-6 text-white" />
+                  </div>
+                            <div className="flex-1">
+                              <p className="text-xl font-medium text-gray-800 leading-relaxed">{goal}</p>
+                  </div>
+                </div>
+              </div>
+                        </div>
                     ))}
-          </div>
+                      </div>
                 </CardContent>
               </Card>
             )}
