@@ -149,6 +149,23 @@ export default function ReportDashboard() {
   // 根據選擇的月份獲取對應的統計數據
   const getStatsForMonth = (month: string) => {
     switch (month) {
+      case '2025-10':
+        return {
+          voiceToTextData: [
+            { week: "9/22-9/28", total: 940, new: 0 },
+            { week: "10/6-10/12", total: 1084, new: 144 },
+            { week: "10/13-10/19", total: 1085, new: 1 },
+            { week: "10/20-10/26", total: 1085, new: 0 },
+            { week: "10/27-10/31", total: 1211, new: 126 }
+          ],
+          knowledgeBaseData: [
+            {
+              category: "知識庫總統計",
+              description: "總文章數：1013篇",
+              details: "截至10月底，知識庫共累積1013篇（含影片專區）"
+            }
+          ]
+        }
       case '2025-09':
         return {
           voiceToTextData: [
@@ -562,48 +579,109 @@ export default function ReportDashboard() {
     
     const allProjects = filteredReports.flatMap(report => report.projects)
     
-    const summary: MonthlySummary = {
-      totalProjects: allProjects.length,
-      completedProjects: allProjects.filter(p => p.status === "completed").length,
-      inProgressProjects: allProjects.filter(p => p.status === "in-progress").length,
-      pendingProjects: allProjects.filter(p => p.status === "pending").length,
-      keyAchievements: [
-        {
-          title: "語音轉文字功能優化",
-          description: "技術：泰元，管理：先博，合作：小編、工讀生",
-          details: [
-            "辭庫至9月底的940個，全月成長142個（15.9%成長）。",
-            "課程摘要至9月底的78篇，全月新增3篇。",
-            "語音轉文字實習生測試持續進行"
-          ]
-        },
-        {
-          title: "財務試算模擬器擴充",
-          description: "技術：泰元，開發：先博，測試：公司夥伴、星展志工",
-          details: [
-            "學貸計算器：協助學生財務規劃",
-            "二胎車貸計算器：複雜貸款計算",
-            "最低生活費計算器：基本生活開銷評估",
-            "強制執行計算器：債務執行風險評估",
-            "個人財務快篩流程示意：快速財務健康檢查",
-            "信用貸款月還款計算：貸款負擔評估",
-            "8月建議優化小工具6項：持續改進"
-          ]
-        },
-        {
-          title: "知識庫管理",
-          description: "文章審核：James，技術：泰元，文章檢查：先博，文章生成：先博、工讀生、小編、婉仙",
-          details: [
-            "知識庫總文章數達942篇，涵蓋38個專業領域",
-            "社福資源資料庫持續擴充，各領域文章數量顯著成長",
-            "星展志工投稿機制穩定運行（目前共15位投稿，23篇文章）",
-            "電子報預備四期完成，季刊債務名詞參考提供",
-            "9月份稿件整理完成，建立完善內容管理流程",
-            "知識庫補足清單持續完善，多領域內容均衡發展"
-          ]
-        }
-      ],
-      workChallenges: [
+    const summary: MonthlySummary = selectedMonth === '2025-10'
+      ? {
+        totalProjects: allProjects.length,
+        completedProjects: allProjects.filter(p => p.status === "completed").length,
+        inProgressProjects: allProjects.filter(p => p.status === "in-progress").length,
+        pendingProjects: allProjects.filter(p => p.status === "pending").length,
+        keyAchievements: [
+          {
+            title: "語音轉文字與辭庫更新",
+            description: "技術：泰元，管理：先博，合作：小編、工讀生",
+            details: [
+              "辭庫累積至 10 月底 1211 個（本月多輪更新與比對）",
+              "持續進行實習生測試與逐字稿還原比較並回報",
+              "摘要模板需求與還原流程更新"
+            ]
+          },
+          {
+            title: "知識庫擴充與上架",
+            description: "審核：James，技術：泰元，生成與檢查：先博、工讀生、小編、婉仙",
+            details: [
+              "知識庫期末總文章數 1013（含影片；社福資料庫為非文章不計）",
+              "債務／詐騙等主題懶人包完成並上架",
+              "影片專區本月上架 13 支"
+            ]
+          },
+          {
+            title: "內容專案與對外合作",
+            description: "跨部門協作與對外簡報分享",
+            details: [
+              "財務試算模擬器 V0 依需求持續設計與修正",
+              "個人財務健康檢測：指標定義、呈現樣式與對答式問句優化",
+              "好理家在分享、IT Matters 決賽簡報準備與試講、社企流分享初版完成"
+            ]
+          }
+        ],
+        workChallenges: [
+          {
+            title: "測試案例蒐集",
+            description: "個人財務健康檢測與家庭經濟圖譜需要更多測試案例來驗證系統準確性"
+          },
+          {
+            title: "團隊擴張適應",
+            description: "新進人員需要時間熟悉工作流程與系統操作"
+          },
+          {
+            title: "如何清晰的敘述目標與需求",
+            description: "需要更清晰地表達工作目標和需求",
+            details: [
+              "將大目標再切成小的階段性目標",
+              "將達成結果數據化"
+            ]
+          }
+        ],
+        nextMonthGoals: [
+          "完成個人財務健康檢測16面向完整測試",
+          "深化家庭經濟圖譜測試案例擴大",
+          "持續優化語音轉文字辭庫品質",
+          "推進知識庫內容多元化發展",
+          "強化團隊協作與培訓機制"
+        ]
+      }
+      : {
+        totalProjects: allProjects.length,
+        completedProjects: allProjects.filter(p => p.status === "completed").length,
+        inProgressProjects: allProjects.filter(p => p.status === "in-progress").length,
+        pendingProjects: allProjects.filter(p => p.status === "pending").length,
+        keyAchievements: [
+          {
+            title: "語音轉文字功能優化",
+            description: "技術：泰元，管理：先博，合作：小編、工讀生",
+            details: [
+              "辭庫至9月底的940個，全月成長142個（15.9%成長）。",
+              "課程摘要至9月底的78篇，全月新增3篇。",
+              "語音轉文字實習生測試持續進行"
+            ]
+          },
+          {
+            title: "財務試算模擬器擴充",
+            description: "技術：泰元，開發：先博，測試：公司夥伴、星展志工",
+            details: [
+              "學貸計算器：協助學生財務規劃",
+              "二胎車貸計算器：複雜貸款計算",
+              "最低生活費計算器：基本生活開銷評估",
+              "強制執行計算器：債務執行風險評估",
+              "個人財務快篩流程示意：快速財務健康檢查",
+              "信用貸款月還款計算：貸款負擔評估",
+              "8月建議優化小工具6項：持續改進"
+            ]
+          },
+          {
+            title: "知識庫管理",
+            description: "文章審核：James，技術：泰元，文章檢查：先博，文章生成：先博、工讀生、小編、婉仙",
+            details: [
+              "知識庫總文章數達942篇，涵蓋38個專業領域",
+              "社福資源資料庫持續擴充，各領域文章數量顯著成長",
+              "星展志工投稿機制穩定運行（目前共15位投稿，23篇文章）",
+              "電子報預備四期完成，季刊債務名詞參考提供",
+              "9月份稿件整理完成，建立完善內容管理流程",
+              "知識庫補足清單持續完善，多領域內容均衡發展"
+            ]
+          }
+        ],
+        workChallenges: [
         {
           title: "測試案例蒐集",
           description: "個人財務健康檢測與家庭經濟圖譜需要更多測試案例來驗證系統準確性"
@@ -822,7 +900,52 @@ export default function ReportDashboard() {
                   </div>
                 </div>
 
-                {/* KPI 指標區域 */}
+                {/* 10 月份執行狀況（僅 2025-10 顯示） */}
+                {selectedMonth === '2025-10' && (
+                  <div className="p-8 border-t border-gray-100">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                      <div className="w-2 h-8 bg-gradient-to-b from-emerald-500 to-teal-600 rounded-full"></div>
+                      10 月份執行狀況
+                    </h3>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="bg-gradient-to-r from-slate-50 to-gray-50 rounded-xl border border-gray-200 p-6">
+                        <h4 className="text-lg font-semibold text-gray-800 mb-3">語音轉文字與詞庫</h4>
+                        <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                          <li>實習生測試與逐字稿還原比較持續進行並回報</li>
+                          <li>自定義辭庫流程與詞條品質優化（多輪詞庫管理與比對）</li>
+                          <li>摘要模板與還原需求更新與確認</li>
+                        </ul>
+                      </div>
+                      <div className="bg-gradient-to-r from-slate-50 to-gray-50 rounded-xl border border-gray-200 p-6">
+                        <h4 className="text-lg font-semibold text-gray-800 mb-3">知識庫擴充與上架</h4>
+                        <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                          <li>推進上架與分類優化，協助公開徵稿上稿</li>
+                          <li>完成債務／詐騙等懶人包產製與文案整理</li>
+                          <li>影片專區本月上架 13 支（已納入總量規則）</li>
+                        </ul>
+                      </div>
+                      <div className="bg-gradient-to-r from-slate-50 to-gray-50 rounded-xl border border-gray-200 p-6">
+                        <h4 className="text-lg font-semibold text-gray-800 mb-3">內容專案與工具</h4>
+                        <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                          <li>財務試算模擬器 V0：依需求持續設計與修正</li>
+                          <li>完成債務／詐騙懶人包與電子報文案</li>
+                          <li>個人財務健康檢測：指標定義、呈現樣式、問句延伸與測試腳本優化</li>
+                        </ul>
+                      </div>
+                      <div className="bg-gradient-to-r from-slate-50 to-gray-50 rounded-xl border border-gray-200 p-6">
+                        <h4 className="text-lg font-semibold text-gray-800 mb-3">教學與對外</h4>
+                        <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                          <li>工讀生訓練（AI 使用、Prompt、V0、引導式問答蒐集）</li>
+                          <li>「好理家在」分享與平台設計介紹</li>
+                          <li>IT Matters 決賽簡報準備與試講；社企流分享簡報初版完成</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* KPI 指標區域（10月不顯示） */}
+                {selectedMonth !== '2025-10' && (
                 <div className="p-8 bg-gray-50">
                   <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
                     <div className="w-2 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full"></div>
@@ -874,8 +997,10 @@ export default function ReportDashboard() {
                     </div>
                   </div>
                 </div>
+                )}
 
-                {/* 主要成就展示 */}
+                {/* 主要成就展示（10月不顯示） */}
+                {selectedMonth !== '2025-10' && (
                 <div className="p-8">
                   <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
                     <div className="w-2 h-8 bg-gradient-to-b from-green-500 to-emerald-600 rounded-full"></div>
@@ -909,10 +1034,11 @@ export default function ReportDashboard() {
                     ))}
                   </div>
                 </div>
+                )}
               </div>
 
-            {/* 月度執行狀況 */}
-              {monthlySummary && (
+            {/* 月度執行狀況（10月不顯示通用卡片） */}
+              {monthlySummary && selectedMonth !== '2025-10' && (
               <Card className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
                 <CardHeader className="bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 text-white">
                   <div className="flex items-center gap-4">
@@ -977,64 +1103,6 @@ export default function ReportDashboard() {
                   </CardContent>
                 </Card>
               )}
-
-            {/* 語音轉文字辭庫更新統計 */}
-            <Card className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white">
-                <div className="flex items-center gap-4">
-                  <div className="p-4 bg-white bg-opacity-20 rounded-2xl">
-                    <Mic className="h-10 w-10" />
-                      </div>
-                  <div>
-                    <CardTitle className="text-4xl font-bold">語音轉文字辭庫更新統計</CardTitle>
-                    <CardDescription className="text-blue-100 text-xl mt-2">
-                      辭庫成長趨勢與數據統計
-                    </CardDescription>
-                              </div>
-                                      </div>
-              </CardHeader>
-              <CardContent className="p-10 bg-white">
-                <div className="text-center">
-                  <div className="inline-flex items-center justify-center w-40 h-40 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full shadow-2xl mb-6">
-                    <span className="text-5xl font-bold text-white">{editVoiceToTextData[editVoiceToTextData.length - 1]?.total || 0}</span>
-                                </div>
-                  <div className="text-3xl font-semibold text-gray-800 mb-3">9月底辭庫總數</div>
-                  <div className="text-2xl text-gray-600 leading-relaxed">
-                    辭庫從7月底的350個擴充至9月底的940個<br />
-                    <span className="font-bold text-blue-600 text-2xl">淨成長590個，增長率達169%</span>
-                              </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-            {/* 知識庫擴充統計 */}
-            <Card className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 text-white">
-                <div className="flex items-center gap-4">
-                  <div className="p-4 bg-white bg-opacity-20 rounded-2xl">
-                    <Database className="h-10 w-10" />
-                      </div>
-                  <div>
-                    <CardTitle className="text-4xl font-bold">知識庫擴充統計</CardTitle>
-                    <CardDescription className="text-purple-100 text-xl mt-2">
-                      知識庫內容擴充與品質提升統計
-                    </CardDescription>
-                  </div>
-                </div>
-                  </CardHeader>
-              <CardContent className="p-10 bg-white">
-                <div className="text-center">
-                  <div className="inline-flex items-center justify-center w-40 h-40 bg-gradient-to-r from-violet-500 to-purple-600 rounded-full shadow-2xl mb-6">
-                    <span className="text-5xl font-bold text-white">942</span>
-                            </div>
-                  <div className="text-3xl font-semibold text-gray-800 mb-3">9月底總文章數</div>
-                  <div className="text-2xl text-gray-600 leading-relaxed">
-                    知識庫從8月的757篇增加到9月的942篇<br />
-                    <span className="font-bold text-purple-600 text-2xl">月增185篇，增長率達24.4%</span>
-                        </div>
-                    </div>
-                  </CardContent>
-                </Card>
 
             {/* 工作困難與挑戰 */}
             {getDisplayChallenges().length > 0 && (
@@ -1132,6 +1200,76 @@ export default function ReportDashboard() {
                 </CardContent>
               </Card>
             )}
+            
+            {/* 語音轉文字辭庫更新統計（移至頁面最底） */}
+            <Card className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white">
+                <div className="flex items-center gap-4">
+                  <div className="p-4 bg-white bg-opacity-20 rounded-2xl">
+                    <Mic className="h-10 w-10" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-4xl font-bold">語音轉文字辭庫更新統計</CardTitle>
+                    <CardDescription className="text-blue-100 text-xl mt-2">
+                      辭庫成長趨勢與數據統計
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-10 bg-white">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center w-40 h-40 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full shadow-2xl mb-6">
+                    <span className="text-5xl font-bold text-white">{selectedMonth === '2025-10' ? 1211 : (editVoiceToTextData[editVoiceToTextData.length - 1]?.total || 0)}</span>
+                  </div>
+                  <div className="text-3xl font-semibold text-gray-800 mb-3">{selectedMonth === '2025-10' ? '10月底辭庫總數' : '9月底辭庫總數'}</div>
+                  {selectedMonth === '2025-10' ? (
+                    <div className="text-2xl text-gray-600 leading-relaxed">
+                      10 月辭庫累積至 1211 個（含本月多輪更新）
+                    </div>
+                  ) : (
+                    <div className="text-2xl text-gray-600 leading-relaxed">
+                      辭庫從7月底的350個擴充至9月底的940個<br />
+                      <span className="font-bold text-blue-600 text-2xl">淨成長590個，增長率達169%</span>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 知識庫擴充統計（移至頁面最底） */}
+            <Card className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 text-white">
+                <div className="flex items-center gap-4">
+                  <div className="p-4 bg-white bg-opacity-20 rounded-2xl">
+                    <Database className="h-10 w-10" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-4xl font-bold">知識庫擴充統計</CardTitle>
+                    <CardDescription className="text-purple-100 text-xl mt-2">
+                      知識庫內容擴充與品質提升統計
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-10 bg-white">
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center w-40 h-40 bg-gradient-to-r from-violet-500 to-purple-600 rounded-full shadow-2xl mb-6">
+                    <span className="text-5xl font-bold text-white">{selectedMonth === '2025-10' ? 1013 : 942}</span>
+                  </div>
+                  <div className="text-3xl font-semibold text-gray-800 mb-3">{selectedMonth === '2025-10' ? '10月底總文章數' : '9月底總文章數'}</div>
+                  {selectedMonth === '2025-10' ? (
+                    <div className="text-2xl text-gray-600 leading-relaxed">
+                      本月期末文章總數 1013（含影片專區，社福資料庫為非文章不計）
+                    </div>
+                  ) : (
+                    <div className="text-2xl text-gray-600 leading-relaxed">
+                      知識庫從8月的757篇增加到9月的942篇<br />
+                      <span className="font-bold text-purple-600 text-2xl">月增185篇，增長率達24.4%</span>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
                         </div>
                       )}
                     </div>
