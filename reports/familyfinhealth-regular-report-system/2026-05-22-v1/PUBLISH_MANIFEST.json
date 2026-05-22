@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-22 19:31:43 +08:00",
+    "generatedAt":  "2026-05-22 19:39:00 +08:00",
     "workflow":  "publish-codex-report",
     "workflowVersion":  "cross-device-static-v2",
     "status":  "public-production-deploy-approved",
@@ -8,9 +8,9 @@
     "reportSlug":  "regular-report-system",
     "entry":  "reports/regular-report-system/index.html",
     "latestLocalUpdate":  {
-                              "updatedAt":  "2026-05-22 19:31:43 +08:00",
-                              "change":  "Publishing the current local publish-ready package to public production and recording that browser-authenticated first-tier sources should use the egroup.kevin@gmail.com Chrome Default profile.",
-                              "publicDeploymentStatus":  "Approved by Kevin in chat on 2026-05-22 and being deployed to GitHub/Vercel production in this task."
+                              "updatedAt":  "2026-05-22 19:39:00 +08:00",
+                              "change":  "Publishing the current local publish-ready package to public production, recording that browser-authenticated first-tier sources should use the egroup.kevin@gmail.com Chrome Default profile, and aligning the monthly report schedule label to 00:00.",
+                              "publicDeploymentStatus":  "Approved by Kevin in chat on 2026-05-22 and deployed to GitHub/Vercel production in this task."
                           },
     "packageType":  "pure-static",
     "externalActions":  {
@@ -21,10 +21,10 @@
     "deployment":  {
                        "provider":  "vercel",
                        "target":  "production",
-                       "deploymentUrl":  "https://publish-ready-8ar4oc2jn-egroup-task3s-projects.vercel.app",
+                       "deploymentUrl":  "https://publish-ready-eight.vercel.app",
                        "aliasUrl":  "https://publish-ready-eight.vercel.app",
                        "reportUrl":  "https://publish-ready-eight.vercel.app/reports/regular-report-system/index.html",
-                       "verifiedAt":  "2026-05-22 18:46 +08:00",
+                       "verifiedAt":  "2026-05-22 19:37 +08:00",
                        "httpStatus":  200,
                        "indexingControls":  [
                                                 "robots.txt: User-agent: * / Disallow: /",
@@ -37,8 +37,9 @@
                              "robots.txt and X-Robots-Tag noindex are indexing requests, not access control.",
                              "Local publish-ready package was updated after the last production deployment with weekly-report-2026-05-01-visual.html and weekly-report-2026-05-03-visual.html; GitHub/Vercel were not updated in that backfill task.",
                              "Source priority is now first-tier objective sources first: familyfinhealth overview, familyfinhealth trends, Google Ads campaign, Codex/GitHub/Vercel records; Gmail report summaries are second-tier fallback or cross-check sources.",
-                             "The local report entry and automation schedule changed after the last production deployment; Kevin requested deploying the local package to public production in the current task."
-                             ,"Browser-authenticated first-tier sources should use Chrome profile directory Default for egroup.kevin@gmail.com before falling back to Gmail summaries."
+                             "The local report entry and automation schedule changed after the last production deployment; Kevin requested deploying the local package to public production in the current task.",
+                             "Browser-authenticated first-tier sources should use Chrome profile directory Default for egroup.kevin@gmail.com before falling back to Gmail summaries.",
+                             "The report entrance schedule label now shows the monthly report schedule as every month on day 1 at 00:00."
                          ],
     "copiedFiles":  [
                         "achievement-record-index.html",
