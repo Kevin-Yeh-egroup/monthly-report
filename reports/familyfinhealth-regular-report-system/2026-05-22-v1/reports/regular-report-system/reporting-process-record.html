@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>固定報表流程紀錄</title>
+  <style>
+    :root { --bg:#f5f7fa; --paper:#fff; --ink:#17202a; --muted:#667085; --line:#d9e0e8; --blue:#245b73; --green:#2f7b68; --shadow:0 16px 42px rgba(23,32,42,.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--bg); font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",Arial,sans-serif; line-height:1.6; letter-spacing:0; }
+    a { color:inherit; text-decoration:none; }
+    .page { width:min(1120px, calc(100vw - 32px)); margin:0 auto; padding:28px 0 48px; }
+    .topbar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; min-height:38px; padding:8px 12px; border-radius:6px; border:1px solid var(--line); background:#fff; color:#344054; font-size:14px; font-weight:900; }
+    header, section { background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:24px; margin-top:18px; }
+    header { border-top:8px solid var(--blue); box-shadow:var(--shadow); margin-top:0; }
+    h1,h2,p { margin:0; }
+    h1 { font-size:clamp(30px,4vw,48px); line-height:1.08; }
+    h2 { font-size:24px; margin-bottom:12px; }
+    .eyebrow { color:var(--green); font-size:13px; font-weight:900; margin-bottom:10px; }
+    .subtitle, .caption { color:var(--muted); margin-top:10px; }
+    table { width:100%; border-collapse:collapse; border:1px solid var(--line); font-size:14px; margin-top:12px; }
+    th,td { padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:#f7f9fb; color:#344054; font-size:12px; font-weight:900; }
+    tr:last-child td { border-bottom:none; }
+    code { background:#eef2f6; border-radius:4px; padding:2px 5px; }
+    ul, ol { margin:0; padding-left:22px; color:#344054; }
+    li { margin:6px 0; }
+    @media (max-width:760px) { .page { width:min(100vw - 20px,1120px); padding-top:12px; } header,section { padding:18px; overflow-x:auto; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="topbar" aria-label="流程紀錄導覽">
+      <a class="button" href="report-index.html">回報表入口</a>
+      <a class="button" href="reporting-process-record.md">開啟 Markdown</a>
+    </nav>
+    <header>
+      <div class="eyebrow">Reporting Process</div>
+      <h1>固定報表流程紀錄</h1>
+      <p class="subtitle">記錄 Kevin 對固定報表流程的要求與變更，避免後續自動化跑偏。</p>
+    </header>
+
+    <section>
+      <h2>目前原則</h2>
+      <ol>
+        <li>報表要整理成可報告的重點，不做流水帳。</li>
+        <li>每日報表必須同時服務「今天怎麼工作」與「昨天營運如何」。</li>
+        <li>Gmail 統計報告搜尋必須包含 <code>in:anywhere</code>。</li>
+        <li>日報歷史在 <code>report-index.html</code> 必須依月份分類。</li>
+        <li>獎章與成就紀錄要能被月報、季報、半年報與年報追溯。</li>
+        <li>Codex 使用演進要獨立記錄，包含每日用法調整、踩坑、解法、成果與可教學素材。</li>
+        <li>給沒有資訊背景夥伴的 Codex 教學檔要保持白話、任務導向、可實作。</li>
+        <li>每日要根據 Kevin 的提問、任務敘述與追問方式給回饋，指出做得好的地方、可以更清楚的地方與隔天練習。</li>
+        <li>是否需要 agent 要先做判斷：清楚的一次性任務可直接處理；長期追蹤、策略、教學、跨工具回顧與成長回饋要納入 agent/反思視角。</li>
+        <li>固定報表可走 <code>publish-codex-report</code>，但預設只建立本機 <code>publish-ready</code> 套件；未經 Kevin 批准不得上傳、部署或分享網址。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>2026-05-22 變更</h2>
+      <table>
+        <thead><tr><th>日期</th><th>變更</th><th>原因</th><th>相關產出</th></tr></thead>
+        <tbody>
+          <tr><td>2026-05-22</td><td>合併「每日工作簡報」與「每日工作與營運日報」</td><td>每天早上只跑一份完整簡報/日報</td><td><code>automation-7</code></td></tr>
+          <tr><td>2026-05-22</td><td>每日合併版排程改為 08:10</td><td>配合早上工作啟動時間</td><td><code>automation-7</code></td></tr>
+          <tr><td>2026-05-22</td><td>舊的單獨「每日工作簡報」暫停</td><td>避免重複產出</td><td><code>automation</code></td></tr>
+          <tr><td>2026-05-22</td><td>手動執行一次合併版</td><td>補出 2026/05/21 日報</td><td><code>daily-report-2026-05-21.html</code></td></tr>
+          <tr><td>2026-05-22</td><td>新增 Codex 使用演進史</td><td>每日記錄開始使用 Codex 後的調整、坑與成果</td><td><code>codex-evolution-history.md</code></td></tr>
+          <tr><td>2026-05-22</td><td>新增非資訊背景夥伴教學檔</td><td>後續可對夥伴進行 Codex 入門教學</td><td><code>codex-nontechnical-partner-teaching.md</code></td></tr>
+          <tr><td>2026-05-22</td><td>更新日/週/月季年自動化規則</td><td>讓固定報表持續整理 Codex 演進素材與教學更新</td><td><code>automation-7</code>、<code>automation-6</code>、<code>automation-8</code>、<code>automation-9</code></td></tr>
+          <tr><td>2026-05-22</td><td>新增 Kevin 每日 Codex 使用回饋</td><td>根據每日提問與任務敘述整理回饋</td><td><code>kevin-codex-daily-feedback.md</code></td></tr>
+          <tr><td>2026-05-22</td><td>補上 agent 使用判斷規則</td><td>長期任務需要分流與反思視角</td><td><code>automation-7</code></td></tr>
+          <tr><td>2026-05-22</td><td>固定報表接上 <code>publish-codex-report</code> 流程</td><td>先建立本機發布預備包，保留審核與批准關卡，避免未確認敏感度前外流</td><td><code>scripts/build-report-publish-ready.ps1</code>、<code>publish-ready/</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>已知缺口</h2>
+      <ul>
+        <li>Slack 連接工具本次未提供可呼叫工具，因此今日簡報未納入 Slack。</li>
+        <li>familyfinhealth 後台與 Google Ads 後台本次未直接讀取，營運數據以 Gmail 統計報告與 Google Ads 郵件為主。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

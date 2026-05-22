@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kevin 每日 Codex 使用回饋</title>
+  <style>
+    :root { --bg:#f5f7fa; --paper:#fff; --ink:#17202a; --muted:#667085; --line:#d9e0e8; --blue:#245b73; --green:#2f7b68; --amber:#c47a2c; --shadow:0 16px 42px rgba(23,32,42,.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--bg); font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",Arial,sans-serif; line-height:1.62; letter-spacing:0; }
+    a { color:inherit; text-decoration:none; }
+    .page { width:min(1120px, calc(100vw - 32px)); margin:0 auto; padding:28px 0 48px; }
+    .topbar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; min-height:38px; padding:8px 12px; border-radius:6px; border:1px solid var(--line); background:#fff; color:#344054; font-size:14px; font-weight:900; }
+    header, section { background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:24px; margin-top:18px; }
+    header { border-top:8px solid var(--blue); box-shadow:var(--shadow); margin-top:0; padding:34px 36px; }
+    h1,h2,h3,p { margin:0; }
+    h1 { font-size:clamp(30px,4vw,48px); line-height:1.08; }
+    h2 { font-size:24px; margin-bottom:12px; }
+    h3 { color:var(--blue); font-size:18px; margin:16px 0 8px; }
+    .eyebrow { color:var(--green); font-size:13px; font-weight:900; margin-bottom:10px; }
+    .subtitle { color:var(--muted); margin-top:10px; }
+    table { width:100%; border-collapse:collapse; border:1px solid var(--line); font-size:14px; margin-top:12px; }
+    th,td { padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:#f7f9fb; color:#344054; font-size:12px; font-weight:900; }
+    tr:last-child td { border-bottom:none; }
+    code, pre { background:#eef2f6; border-radius:6px; }
+    code { padding:2px 5px; }
+    pre { padding:14px; overflow:auto; }
+    ul, ol { margin:0; padding-left:22px; color:#344054; }
+    li { margin:6px 0; }
+    .entry { border-left:5px solid var(--amber); }
+    @media (max-width:760px) { .page { width:min(100vw - 20px,1120px); padding-top:12px; } header,section { padding:18px; overflow-x:auto; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="topbar" aria-label="每日回饋導覽">
+      <a class="button" href="report-index.html">回報表入口</a>
+      <a class="button" href="kevin-codex-daily-feedback.md">開啟 Markdown</a>
+      <a class="button" href="codex-evolution-history.html">演進史</a>
+    </nav>
+    <header>
+      <div class="eyebrow">Daily Feedback</div>
+      <h1>Kevin 每日 Codex 使用回饋</h1>
+      <p class="subtitle">根據 Kevin 每天對 Codex 的提問、任務敘述、追問方式與工作結果，整理成每日回饋，協助看見優勢、盲點與下一步練習。</p>
+    </header>
+
+    <section>
+      <h2>回饋原則</h2>
+      <ol>
+        <li>具體、溫和、可行，不做人格評價。</li>
+        <li>只根據當天可追溯的提問、任務、對話與產出回饋。</li>
+        <li>同時寫出做得好的地方與可以更好的地方。</li>
+        <li>每天最多給 1-3 個練習建議，避免變成壓力清單。</li>
+        <li>對不足的描述要轉成下一次可嘗試的行為。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Agent 使用判斷規則</h2>
+      <table>
+        <thead><tr><th>情境</th><th>是否需要 agent</th><th>原因</th></tr></thead>
+        <tbody>
+          <tr><td>單一文件、單一自動化、範圍清楚</td><td>通常不需要</td><td>直接修改與驗證比較快，成本低</td></tr>
+          <tr><td>跨日、跨工具、跨資料來源的長期追蹤</td><td>建議納入 Agent OS 或專門回顧視角</td><td>需要記憶、歸納與持續回饋</td></tr>
+          <tr><td>需要策略、教學、產品、營運多角度判斷</td><td>建議先做 agent/角色分流</td><td>可以避免只用單一工程視角處理</td></tr>
+          <tr><td>需要長期觀察 Kevin 的提問習慣</td><td>需要每日教練/反思視角</td><td>這不是一次性輸出，而是成長紀錄</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="entry">
+      <h2>2026-05-22</h2>
+      <ul>
+        <li>今日提問與任務特徵：先提出長期紀錄與教學系統需求，接著追問為什麼沒有帶入 agent，並補充希望每天取得提問與任務敘述回饋。</li>
+        <li>做得好的地方：能在初步成果完成後檢查「方法是否足夠」，不只看檔案有沒有產出。</li>
+        <li>可以更清楚的地方：未來若一開始就希望啟用 Agent OS、任務分流、教練視角或多角色審視，可以直接寫「請先判斷是否需要 agent，並說明分工」。</li>
+        <li>對 Codex/agent 使用的觀察：一次性清楚任務可直接處理；長期成長回饋與團隊教學應納入 agent/反思視角。</li>
+        <li>明日可練習的一件事：交付任務時加上一句「請同時回饋我這個任務描述哪裡清楚、哪裡可以更精準」。</li>
+        <li>一句回饋：你已經開始從「叫 Codex 做事」進到「設計我和 Codex 如何一起進步」。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
+

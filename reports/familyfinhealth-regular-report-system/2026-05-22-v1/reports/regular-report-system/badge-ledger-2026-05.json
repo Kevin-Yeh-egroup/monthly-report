@@ -1,0 +1,344 @@
+﻿[
+    {
+        "Date":  "2026-05-01",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-01",
+        "Name":  "自動化推進",
+        "Reason":  "當日工作包含追蹤、成就或流程自動化相關改善。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-02",
+        "Name":  "資料偵探",
+        "Reason":  "從 Gmail 垃圾桶補回每日統計報告，修正原本的資料缺口。",
+        "Evidence":  "Gmail TRASH"
+    },
+    {
+        "Date":  "2026-05-02",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-02",
+        "Name":  "自動化推進",
+        "Reason":  "當日工作包含追蹤、成就或流程自動化相關改善。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-03",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-03",
+        "Name":  "自動化推進",
+        "Reason":  "當日工作包含追蹤、成就或流程自動化相關改善。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-04",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-04",
+        "Name":  "資料偵探",
+        "Reason":  "從 Gmail 垃圾桶補回每日統計報告，修正原本的資料缺口。",
+        "Evidence":  "Gmail TRASH"
+    },
+    {
+        "Date":  "2026-05-04",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-05",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-05",
+        "Name":  "資料偵探",
+        "Reason":  "從 Gmail 垃圾桶補回每日統計報告，修正原本的資料缺口。",
+        "Evidence":  "Gmail TRASH"
+    },
+    {
+        "Date":  "2026-05-05",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-06",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-06",
+        "Name":  "資料偵探",
+        "Reason":  "從 Gmail 垃圾桶補回每日統計報告，修正原本的資料缺口。",
+        "Evidence":  "Gmail TRASH"
+    },
+    {
+        "Date":  "2026-05-06",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-07",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-07",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-07",
+        "Name":  "產品打磨",
+        "Reason":  "當日工作包含頁面、工具、流程、導覽或體驗優化。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-08",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-08",
+        "Name":  "資料偵探",
+        "Reason":  "從 Gmail 垃圾桶補回每日統計報告，修正原本的資料缺口。",
+        "Evidence":  "Gmail TRASH"
+    },
+    {
+        "Date":  "2026-05-08",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-09",
+        "Name":  "資料偵探",
+        "Reason":  "從 Gmail 垃圾桶補回每日統計報告，修正原本的資料缺口。",
+        "Evidence":  "Gmail TRASH"
+    },
+    {
+        "Date":  "2026-05-09",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-09",
+        "Name":  "自動化推進",
+        "Reason":  "當日工作包含追蹤、成就或流程自動化相關改善。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-10",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-10",
+        "Name":  "自動化推進",
+        "Reason":  "當日工作包含追蹤、成就或流程自動化相關改善。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-11",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-11",
+        "Name":  "資料偵探",
+        "Reason":  "從 Gmail 垃圾桶補回每日統計報告，修正原本的資料缺口。",
+        "Evidence":  "Gmail TRASH"
+    },
+    {
+        "Date":  "2026-05-11",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-12",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-12",
+        "Name":  "資料偵探",
+        "Reason":  "從 Gmail 垃圾桶補回每日統計報告，修正原本的資料缺口。",
+        "Evidence":  "Gmail TRASH"
+    },
+    {
+        "Date":  "2026-05-12",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-13",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-13",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-13",
+        "Name":  "產品打磨",
+        "Reason":  "當日工作包含頁面、工具、流程、導覽或體驗優化。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-14",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-14",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-14",
+        "Name":  "產品打磨",
+        "Reason":  "當日工作包含頁面、工具、流程、導覽或體驗優化。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-15",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-15",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-15",
+        "Name":  "產品打磨",
+        "Reason":  "當日工作包含頁面、工具、流程、導覽或體驗優化。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-16",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-16",
+        "Name":  "自動化推進",
+        "Reason":  "當日工作包含追蹤、成就或流程自動化相關改善。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-17",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-17",
+        "Name":  "自動化推進",
+        "Reason":  "當日工作包含追蹤、成就或流程自動化相關改善。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-18",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-18",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-18",
+        "Name":  "產品打磨",
+        "Reason":  "當日工作包含頁面、工具、流程、導覽或體驗優化。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-19",
+        "Name":  "今日小勝",
+        "Reason":  "當日有可追溯的開發或內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-19",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-19",
+        "Name":  "產品打磨",
+        "Reason":  "當日工作包含頁面、工具、流程、導覽或體驗優化。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-20",
+        "Name":  "轉換觀察員",
+        "Reason":  "當日報告有 Google Ads 與站內註冊 / 訪客 / 工具使用的關聯觀察。",
+        "Evidence":  "Gmail 日報與 Google Ads 事件"
+    },
+    {
+        "Date":  "2026-05-20",
+        "Name":  "自動化推進",
+        "Reason":  "當日工作包含追蹤、成就或流程自動化相關改善。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-21",
+        "Name":  "今日小勝",
+        "Reason":  "當日有跨產品可追溯的功能與內容交付。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-21",
+        "Name":  "產品打磨",
+        "Reason":  "會員、無障礙、時間資源、服務歷史與投資風險工具都有體驗改善。",
+        "Evidence":  "C:\\git Git log"
+    },
+    {
+        "Date":  "2026-05-21",
+        "Name":  "服務回饋雷達",
+        "Reason":  "多筆正面回饋、諮詢與改期訊息被納入今日服務觀察。",
+        "Evidence":  "Gmail 好理家在通知"
+    }
+]

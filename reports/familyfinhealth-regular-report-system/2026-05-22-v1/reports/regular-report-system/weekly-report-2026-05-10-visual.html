@@ -1,0 +1,1381 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>好理家在工作週報｜2026-05-10 至 2026-05-16</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --paper: #ffffff;
+      --ink: #182230;
+      --muted: #667085;
+      --line: #d8e0e8;
+      --soft: #eef3f7;
+      --blue: #245b73;
+      --green: #2f7b68;
+      --amber: #c47a2c;
+      --red: #b45f56;
+      --violet: #635b8f;
+      --shadow: 0 16px 42px rgba(24, 34, 48, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", Arial, sans-serif;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, p { margin: 0; }
+
+    .page {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0 44px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .periods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .periods a {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #344054;
+    }
+
+    .periods a.active {
+      color: #ffffff;
+      border-color: var(--blue);
+      background: var(--blue);
+    }
+
+    .report {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 34px 36px 28px;
+      border-top: 8px solid var(--blue);
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(120deg, rgba(36, 91, 115, 0.08), rgba(47, 123, 104, 0.06) 45%, rgba(196, 122, 44, 0.09));
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(300px, 0.82fr);
+      gap: 28px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1.08;
+      letter-spacing: 0;
+      max-width: 760px;
+    }
+
+    .subtitle {
+      margin-top: 16px;
+      color: #344054;
+      font-size: 18px;
+      max-width: 780px;
+    }
+
+    .datebox {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(216, 224, 232, 0.95);
+      padding: 18px;
+      border-radius: 8px;
+    }
+
+    .datebox .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .datebox .range {
+      margin-top: 8px;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--blue);
+    }
+
+    .datebox .note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    section {
+      padding: 30px 36px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-child { border-bottom: none; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .caption {
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 720px;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      border-bottom: 1px solid var(--line);
+    }
+
+    .kpi {
+      min-height: 126px;
+      padding: 18px;
+      border-right: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .kpi:last-child { border-right: none; }
+
+    .kpi .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .kpi .value {
+      margin-top: 8px;
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .kpi .note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .kpi.good .value { color: var(--green); }
+    .kpi.warn .value { color: var(--amber); }
+    .kpi.risk .value { color: var(--red); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f7f9fb;
+      color: #344054;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    .work-table td:first-child {
+      width: 180px;
+      font-weight: 900;
+      color: var(--blue);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .note-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .note-card {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 16px;
+    }
+
+    .note-card:nth-child(2) { border-left-color: var(--amber); }
+    .note-card:nth-child(3) { border-left-color: var(--green); }
+
+    .note-card p {
+      margin-top: 6px;
+      color: #344054;
+      font-size: 14px;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+      gap: 16px;
+    }
+
+    .story-card,
+    .chart-panel,
+    .theme-card,
+    .action-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .story-card {
+      padding: 20px;
+      min-height: 210px;
+    }
+
+    .hero-insight {
+      background: linear-gradient(135deg, rgba(36, 91, 115, 0.1), rgba(47, 123, 104, 0.06));
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      color: var(--blue);
+      background: rgba(36, 91, 115, 0.1);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .story-card h3 {
+      margin-top: 12px;
+      font-size: 24px;
+      line-height: 1.28;
+    }
+
+    .story-card p {
+      margin-top: 12px;
+      color: #344054;
+      line-height: 1.7;
+    }
+
+    .insight-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      padding-left: 18px;
+      color: #344054;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .insight-list li::marker {
+      color: var(--blue);
+    }
+
+    .summary-points {
+      display: grid;
+      gap: 10px;
+    }
+
+    .point-card {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .point-card strong {
+      color: var(--blue);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .point-card span {
+      color: #344054;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .work-visual-grid,
+    .ads-visual-grid {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.88fr) minmax(0, 1.12fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .ads-visual-grid + .two-col {
+      margin-top: 16px;
+    }
+
+    .chart-panel {
+      padding: 18px;
+    }
+
+    .chart-panel h3 {
+      margin-bottom: 14px;
+    }
+
+    .bar-chart {
+      display: grid;
+      gap: 13px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 165px) minmax(0, 1fr) 52px;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .bar-track {
+      height: 12px;
+      border-radius: 999px;
+      background: #e8eef4;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .bar-fill.green { background: var(--green); }
+    .bar-fill.amber { background: var(--amber); }
+    .bar-fill.violet { background: var(--violet); }
+    .bar-fill.red { background: var(--red); }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .theme-card {
+      padding: 16px;
+      min-height: 178px;
+    }
+
+    .theme-card h3 {
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .theme-card p,
+    .action-card p {
+      color: #344054;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .theme-card ul {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding-left: 18px;
+      color: #344054;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .theme-card li::marker {
+      color: var(--blue);
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .action-card {
+      padding: 16px;
+      border-left: 5px solid var(--green);
+    }
+
+    .action-card:nth-child(2) { border-left-color: var(--amber); }
+    .action-card:nth-child(3) { border-left-color: var(--violet); }
+
+    .change-chart .bar-row {
+      grid-template-columns: minmax(120px, 145px) minmax(0, 1fr) 72px;
+    }
+
+    .change-track {
+      position: relative;
+      height: 12px;
+      border-radius: 999px;
+      background: #e8eef4;
+      overflow: hidden;
+    }
+
+    .change-track::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: rgba(24, 34, 48, 0.22);
+    }
+
+    .change-fill {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-radius: 999px;
+      background: var(--green);
+    }
+
+    .change-fill.down {
+      right: 50%;
+      background: var(--red);
+    }
+
+    .change-fill.up {
+      left: 50%;
+    }
+
+    .ads-flow {
+      display: grid;
+      gap: 10px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: minmax(108px, 140px) minmax(0, 1fr) 92px;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .flow-track {
+      height: 18px;
+      border-radius: 999px;
+      background: #e8eef4;
+      overflow: hidden;
+    }
+
+    .flow-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .flow-fill.green { background: var(--green); }
+    .flow-fill.amber { background: var(--amber); }
+    .flow-fill.violet { background: var(--violet); }
+
+    .chart-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .rank-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .rank-bars {
+      display: grid;
+      gap: 12px;
+    }
+
+    .rank-bar-row {
+      display: grid;
+      grid-template-columns: minmax(150px, 220px) minmax(0, 1fr) 82px;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .rank-bar-row .rank-name {
+      font-weight: 900;
+      color: var(--blue);
+    }
+
+    .rank-bar-row strong {
+      text-align: right;
+      font-size: 20px;
+      color: var(--blue);
+    }
+
+    .rank-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 150px;
+      background: #ffffff;
+    }
+
+    .rank-no {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #ffffff;
+      background: var(--blue);
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .rank-title {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .rank-clicks {
+      margin-top: 8px;
+      color: var(--blue);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .rank-type {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .landing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .funnel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .funnel-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 16px;
+    }
+
+    .funnel-card h3 {
+      color: var(--blue);
+      margin-bottom: 14px;
+    }
+
+    .funnel-steps {
+      display: grid;
+      gap: 11px;
+    }
+
+    .funnel-step {
+      display: grid;
+      grid-template-columns: 96px minmax(0, 1fr) 58px;
+      gap: 10px;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .funnel-track {
+      height: 18px;
+      border-radius: 999px;
+      background: #e8eef4;
+      overflow: hidden;
+    }
+
+    .funnel-fill {
+      width: var(--w);
+      min-width: 4px;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .funnel-step:nth-child(2) .funnel-fill { background: var(--green); }
+    .funnel-step:nth-child(3) .funnel-fill { background: var(--amber); }
+
+    .funnel-rates {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .rate-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 10px;
+    }
+
+    .rate-card .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .rate-card .value {
+      margin-top: 4px;
+      color: var(--blue);
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .tool-strip {
+      display: grid;
+      grid-template-columns: 220px repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 14px;
+    }
+
+    .tool-strip h3 {
+      color: var(--blue);
+      align-self: center;
+    }
+
+    .landing-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .landing-card h3 {
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #f7f9fb;
+    }
+
+    .mini-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding: 14px;
+    }
+
+    .mini {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfcfd;
+    }
+
+    .mini .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .mini .value {
+      margin-top: 6px;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .trendline {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      height: 34px;
+      margin-top: 8px;
+    }
+
+    .trendbar {
+      flex: 1;
+      min-width: 14px;
+      border-radius: 5px 5px 2px 2px;
+      background: rgba(36, 91, 115, 0.2);
+    }
+
+    .trendbar.active {
+      background: var(--blue);
+    }
+
+    .recommend-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .recommend-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 16px;
+    }
+
+    .recommend-card h3 {
+      margin-top: 10px;
+      color: var(--blue);
+    }
+
+    .recommend-card ul {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+      padding-left: 18px;
+      color: #344054;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .recommend-card li::marker {
+      color: var(--green);
+    }
+
+    .footer {
+      padding: 18px 36px;
+      color: var(--muted);
+      background: #f8fafc;
+      font-size: 12px;
+    }
+
+    @media (max-width: 1060px) {
+      .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .kpi:nth-child(3n) { border-right: none; }
+      .two-col, .landing-grid, .funnel-grid, .story-grid, .work-visual-grid, .ads-visual-grid, .tool-strip, .recommend-grid { grid-template-columns: 1fr; }
+      .rank-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .action-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(100vw - 20px, 1180px); padding-top: 12px; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .periods { justify-content: flex-start; }
+      .hero, section, .footer { padding-left: 18px; padding-right: 18px; }
+      .hero-grid, .kpis, .rank-grid, .mini-metrics, .theme-grid, .funnel-rates { grid-template-columns: 1fr; }
+      .point-card, .bar-row, .flow-step, .rank-bar-row, .change-chart .bar-row, .funnel-step { grid-template-columns: 1fr; }
+      .kpi { border-right: none; border-bottom: 1px solid var(--line); }
+      .kpi:last-child { border-bottom: none; }
+      th, td { padding: 10px; }
+    }
+
+    @media print {
+      body { background: #ffffff; }
+      .page { width: 100%; padding: 0; }
+      .topbar { display: none; }
+      .report { box-shadow: none; border: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="topbar" aria-label="報表檢視">
+      <a class="brand" href="report-index.html">好理家在報表入口</a>
+      <div class="periods">
+        <a href="report-index.html#daily">日報</a>
+        <a class="active" href="weekly-report-2026-05-10-visual.html">週報</a>
+        <a href="report-index.html#monthly">月報</a>
+        <a href="report-index.html#quarterly">季報</a>
+        <a href="report-index.html#halfyear">半年報</a>
+        <a href="report-index.html#annual">年報</a>
+      </div>
+    </nav>
+
+    <article class="report">
+      <header class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">好理家在｜工作週報</div>
+            <h1>本週工作與 Google Ads 成效追蹤</h1>
+          </div>
+          <div class="datebox">
+            <div class="label">報告區間</div>
+            <div class="range">2026/05/10 - 05/16</div>
+            <div class="note">週日到週六；對應 115/05/10-115/05/16。</div>
+          </div>
+        </div>
+      </header>
+
+      <section aria-labelledby="summary-title">
+        <div class="section-head">
+          <div>
+            <h2 id="summary-title">本週重點摘要</h2>
+            <p class="caption">先呈現可決策的重點，再用下方圖表與數字支撐，避免把週報變成工作流水帳。</p>
+          </div>
+        </div>
+        <div class="story-grid">
+          <article class="story-card hero-insight">
+            <span class="tag">本週主訊息</span>
+            <h3>本週是「廣告點擊效率提升、流量規模收縮、產品與自動化並進」的一週。</h3>
+            <p>CTR 從 1.39% 提升到 1.75%，代表廣告素材與受眾的點擊吸引力變好；但曝光與點擊同步下降，短期重點應先釐清投放限制、受眾規模與 landing page 轉換。工作面則集中在好理家在工具迭代、檢測漏斗追蹤、InfoCenter 與 Codex 自動化素材回收。</p>
+            <ul class="insight-list">
+              <li>廣告：點閱率改善，但曝光較前週下降 50.0%，需要先找出流量縮小原因。</li>
+              <li>產品：時間資源、生活試算、投資風險與檢測頁持續迭代，已有明確的工具主軸。</li>
+              <li>自動化：Codex 對話、Gmail 日報、GitHub / Cursor 工作紀錄可納入後續報告素材池。</li>
+            </ul>
+          </article>
+          <div class="summary-points" aria-label="本週重點指標">
+            <article class="point-card">
+              <strong>+0.36pp</strong>
+              <span>CTR 較前週提升，廣告內容吸引力改善。</span>
+            </article>
+            <article class="point-card">
+              <strong>-50.0%</strong>
+              <span>曝光較前週下降，需檢查政策限制與受眾規模。</span>
+            </article>
+            <article class="point-card">
+              <strong>3</strong>
+              <span>Codex 自動化主軸：每日簡報、每週回顧、每週資訊雷達。</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="work-title">
+        <div class="section-head">
+          <div>
+            <h2 id="work-title">本週工作成果地圖</h2>
+            <p class="caption">依 Cursor、GitHub、Codex 自動化設定與你提供的週報內容整理，改成主題式成果，不逐項列流水帳。</p>
+          </div>
+        </div>
+        <div class="work-visual-grid">
+          <article class="chart-panel">
+            <h3>工作投入主軸</h3>
+            <div class="bar-chart" aria-label="工作投入主軸圖">
+              <div class="bar-row">
+                <span>產品與工具迭代</span>
+                <div class="bar-track"><div class="bar-fill" style="width: 100%"></div></div>
+                <strong>5</strong>
+              </div>
+              <div class="bar-row">
+                <span>Codex 自動化</span>
+                <div class="bar-track"><div class="bar-fill green" style="width: 60%"></div></div>
+                <strong>3</strong>
+              </div>
+              <div class="bar-row">
+                <span>課程與內容展示</span>
+                <div class="bar-track"><div class="bar-fill amber" style="width: 40%"></div></div>
+                <strong>2</strong>
+              </div>
+              <div class="bar-row">
+                <span>行政與活動支援</span>
+                <div class="bar-track"><div class="bar-fill violet" style="width: 40%"></div></div>
+                <strong>2</strong>
+              </div>
+            </div>
+            <p class="chart-note">數量為本週可辨識的成果主題數，用來看工作重心，不代表工時。</p>
+          </article>
+
+          <div class="theme-grid">
+            <article class="theme-card">
+              <h3>好理家在 / 產品工具</h3>
+              <ul>
+                <li>新增時間資源盤點助理與標籤，並調整公開導航。</li>
+                <li>將財務試算模擬器更新為生活試算模擬器。</li>
+                <li>更新時間資源工具 URL 與頁面描述，方便後續追蹤入口成效。</li>
+              </ul>
+            </article>
+            <article class="theme-card">
+              <h3>Codex / InfoCenter / 自動化</h3>
+              <ul>
+                <li>建立每日工作簡報、每週個人營運回顧、每週資訊雷達。</li>
+                <li>把好理家在通知、InfoCenter 更新與 Codex 對話納入報告素材。</li>
+                <li>持續研究 skill、agent workflow 與 AI 自動化工作流。</li>
+              </ul>
+            </article>
+            <article class="theme-card">
+              <h3>工具原型與成果展示</h3>
+              <ul>
+                <li>推進時間盤點表與投資風險檢測 v0。</li>
+                <li>整理 Cilia 成就追蹤與可展示成果。</li>
+                <li>補強 v0 課程作品集與得獎展示內容。</li>
+              </ul>
+            </article>
+            <article class="theme-card">
+              <h3>營運支援與 AI 沙盒</h3>
+              <ul>
+                <li>整理核銷資料與活動支援事項。</li>
+                <li>支援家庭韌性與社會情緒教育論壇。</li>
+                <li>盤點馴錢師需求與 AI 沙盒可導入的工作場景。</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+
+        <div class="action-grid" aria-label="下週工作建議">
+          <article class="action-card">
+            <h3>產品上線排序</h3>
+            <p>把 Ivy 建議、時間資源盤點、生活試算與後台 tracking 拆成可驗收清單，決定正式環境上線順序。</p>
+          </article>
+          <article class="action-card">
+            <h3>內容與展示版本</h3>
+            <p>整理時間盤點與投資風險檢測的可展示流程，補齊結果頁、案例與課程成果頁連結。</p>
+          </article>
+          <article class="action-card">
+            <h3>自動化納入週報</h3>
+            <p>讓日報、週報、資訊雷達固定回收好理家在、InfoCenter、Google Ads 與 Codex skill/研究工作。</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="kpis" aria-label="Google Ads 與網站核心數據">
+        <div class="kpi good">
+          <div class="label">週增加註冊數</div>
+          <div class="value">122</div>
+          <div class="note">好理家在後台</div>
+        </div>
+        <div class="kpi good">
+          <div class="label">平均每日訪客數</div>
+          <div class="value">726</div>
+          <div class="note">好理家在後台</div>
+        </div>
+        <div class="kpi">
+          <div class="label">點擊數</div>
+          <div class="value">2,050</div>
+          <div class="note">Google Ads 後台</div>
+        </div>
+        <div class="kpi good">
+          <div class="label">點閱率</div>
+          <div class="value">1.75%</div>
+          <div class="note">較前週提升</div>
+        </div>
+        <div class="kpi">
+          <div class="label">曝光次數</div>
+          <div class="value">117,266</div>
+          <div class="note">展示廣告觸及</div>
+        </div>
+        <div class="kpi">
+          <div class="label">平均單次出價</div>
+          <div class="value">$0.74</div>
+          <div class="note">CPC 持平</div>
+        </div>
+        <div class="kpi warn">
+          <div class="label">費用</div>
+          <div class="value">$1,526.56</div>
+          <div class="note">較前週下降</div>
+        </div>
+      </div>
+
+      <section aria-labelledby="ads-title">
+        <div class="section-head">
+          <div>
+            <h2 id="ads-title">Google Ads 分析</h2>
+            <p class="caption">依舊週報的觀察欄位整理；廣告數值以本次讀到的 Google Ads campaign-level 資料為準，註冊與訪客以好理家在後台趨勢資料為準。</p>
+          </div>
+        </div>
+        <div class="ads-visual-grid">
+          <article class="chart-panel">
+            <h3>廣告到網站觀察漏斗</h3>
+            <div class="ads-flow" aria-label="廣告到網站觀察漏斗">
+              <div class="flow-step">
+                <span>曝光</span>
+                <div class="flow-track"><div class="flow-fill" style="width: 100%"></div></div>
+                <strong>117,266</strong>
+              </div>
+              <div class="flow-step">
+                <span>點擊</span>
+                <div class="flow-track"><div class="flow-fill green" style="width: 64%"></div></div>
+                <strong>2,050</strong>
+              </div>
+              <div class="flow-step">
+                <span>平均日訪客</span>
+                <div class="flow-track"><div class="flow-fill amber" style="width: 48%"></div></div>
+                <strong>726</strong>
+              </div>
+              <div class="flow-step">
+                <span>週新增註冊</span>
+                <div class="flow-track"><div class="flow-fill violet" style="width: 34%"></div></div>
+                <strong>122</strong>
+              </div>
+            </div>
+            <p class="chart-note">此圖用於呈現觀察路徑；不同來源資料不做嚴格歸因，實際判讀以數字與趨勢為準。</p>
+          </article>
+
+          <article class="chart-panel change-chart">
+            <h3>本週與前週變化</h3>
+            <div class="bar-chart" aria-label="本週與前週變化圖">
+              <div class="bar-row">
+                <span>CTR</span>
+                <div class="change-track"><div class="change-fill up" style="width: 26%"></div></div>
+                <strong>+25.9%</strong>
+              </div>
+              <div class="bar-row">
+                <span>平均日訪客</span>
+                <div class="change-track"><div class="change-fill up" style="width: 3%"></div></div>
+                <strong>+1.1%</strong>
+              </div>
+              <div class="bar-row">
+                <span>費用</span>
+                <div class="change-track"><div class="change-fill down" style="width: 37%"></div></div>
+                <strong>-36.9%</strong>
+              </div>
+              <div class="bar-row">
+                <span>點擊</span>
+                <div class="change-track"><div class="change-fill down" style="width: 37%"></div></div>
+                <strong>-37.1%</strong>
+              </div>
+              <div class="bar-row">
+                <span>曝光</span>
+                <div class="change-track"><div class="change-fill down" style="width: 50%"></div></div>
+                <strong>-50.0%</strong>
+              </div>
+              <div class="bar-row">
+                <span>週新增註冊</span>
+                <div class="change-track"><div class="change-fill down" style="width: 46%"></div></div>
+                <strong>-45.8%</strong>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="two-col">
+          <table aria-label="Google Ads 指標">
+            <thead>
+              <tr>
+                <th>指標</th>
+                <th>前週</th>
+                <th>本週</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>點擊數</td>
+                <td>3,258</td>
+                <td>2,050</td>
+              </tr>
+              <tr>
+                <td>點閱率</td>
+                <td>1.39%</td>
+                <td>1.75%</td>
+              </tr>
+              <tr>
+                <td>曝光次數</td>
+                <td>234,626</td>
+                <td>117,266</td>
+              </tr>
+              <tr>
+                <td>平均單次出價</td>
+                <td>$0.74</td>
+                <td>$0.74</td>
+              </tr>
+              <tr>
+                <td>費用</td>
+                <td>$2,419.61</td>
+                <td>$1,526.56</td>
+              </tr>
+              <tr>
+                <td>週增加註冊數</td>
+                <td>225</td>
+                <td>122</td>
+              </tr>
+              <tr>
+                <td>平均每日訪客數</td>
+                <td>718</td>
+                <td>726</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="note-list">
+            <article class="note-card">
+              <h3>週事件</h3>
+              <p>金融服務政策有改變，廣告內容與素材需要持續依政策調整。</p>
+            </article>
+            <article class="note-card">
+              <h3>Google Ads 觀察</h3>
+              <p>最佳化分數為 82.6%。本週 CTR 從 1.39% 提升到 1.75%，代表廣告吸引力改善；但曝光從 234,626 降到 117,266，點擊從 3,258 降到 2,050，需要優先檢查政策限制與可投放受眾規模。</p>
+            </article>
+            <article class="note-card">
+              <h3>判讀</h3>
+              <p>CPC 維持 $0.74，費用下降主因是曝光與點擊同步縮小；網站端週新增註冊 122 人、平均每日訪客 726 人，訪客量維持但註冊轉換需要下週持續追蹤。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="rank-title">
+        <div class="section-head">
+          <div>
+            <h2 id="rank-title">廣告內容排名</h2>
+            <p class="caption">以橫條圖呈現本週主要廣告內容的點擊集中度，快速看出哪個主題最能帶來流量。</p>
+          </div>
+        </div>
+        <div class="rank-bars" aria-label="廣告內容點擊排名">
+          <div class="rank-bar-row">
+            <span class="rank-name">1. 詐騙防禦</span>
+            <div class="bar-track"><div class="bar-fill" style="width: 100%"></div></div>
+            <strong>1,072</strong>
+          </div>
+          <div class="rank-bar-row">
+            <span class="rank-name">2. 財務焦慮</span>
+            <div class="bar-track"><div class="bar-fill green" style="width: 56%"></div></div>
+            <strong>600</strong>
+          </div>
+          <div class="rank-bar-row">
+            <span class="rank-name">3. 線上財務諮詢</span>
+            <div class="bar-track"><div class="bar-fill amber" style="width: 20%"></div></div>
+            <strong>211</strong>
+          </div>
+          <div class="rank-bar-row">
+            <span class="rank-name">4. 財務韌性</span>
+            <div class="bar-track"><div class="bar-fill violet" style="width: 19%"></div></div>
+            <strong>199</strong>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="landing-title">
+        <div class="section-head">
+          <div>
+            <h2 id="landing-title">檢測轉換漏斗</h2>
+            <p class="caption">平均每日訪客數採全站固定值 726；日均點擊與日均使用則依各檢測頁與工具使用資料呈現，用同一個入口基準看出各檢測的週轉換差異。</p>
+          </div>
+        </div>
+        <div class="funnel-grid">
+          <article class="funnel-card">
+            <h3>財務韌性檢測</h3>
+            <div class="funnel-steps">
+              <div class="funnel-step">
+                <span>平均每日訪客數</span>
+                <div class="funnel-track"><div class="funnel-fill" style="--w: 100%"></div></div>
+                <strong>726</strong>
+              </div>
+              <div class="funnel-step">
+                <span>日均點擊</span>
+                <div class="funnel-track"><div class="funnel-fill" style="--w: 8%"></div></div>
+                <strong>55</strong>
+              </div>
+              <div class="funnel-step">
+                <span>日均使用</span>
+                <div class="funnel-track"><div class="funnel-fill" style="--w: 3%"></div></div>
+                <strong>18</strong>
+              </div>
+            </div>
+            <div class="funnel-rates">
+              <div class="rate-card">
+                <div class="label">使用 / 訪客</div>
+                <div class="value">2.5%</div>
+              </div>
+              <div class="rate-card">
+                <div class="label">使用 / 點擊</div>
+                <div class="value">33%</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="funnel-card">
+            <h3>詐騙防禦檢測</h3>
+            <div class="funnel-steps">
+              <div class="funnel-step">
+                <span>平均每日訪客數</span>
+                <div class="funnel-track"><div class="funnel-fill" style="--w: 100%"></div></div>
+                <strong>726</strong>
+              </div>
+              <div class="funnel-step">
+                <span>日均點擊</span>
+                <div class="funnel-track"><div class="funnel-fill" style="--w: 12%"></div></div>
+                <strong>88</strong>
+              </div>
+              <div class="funnel-step">
+                <span>日均使用</span>
+                <div class="funnel-track"><div class="funnel-fill" style="--w: 1%"></div></div>
+                <strong>4</strong>
+              </div>
+            </div>
+            <div class="funnel-rates">
+              <div class="rate-card">
+                <div class="label">使用 / 訪客</div>
+                <div class="value">0.6%</div>
+              </div>
+              <div class="rate-card">
+                <div class="label">使用 / 點擊</div>
+                <div class="value">4.5%</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="funnel-card">
+            <h3>財務焦慮檢測</h3>
+            <div class="funnel-steps">
+              <div class="funnel-step">
+                <span>平均每日訪客數</span>
+                <div class="funnel-track"><div class="funnel-fill" style="--w: 100%"></div></div>
+                <strong>726</strong>
+              </div>
+              <div class="funnel-step">
+                <span>日均點擊</span>
+                <div class="funnel-track"><div class="funnel-fill" style="--w: 31%"></div></div>
+                <strong>222</strong>
+              </div>
+              <div class="funnel-step">
+                <span>日均使用</span>
+                <div class="funnel-track"><div class="funnel-fill" style="--w: 16%"></div></div>
+                <strong>114</strong>
+              </div>
+            </div>
+            <div class="funnel-rates">
+              <div class="rate-card">
+                <div class="label">使用 / 訪客</div>
+                <div class="value">15.7%</div>
+              </div>
+              <div class="rate-card">
+                <div class="label">使用 / 點擊</div>
+                <div class="value">51%</div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="tool-strip">
+          <h3>財務生活記帳助理</h3>
+          <div class="mini">
+            <div class="label">介紹頁點閱人次</div>
+            <div class="value">402</div>
+            <div class="label">近 30 天累計</div>
+          </div>
+          <div class="mini">
+            <div class="label">介紹頁週均點閱</div>
+            <div class="value">80.4</div>
+            <div class="label">每週粒度</div>
+          </div>
+          <div class="mini">
+            <div class="label">週點閱高低</div>
+            <div class="value">106 / 29</div>
+            <div class="label">最高 05/04 週；最低 05/18 週</div>
+          </div>
+          <div class="mini">
+            <div class="label">日均使用週趨勢</div>
+            <div class="value">12.5</div>
+            <div class="label">前前週 12.8 → 前週 13.8 → 本週 12.5</div>
+            <div class="trendline" aria-hidden="true">
+              <span class="trendbar" style="height: 74%"></span>
+              <span class="trendbar" style="height: 80%"></span>
+              <span class="trendbar active" style="height: 72%"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="optimization-title">
+        <div class="section-head">
+          <div>
+            <h2 id="optimization-title">下週優化建議</h2>
+            <p class="caption">整合現有工具、Gmail 日報週報素材與公開 dashboard 呈現方法，保留最能轉成行動的三件事。</p>
+          </div>
+        </div>
+        <div class="recommend-grid">
+          <article class="recommend-card">
+            <span class="tag">廣告與流量</span>
+            <h3>先找出曝光縮小原因，再調整素材與受眾</h3>
+            <ul>
+              <li>以 Google Ads 的曝光、點擊、CTR、CPC、費用做每週固定 scorecard。</li>
+              <li>本週 CTR 改善但曝光下降，優先檢查政策限制、受眾規模與預算分配。</li>
+              <li>下週追蹤「曝光是否回升」與「點擊是否轉進檢測頁」。</li>
+            </ul>
+          </article>
+          <article class="recommend-card">
+            <span class="tag">檢測漏斗</span>
+            <h3>用同一個訪客基準比較三個檢測</h3>
+            <ul>
+              <li>固定用平均每日訪客數 726 作為第一層入口，避免每個漏斗基準不同。</li>
+              <li>詐騙防禦使用 / 點擊最低，先檢查 CTA、入口文案與問卷完成阻力。</li>
+              <li>財務焦慮的日均使用最高，可回推頁面內容與流程作為其他檢測的參考。</li>
+            </ul>
+          </article>
+          <article class="recommend-card">
+            <span class="tag">報告素材自動化</span>
+            <h3>把日報、Codex 與工作紀錄做成素材池</h3>
+            <ul>
+              <li>Gmail 日報已有核心發現、週趨勢摘要、立即行動與風險預警，可直接轉成週報建議。</li>
+              <li>Codex 對話中提到的好理家在、InfoCenter、skill / agent 研究，都列入工作成果素材。</li>
+              <li>每週只保留 3 個重點、3 個風險、3 個下週行動，避免報告變成流水帳。</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <div class="footer">
+        產出時間：2026/05/21。資料區間：2026/05/10-05/16。
+      </div>
+    </article>
+  </main>
+</body>
+</html>

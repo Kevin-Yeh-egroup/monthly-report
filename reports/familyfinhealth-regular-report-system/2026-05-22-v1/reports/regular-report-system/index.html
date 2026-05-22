@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>好理家在報表入口</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --paper: #ffffff;
+      --ink: #17202a;
+      --muted: #667085;
+      --line: #d9e0e8;
+      --blue: #245b73;
+      --green: #2f7b68;
+      --amber: #c47a2c;
+      --violet: #635b8f;
+      --shadow: 0 16px 42px rgba(23, 32, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", Arial, sans-serif;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      width: min(1120px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 46px;
+    }
+
+    header {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-top: 8px solid var(--blue);
+      box-shadow: var(--shadow);
+      padding: 34px 36px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: clamp(30px, 4vw, 50px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      color: #344054;
+      font-size: 18px;
+      margin-top: 14px;
+      max-width: 800px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card, .history {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .card {
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card h2 { font-size: 22px; }
+    .card p { color: #344054; font-size: 15px; }
+
+    .tag {
+      align-self: flex-start;
+      padding: 5px 9px;
+      border-radius: 6px;
+      background: #eef2f6;
+      color: #344054;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .card.weekly { border-top: 5px solid var(--blue); }
+    .card.daily { border-top: 5px solid var(--green); }
+    .card.monthly { border-top: 5px solid var(--amber); }
+    .card.quarterly { border-top: 5px solid var(--violet); }
+
+    .actions {
+      margin-top: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      color: #344054;
+      font-weight: 800;
+      font-size: 14px;
+      background: #ffffff;
+    }
+
+    .button.primary {
+      color: #ffffff;
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .history { margin-top: 18px; }
+
+    .history-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-end;
+      margin-bottom: 14px;
+    }
+
+    .history h2 { font-size: 24px; }
+    .history p { color: #344054; margin-top: 6px; }
+
+    .history-select-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .history-select-card {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+    }
+
+    .history-type {
+      display: inline-flex;
+      color: #ffffff;
+      background: var(--blue);
+      border-radius: 6px;
+      padding: 5px 8px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .history-title {
+      margin-top: 10px;
+      font-weight: 900;
+    }
+
+    .history-meta {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    select {
+      width: 100%;
+      min-height: 42px;
+      margin-top: 12px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #ffffff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 880px) {
+      .grid, .history-select-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 600px) {
+      .page { width: min(100vw - 20px, 1120px); padding-top: 12px; }
+      header { padding: 24px 20px; }
+      .grid, .history-select-grid { grid-template-columns: 1fr; }
+      .history-head { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="eyebrow">好理家在報表入口</div>
+      <h1>日報、週報、月報、長週期報表、成就紀錄與 Codex 演進史</h1>
+      <p class="subtitle">目前已建立 2026/05/01-05/21 日報、2026/05 進行中月報、獎章牆、成就紀錄、報表生成時間線、Codex 使用演進史與夥伴教學檔。日報已依月份分類，避免塞進單一長清單。</p>
+    </header>
+
+    <section class="grid" aria-label="報表分類">
+      <article class="card daily" id="daily">
+        <span class="tag">每日 08:10</span>
+        <h2>每日工作簡報與營運日報</h2>
+        <p>每天早上整合今日工作簡報與前一自然日營運日報，包含行事曆、Gmail 跟進、工作紀錄、核心數據、獎章與下一步。</p>
+        <div class="actions">
+          <a class="button primary" href="daily-report-2026-05-21.html">開啟最新 2026/05/21</a>
+        </div>
+      </article>
+
+      <article class="card weekly" id="weekly">
+        <span class="tag">每週日 20:00</span>
+        <h2>工作週報</h2>
+        <p>整理上一個自然週的工作、營運數據、Google Ads 觀察、主題成果與下週建議。</p>
+        <div class="actions">
+          <a class="button primary" href="weekly-report-2026-05-10-visual.html">開啟 2026/05/10-05/16</a>
+        </div>
+      </article>
+
+      <article class="card monthly" id="monthly">
+        <span class="tag">每月 1 日 20:00</span>
+        <h2>月報</h2>
+        <p>進行中月報會持續接上每日素材，月底後整理成正式月報。</p>
+        <div class="actions">
+          <a class="button primary" href="monthly-report-2026-05-in-progress.html">開啟 2026/05 進行中</a>
+        </div>
+      </article>
+
+      <article class="card quarterly" id="quarterly">
+        <span class="tag">自然季</span>
+        <h2>季報</h2>
+        <p>每季結束後彙整產品、營運、數據、工作流程與成就素材。</p>
+        <div class="actions">
+          <a class="button" href="#">尚未產生</a>
+        </div>
+      </article>
+
+      <article class="card" id="halfyear">
+        <span class="tag">自然半年</span>
+        <h2>半年報</h2>
+        <p>每半年整理一次方向、趨勢、工具成果與下半年優化建議。</p>
+        <div class="actions">
+          <a class="button" href="#">尚未產生</a>
+        </div>
+      </article>
+
+      <article class="card" id="annual">
+        <span class="tag">自然年</span>
+        <h2>年報</h2>
+        <p>年底先做年度預回顧，隔年 1/1 承接草稿產生正式年報。</p>
+        <div class="actions">
+          <a class="button" href="#">尚未產生</a>
+        </div>
+      </article>
+
+      <article class="card" id="codex-evolution">
+        <span class="tag">每日更新</span>
+        <h2>Codex 使用演進史</h2>
+        <p>每天記錄 Codex 工作流調整、踩坑、解法、成果，以及可教給後續夥伴的做法；也追蹤 Kevin 的提問與任務描述回饋。</p>
+        <div class="actions">
+          <a class="button primary" href="codex-evolution-history.html">開啟演進史</a>
+          <a class="button" href="codex-nontechnical-partner-teaching.html">開啟教學檔</a>
+          <a class="button" href="kevin-codex-daily-feedback.html">開啟每日回饋</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="history" aria-labelledby="history-title">
+      <div class="history-head">
+        <div>
+          <h2 id="history-title">歷史報表</h2>
+          <p>先選月份，再選日期。週報、月報與成就紀錄在同一區快速開啟。</p>
+        </div>
+        <span class="tag">21 份日報 + 成就紀錄 + Codex 演進</span>
+      </div>
+
+      <div class="history-select-grid">
+        <article class="history-select-card">
+          <span class="history-type">日報</span>
+          <div class="history-title">2026 年 5 月</div>
+          <div class="history-meta">2026/05/01-05/21</div>
+          <select aria-label="選擇 2026 年 5 月日報" data-report-select>
+            <option value="">選擇日報</option>
+            <option value="daily-report-2026-05-21.html">05/21：工作簡報與營運日報</option>
+            <option value="daily-report-2026-05-20.html">05/20：營運日報</option>
+            <option value="daily-report-2026-05-19.html">05/19：營運日報</option>
+            <option value="daily-report-2026-05-18.html">05/18：營運日報</option>
+            <option value="daily-report-2026-05-17.html">05/17：營運日報</option>
+            <option value="daily-report-2026-05-16.html">05/16：營運日報</option>
+            <option value="daily-report-2026-05-15.html">05/15：營運日報</option>
+            <option value="daily-report-2026-05-14.html">05/14：營運日報</option>
+            <option value="daily-report-2026-05-13.html">05/13：營運日報</option>
+            <option value="daily-report-2026-05-12.html">05/12：營運日報</option>
+            <option value="daily-report-2026-05-11.html">05/11：營運日報</option>
+            <option value="daily-report-2026-05-10.html">05/10：營運日報</option>
+            <option value="daily-report-2026-05-09.html">05/09：營運日報</option>
+            <option value="daily-report-2026-05-08.html">05/08：營運日報</option>
+            <option value="daily-report-2026-05-07.html">05/07：營運日報</option>
+            <option value="daily-report-2026-05-06.html">05/06：營運日報</option>
+            <option value="daily-report-2026-05-05.html">05/05：營運日報</option>
+            <option value="daily-report-2026-05-04.html">05/04：營運日報</option>
+            <option value="daily-report-2026-05-03.html">05/03：營運日報</option>
+            <option value="daily-report-2026-05-02.html">05/02：營運日報</option>
+            <option value="daily-report-2026-05-01.html">05/01：營運日報</option>
+          </select>
+        </article>
+
+        <article class="history-select-card">
+          <span class="history-type">週報</span>
+          <div class="history-title">自然週週報</div>
+          <div class="history-meta">目前 1 份週報</div>
+          <select aria-label="選擇週報" data-report-select>
+            <option value="">選擇週報</option>
+            <option value="weekly-report-2026-05-10-visual.html">2026/05/10 - 05/16</option>
+          </select>
+        </article>
+
+        <article class="history-select-card">
+          <span class="history-type">月報</span>
+          <div class="history-title">2026 年 5 月</div>
+          <div class="history-meta">進行中月報</div>
+          <select aria-label="選擇月報" data-report-select>
+            <option value="">選擇月報</option>
+            <option value="monthly-report-2026-05-in-progress.html">2026/05 進行中</option>
+          </select>
+        </article>
+
+        <article class="history-select-card">
+          <span class="history-type">成就</span>
+          <div class="history-title">成就與獎章</div>
+          <div class="history-meta">給月報、季報與年報追溯</div>
+          <select aria-label="選擇成就紀錄" data-report-select>
+            <option value="">選擇成就紀錄</option>
+            <option value="achievement-record-index.html">成就紀錄索引</option>
+            <option value="badge-ledger-2026-05.html">2026/05 獎章牆</option>
+          </select>
+        </article>
+
+        <article class="history-select-card">
+          <span class="history-type">流程</span>
+          <div class="history-title">流程與時間線</div>
+          <div class="history-meta">自動化與報表規則</div>
+          <select aria-label="選擇流程紀錄" data-report-select>
+            <option value="">選擇流程紀錄</option>
+            <option value="report-generation-timeline.html">報表生成時間線</option>
+            <option value="reporting-process-record.html">流程紀錄</option>
+            <option value="codex-regular-report-tutorial.md">報表教學</option>
+            <option value="codex-evolution-history.html">Codex 使用演進史</option>
+            <option value="codex-nontechnical-partner-teaching.html">Codex 夥伴教學檔</option>
+            <option value="kevin-codex-daily-feedback.html">Kevin 每日 Codex 使用回饋</option>
+          </select>
+        </article>
+
+        <article class="history-select-card">
+          <span class="history-type">發布</span>
+          <div class="history-title">Publish-ready 套件</div>
+          <div class="history-meta">本機預備包；未上傳、未部署、未分享</div>
+          <select aria-label="選擇發布套件" data-report-select>
+            <option value="">選擇發布項目</option>
+            <option value="publish-ready/index.html">本機 publish-ready 入口</option>
+            <option value="publish-ready/PUBLICATION_CHECKLIST.md">發布檢查表</option>
+            <option value="publish-ready/README.md">發布說明</option>
+          </select>
+        </article>
+      </div>
+    </section>
+  </main>
+  <script>
+    document.querySelectorAll("[data-report-select]").forEach((select) => {
+      select.addEventListener("change", (event) => {
+        const target = event.currentTarget.value;
+        if (target) {
+          window.location.href = target;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

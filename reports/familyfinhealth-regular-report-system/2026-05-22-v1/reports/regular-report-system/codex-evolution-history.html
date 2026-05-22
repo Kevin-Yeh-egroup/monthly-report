@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Codex 使用演進歷史</title>
+  <style>
+    :root { --bg:#f5f7fa; --paper:#fff; --ink:#17202a; --muted:#667085; --line:#d9e0e8; --blue:#245b73; --green:#2f7b68; --amber:#c47a2c; --shadow:0 16px 42px rgba(23,32,42,.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--bg); font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",Arial,sans-serif; line-height:1.62; letter-spacing:0; }
+    a { color:inherit; text-decoration:none; }
+    .page { width:min(1120px, calc(100vw - 32px)); margin:0 auto; padding:28px 0 48px; }
+    .topbar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; min-height:38px; padding:8px 12px; border-radius:6px; border:1px solid var(--line); background:#fff; color:#344054; font-size:14px; font-weight:900; }
+    header, section { background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:24px; margin-top:18px; }
+    header { border-top:8px solid var(--blue); box-shadow:var(--shadow); margin-top:0; padding:34px 36px; }
+    h1,h2,h3,p { margin:0; }
+    h1 { font-size:clamp(30px,4vw,48px); line-height:1.08; }
+    h2 { font-size:24px; margin-bottom:12px; }
+    h3 { color:var(--blue); font-size:18px; margin:16px 0 8px; }
+    .eyebrow { color:var(--green); font-size:13px; font-weight:900; margin-bottom:10px; }
+    .subtitle, .caption { color:var(--muted); margin-top:10px; }
+    table { width:100%; border-collapse:collapse; border:1px solid var(--line); font-size:14px; margin-top:12px; }
+    th,td { padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:#f7f9fb; color:#344054; font-size:12px; font-weight:900; }
+    tr:last-child td { border-bottom:none; }
+    code, pre { background:#eef2f6; border-radius:6px; }
+    code { padding:2px 5px; }
+    pre { padding:14px; overflow:auto; }
+    ul, ol { margin:0; padding-left:22px; color:#344054; }
+    li { margin:6px 0; }
+    .entry { border-left:5px solid var(--amber); }
+    @media (max-width:760px) { .page { width:min(100vw - 20px,1120px); padding-top:12px; } header,section { padding:18px; overflow-x:auto; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="topbar" aria-label="Codex 演進導覽">
+      <a class="button" href="report-index.html">回報表入口</a>
+      <a class="button" href="codex-evolution-history.md">開啟 Markdown</a>
+      <a class="button" href="codex-nontechnical-partner-teaching.html">教學檔</a>
+    </nav>
+    <header>
+      <div class="eyebrow">Codex Evolution</div>
+      <h1>Codex 使用演進歷史</h1>
+      <p class="subtitle">每天記錄 Kevin 使用 Codex 之後的工作方式演進：調整、踩坑、解法、成果與可教學素材。日期以台灣時間為準。</p>
+    </header>
+
+    <section>
+      <h2>紀錄原則</h2>
+      <ol>
+        <li>只記錄可追溯、可教學、可複用的變化，不寫流水帳。</li>
+        <li>每日先留下素材，週報整理成模式，月報整理成能力，季報整理成策略。</li>
+        <li>坑洞要寫成「症狀、原因、解法、下次預防」。</li>
+        <li>成果要連到具體產出，例如報表、檔案、自動化、網站功能、教學素材或流程改善。</li>
+        <li>對沒有資訊背景的人，要用任務語言說明，不用工程術語當主軸。</li>
+        <li>每日也要同步整理 Kevin 的提問與任務敘述回饋，寫入 <code>kevin-codex-daily-feedback.md</code>。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>每日紀錄格式</h2>
+      <pre><code>### YYYY-MM-DD
+
+- 今日 Codex 用法：
+- 調整過什麼：
+- 踩過什麼坑：
+- 解法或新規則：
+- 產出成果：
+- 可教給夥伴的一句話：
+- 證據來源：</code></pre>
+    </section>
+
+    <section>
+      <h2>週月季整理規則</h2>
+      <table>
+        <thead><tr><th>週期</th><th>整理重點</th><th>輸出方式</th></tr></thead>
+        <tbody>
+          <tr><td>每日</td><td>今日用法、調整、坑、成果</td><td>追加到本檔，並在日報保留「Codex 演進紀錄」摘要</td></tr>
+          <tr><td>每週</td><td>本週學到的工作模式、反覆問題、最有用的提示語</td><td>寫入週報的「Codex 演進週記」區塊</td></tr>
+          <tr><td>每月</td><td>已穩定下來的流程、可複用模板、教學素材更新</td><td>寫入月報，並更新教學檔</td></tr>
+          <tr><td>每季</td><td>能複製給團隊的工作系統、角色分工與風險控管</td><td>寫入季報，整理成夥伴訓練建議</td></tr>
+          <tr><td>每日回饋</td><td>Kevin 的提問方式、任務描述、追問品質、可改善處</td><td>追加到 <code>kevin-codex-daily-feedback.md</code>，並在日報保留摘要</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="entry">
+      <h2>2026-05-22</h2>
+      <ul>
+        <li>今日 Codex 用法：把既有固定報表延伸成「Codex 使用演進史」與「非資訊背景夥伴教學」的長期系統。</li>
+        <li>調整過什麼：日報追加 Codex 使用演進與 Kevin 每日提問回饋；週報、月報、季報整理成可報告、可教學內容。</li>
+        <li>踩過什麼坑：Codex 使用經驗原本容易混在工作成果裡，缺少獨立紀錄線。</li>
+        <li>解法或新規則：新增長期總帳、夥伴教學主檔與每日回饋檔，並寫回自動化提示。</li>
+        <li>產出成果：建立 Codex 演進紀錄格式、週月季整理規則、教學檔骨架與每日提問回饋格式。</li>
+        <li>可教給夥伴的一句話：不要把 Codex 當成會寫程式的黑盒子，把它當成能幫你整理任務、提出下一步、留下紀錄的工作夥伴。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

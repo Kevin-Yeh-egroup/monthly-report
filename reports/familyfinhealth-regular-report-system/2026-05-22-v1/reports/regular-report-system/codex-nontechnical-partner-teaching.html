@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Codex 夥伴教學檔</title>
+  <style>
+    :root { --bg:#f5f7fa; --paper:#fff; --ink:#17202a; --muted:#667085; --line:#d9e0e8; --blue:#245b73; --green:#2f7b68; --amber:#c47a2c; --shadow:0 16px 42px rgba(23,32,42,.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--bg); font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",Arial,sans-serif; line-height:1.62; letter-spacing:0; }
+    a { color:inherit; text-decoration:none; }
+    .page { width:min(1120px, calc(100vw - 32px)); margin:0 auto; padding:28px 0 48px; }
+    .topbar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; min-height:38px; padding:8px 12px; border-radius:6px; border:1px solid var(--line); background:#fff; color:#344054; font-size:14px; font-weight:900; }
+    header, section { background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:24px; margin-top:18px; }
+    header { border-top:8px solid var(--blue); box-shadow:var(--shadow); margin-top:0; padding:34px 36px; }
+    h1,h2,h3,p { margin:0; }
+    h1 { font-size:clamp(30px,4vw,48px); line-height:1.08; }
+    h2 { font-size:24px; margin-bottom:12px; }
+    h3 { color:var(--blue); font-size:18px; margin:16px 0 8px; }
+    .eyebrow { color:var(--green); font-size:13px; font-weight:900; margin-bottom:10px; }
+    .subtitle, .caption { color:var(--muted); margin-top:10px; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:8px; background:#fbfcfd; padding:16px; }
+    table { width:100%; border-collapse:collapse; border:1px solid var(--line); font-size:14px; margin-top:12px; }
+    th,td { padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:#f7f9fb; color:#344054; font-size:12px; font-weight:900; }
+    tr:last-child td { border-bottom:none; }
+    code, pre { background:#eef2f6; border-radius:6px; }
+    code { padding:2px 5px; }
+    pre { padding:14px; overflow:auto; }
+    ul, ol { margin:0; padding-left:22px; color:#344054; }
+    li { margin:6px 0; }
+    @media (max-width:760px) { .page { width:min(100vw - 20px,1120px); padding-top:12px; } header,section { padding:18px; overflow-x:auto; } .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="topbar" aria-label="教學檔導覽">
+      <a class="button" href="report-index.html">回報表入口</a>
+      <a class="button" href="codex-nontechnical-partner-teaching.md">開啟 Markdown</a>
+      <a class="button" href="codex-evolution-history.html">演進史</a>
+    </nav>
+    <header>
+      <div class="eyebrow">Codex Training</div>
+      <h1>Codex 夥伴教學檔</h1>
+      <p class="subtitle">給第一次接觸 Codex、沒有資訊或程式背景的夥伴。目標不是教大家寫程式，而是學會用 Codex 協助整理工作、產出文件、檢查成果與留下紀錄。</p>
+    </header>
+
+    <section>
+      <h2>教學目標</h2>
+      <ol>
+        <li>用自然語言說清楚要 Codex 幫忙的任務。</li>
+        <li>把大任務拆成「目標、資料、格式、限制、檢查方式」。</li>
+        <li>看懂 Codex 回報的進度，知道何時要補資料或修正方向。</li>
+        <li>產出基本文件、報表、教案、整理表或工作清單。</li>
+        <li>知道哪些事情可以交給 Codex，哪些事情需要人最後確認。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>核心觀念</h2>
+      <table>
+        <thead><tr><th>觀念</th><th>白話說法</th><th>教學提醒</th></tr></thead>
+        <tbody>
+          <tr><td>任務描述</td><td>先說你要完成什麼，不是先問工具怎麼用</td><td>「請幫我整理成主管看得懂的週報」比「幫我用 Markdown」更好</td></tr>
+          <tr><td>資料來源</td><td>告訴 Codex 可以參考哪些檔案、信件或紀錄</td><td>沒有資料時，Codex 只能先做模板或假設</td></tr>
+          <tr><td>輸出格式</td><td>指定要表格、段落、清單、簡報或教案</td><td>格式越清楚，成果越接近可直接使用</td></tr>
+          <tr><td>限制條件</td><td>說明不要做什麼、語氣要怎樣、誰會看</td><td>例如不要流水帳、不要太技術、要繁體中文</td></tr>
+          <tr><td>驗證方式</td><td>最後要檢查什麼才算完成</td><td>例如日期正確、連結可開、資料來源有註明</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>90 分鐘入門課</h2>
+      <div class="grid">
+        <article class="card"><h3>1. 開場 10 分鐘</h3><p>說明 Codex 是能協助讀資料、整理資訊、寫文件與檢查成果的工作夥伴。</p></article>
+        <article class="card"><h3>2. 五欄位 15 分鐘</h3><p>練習說清楚目標、資料、格式、限制與檢查方式。</p></article>
+        <article class="card"><h3>3. 示範 20 分鐘</h3><p>從零示範如何把一段資料變成可用文件，再請 Codex 自我檢查。</p></article>
+        <article class="card"><h3>4. 練習 25 分鐘</h3><p>每位夥伴完成一個真實工作小任務，例如週報、會議紀錄或活動分工。</p></article>
+        <article class="card"><h3>5. 常見坑 15 分鐘</h3><p>示範只說「幫我整理」會發生什麼，以及如何補上對象、用途與限制。</p></article>
+        <article class="card"><h3>6. 收尾 5 分鐘</h3><p>建立三個習慣：先說目標、產出初版、最後檢查。</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>好任務模板</h2>
+      <pre><code>我要完成：
+請參考：
+請輸出成：
+限制是：
+完成前請檢查：</code></pre>
+    </section>
+
+    <section>
+      <h2>安全邊界</h2>
+      <ul>
+        <li>個資、帳號、密碼、金流、醫療、法律、財務建議等內容，不能只靠 Codex 判斷。</li>
+        <li>對外發布前，要由負責人確認內容、數字、語氣與權限。</li>
+        <li>如果資料來源不完整，要標註「目前依已提供資料整理」。</li>
+        <li>Codex 可以幫忙做初稿與檢查，但不能替人承擔專業責任。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
+

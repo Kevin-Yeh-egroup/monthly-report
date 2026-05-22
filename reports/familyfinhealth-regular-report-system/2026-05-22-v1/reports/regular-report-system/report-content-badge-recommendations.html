@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>報表內容建議與 Kevin 獎章機制</title>
+  <style>
+    :root { --bg:#f5f7fa; --paper:#fff; --ink:#17202a; --muted:#667085; --line:#d9e0e8; --blue:#245b73; --green:#2f7b68; --amber:#c47a2c; --red:#b5473a; --shadow:0 16px 42px rgba(23,32,42,.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC",Arial,sans-serif; line-height:1.58; letter-spacing:0; }
+    a { color:var(--blue); text-decoration:none; font-weight:800; }
+    h1,h2,h3,p { margin:0; }
+    .page { width:min(1120px, calc(100vw - 32px)); margin:0 auto; padding:28px 0 48px; }
+    .topbar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; min-height:38px; padding:8px 12px; border:1px solid var(--line); border-radius:6px; background:#fff; color:#344054; font-size:14px; font-weight:900; }
+    header { border:1px solid var(--line); border-top:8px solid var(--blue); background:var(--paper); box-shadow:var(--shadow); padding:34px 36px; }
+    .eyebrow { color:var(--green); font-size:13px; font-weight:900; margin-bottom:10px; }
+    h1 { font-size:clamp(30px,4vw,48px); line-height:1.08; }
+    .subtitle { margin-top:14px; color:#344054; font-size:18px; max-width:820px; }
+    section { margin-top:18px; border:1px solid var(--line); border-radius:8px; background:var(--paper); padding:22px; }
+    .section-head { display:flex; justify-content:space-between; gap:14px; align-items:flex-end; margin-bottom:16px; }
+    .caption { color:var(--muted); font-size:14px; margin-top:5px; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .card { border:1px solid var(--line); border-radius:8px; padding:16px; background:#fbfcfd; }
+    .card h3 { font-size:18px; margin-bottom:8px; }
+    ul { margin:0; padding-left:20px; }
+    li { margin:6px 0; }
+    table { width:100%; border-collapse:collapse; border:1px solid var(--line); font-size:14px; }
+    th,td { padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:#f7f9fb; color:#344054; font-size:12px; font-weight:900; }
+    tr:last-child td { border-bottom:none; }
+    .source-list li { overflow-wrap:anywhere; }
+    @media (max-width: 760px) { .page { width:min(100vw - 20px,1120px); padding-top:12px; } header,section { padding:20px; } .grid { grid-template-columns:1fr; } .section-head { flex-direction:column; align-items:flex-start; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="topbar" aria-label="報表建議導覽">
+      <a class="button" href="report-index.html">回報表入口</a>
+      <a class="button" href="report-content-badge-recommendations.md">開啟文字版</a>
+    </nav>
+    <header>
+      <div class="eyebrow">報表方法論</div>
+      <h1>報表內容建議與 Kevin 獎章機制</h1>
+      <p class="subtitle">把日報、週報、月報做成可回溯、可決策、能看見進展的系統；獎章用來標記真實成果，不做排名或刷分。</p>
+    </header>
+
+    <section aria-labelledby="content-title">
+      <div class="section-head">
+        <div>
+          <h2 id="content-title">報表內容建議</h2>
+          <p class="caption">依週期分層：日報保留事實，週報整理脈絡，月報形成決策。</p>
+        </div>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>日報</h3>
+          <ul>
+            <li>本日主訊息</li>
+            <li>本日工作紀錄</li>
+            <li>核心數據與異常</li>
+            <li>明日優先事項</li>
+            <li>今日獎章</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>週報</h3>
+          <ul>
+            <li>本週重點摘要</li>
+            <li>工作成果地圖</li>
+            <li>KPI、Ads 與漏斗</li>
+            <li>下週預計工作</li>
+            <li>本週獎章</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>月報</h3>
+          <ul>
+            <li>月度主結論</li>
+            <li>里程碑與主題佔比</li>
+            <li>月度 Ads 與產品趨勢</li>
+            <li>跨月待辦</li>
+            <li>月度獎章牆</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="badge-title">
+      <div class="section-head">
+        <div>
+          <h2 id="badge-title">Kevin 獎章機制</h2>
+          <p class="caption">只獎勵有證據的進展，並把獎章連回下一步行動。</p>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>獎章</th><th>觸發條件</th><th>證據來源</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>今日小勝</td><td>完成至少 1 個可交付工作或明確推進</td><td>Git、Cursor、Codex、手動補充</td></tr>
+          <tr><td>資料偵探</td><td>找到缺漏資料、修正資料口徑或補齊來源</td><td>Gmail、後台、報表紀錄</td></tr>
+          <tr><td>轉換觀察員</td><td>找出 Ads、訪客、註冊、工具使用間的明確異常</td><td>Google Ads、familyfinhealth</td></tr>
+          <tr><td>自動化推進</td><td>報表、skill、agent 或流程自動化有改善</td><td>Codex、repo、流程文件</td></tr>
+          <tr><td>產品打磨</td><td>完成使用者可感知的頁面、工具、流程或文案優化</td><td>Git、GitHub、Cursor</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section aria-labelledby="sources-title">
+      <div class="section-head">
+        <div>
+          <h2 id="sources-title">參考來源</h2>
+          <p class="caption">本頁依據 websearch 結果整理，後續可持續擴充。</p>
+        </div>
+      </div>
+      <ul class="source-list">
+        <li><a href="https://www.tableau.com/kpi/what-is-kpi-dashboard">Tableau：KPI Dashboard</a></li>
+        <li><a href="https://www.tableau.com/dashboard/what-is-dashboard">Tableau：Dashboard Best Practices</a></li>
+        <li><a href="https://nam.powerbi.microsoft.com/en-nz/blog/the-art-and-science-of-effective-dashboard-design/">Microsoft Power BI：Effective Dashboard Design</a></li>
+        <li><a href="https://www.hbs.edu/faculty/Pages/item.aspx?num=40244">Harvard Business School：The Power of Small Wins</a></li>
+        <li><a href="https://stackoverflow.blog/2021/04/12/stack-overflow-badges-explained/">Stack Overflow：Badges Explained</a></li>
+        <li><a href="https://arxiv.org/abs/2008.06125">arXiv：One Size Does Not Fit All, Badge Behavior</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
