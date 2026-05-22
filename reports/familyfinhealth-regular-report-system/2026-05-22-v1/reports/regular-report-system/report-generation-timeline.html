@@ -45,8 +45,8 @@
       <h2>週期規則</h2>
       <ul>
         <li>每日工作簡報與營運日報：每天 08:10 產生。</li>
-        <li>週報：每週日 20:00 產生上一個自然週。</li>
-        <li>月報與長週期報表：每月 1 日 20:00 依自然月、季、半年、年判斷。</li>
+        <li>週報：每週日 20:00 產生上一個週日到週六的工作週報；若週期跨月份，正式歷史索引拆成月內片段。</li>
+        <li>月報與長週期報表：每月 1 日 00:00 依自然月、季、半年、年判斷。</li>
         <li>年度預回顧：每年 12/28 20:00。</li>
         <li>Codex 使用演進史：每天隨日報更新，週報、月報、季報與年報做摘要與教學化整理。</li>
         <li>Codex 夥伴教學檔：流程或教學素材有新發現時更新。</li>
@@ -72,11 +72,15 @@
       <table>
         <thead><tr><th>報表</th><th>區間</th><th>預定生成時間</th><th>狀態</th><th>產出</th></tr></thead>
         <tbody>
+          <tr><td>週報</td><td>2026/05/01-2026/05/02</td><td>2026/05/22 回填</td><td>已完成</td><td><code>weekly-report-2026-05-01-visual.html</code></td></tr>
+          <tr><td>週報</td><td>2026/05/03-2026/05/09</td><td>2026/05/22 回填</td><td>已完成</td><td><code>weekly-report-2026-05-03-visual.html</code></td></tr>
           <tr><td>週報</td><td>2026/05/10-2026/05/16</td><td>2026/05/17 20:00</td><td>已完成</td><td><code>weekly-report-2026-05-10-visual.html</code></td></tr>
           <tr><td>週報</td><td>2026/05/17-2026/05/23</td><td>2026/05/24 20:00</td><td>待產生</td><td>尚未產生</td></tr>
-          <tr><td>月報</td><td>2026/05/01-2026/05/31</td><td>2026/06/01 20:00</td><td>進行中</td><td><code>monthly-report-2026-05-in-progress.html</code></td></tr>
-          <tr><td>季報 Q2</td><td>2026/04/01-2026/06/30</td><td>2026/07/01 20:00</td><td>待產生</td><td>尚未產生</td></tr>
-          <tr><td>半年報 H1</td><td>2026/01/01-2026/06/30</td><td>2026/07/01 20:00</td><td>待產生</td><td>尚未產生</td></tr>
+          <tr><td>週報</td><td>2026/05/24-2026/05/30</td><td>2026/05/31 20:00</td><td>待產生</td><td>尚未產生</td></tr>
+          <tr><td>週報</td><td>2026/05/31</td><td>2026/06/07 20:00</td><td>待產生</td><td>跨月週的 5 月片段</td></tr>
+          <tr><td>月報</td><td>2026/05/01-2026/05/31</td><td>2026/06/01 00:00</td><td>進行中</td><td><code>monthly-report-2026-05-in-progress.html</code></td></tr>
+          <tr><td>季報 Q2</td><td>2026/04/01-2026/06/30</td><td>2026/07/01 00:00</td><td>待產生</td><td>尚未產生</td></tr>
+          <tr><td>半年報 H1</td><td>2026/01/01-2026/06/30</td><td>2026/07/01 00:00</td><td>待產生</td><td>尚未產生</td></tr>
         </tbody>
       </table>
     </section>
@@ -102,7 +106,7 @@
           <tr><td><code>automation-7</code> 每日工作簡報與營運日報</td><td>每天 08:10</td><td>今日工作簡報 + 前一自然日營運日報</td><td>啟用</td></tr>
           <tr><td><code>automation</code> 每日工作簡報</td><td>原週一至週五 09:00</td><td>已併入 <code>automation-7</code></td><td>暫停</td></tr>
           <tr><td><code>automation-6</code> 工作週報</td><td>每週日 20:00</td><td>上一自然週週報</td><td>啟用</td></tr>
-          <tr><td><code>automation-8</code> 長週期報表</td><td>每月 1 日 20:00</td><td>月報、季報、半年報、年報</td><td>啟用</td></tr>
+          <tr><td><code>automation-8</code> 長週期報表</td><td>每月 1 日 00:00</td><td>月報、季報、半年報、年報</td><td>啟用</td></tr>
           <tr><td><code>automation-9</code> 年度預回顧</td><td>每年 12/28 20:00</td><td>年度草稿與成就素材</td><td>啟用</td></tr>
         </tbody>
       </table>

@@ -6,20 +6,56 @@
   <meta http-equiv="refresh" content="0; url=reports/regular-report-system/index.html" />
   <title>好理家在報表入口</title>
   <style>
-    body { margin: 0; font-family: "Segoe UI", "Noto Sans TC", Arial, sans-serif; color: #17201b; background: #f5f7f4; line-height: 1.65; }
-    main { width: min(880px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0; }
-    .card { background: #fff; border: 1px solid #dbe3dc; border-radius: 8px; padding: 24px; }
-    h1 { margin: 0; font-size: 36px; line-height: 1.15; }
+    body {
+      margin: 0;
+      color: #17201b;
+      background: #f5f7f4;
+      font-family: "Segoe UI", "Noto Sans TC", Arial, sans-serif;
+      line-height: 1.65;
+      letter-spacing: 0;
+    }
+
+    main {
+      width: min(880px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #dbe3dc;
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 36px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
     p { color: #66716a; }
-    a { display: inline-flex; align-items: center; min-height: 40px; margin-top: 12px; padding: 8px 14px; border-radius: 8px; background: #1d7f55; color: #fff; text-decoration: none; font-weight: 700; }
-    code { background: #eef3ef; padding: 2px 5px; border-radius: 5px; }
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      margin-top: 12px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: #1d7f55;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
   <main>
     <section class="card">
       <h1>好理家在報表入口</h1>
-      <p>正在開啟公開 production 報表入口。此部署設定為公開可看，但使用 robots.txt 與 X-Robots-Tag: noindex, nofollow 提醒搜尋引擎不要收錄。</p>
+      <p>這個頁面會自動轉到目前的報表入口。公開 production 版本仍以 robots.txt 與 X-Robots-Tag: noindex, nofollow 控制搜尋引擎收錄，但不是存取權限控管。</p>
       <a href="reports/regular-report-system/index.html">開啟報表入口</a>
     </section>
   </main>

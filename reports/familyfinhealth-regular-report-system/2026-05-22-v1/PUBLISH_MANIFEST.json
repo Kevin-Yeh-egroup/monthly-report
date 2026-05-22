@@ -1,12 +1,17 @@
 {
-    "generatedAt":  "2026-05-22 18:28:01 +08:00",
+    "generatedAt":  "2026-05-22 19:26:12 +08:00",
     "workflow":  "publish-codex-report",
     "workflowVersion":  "cross-device-static-v2",
-    "status":  "public-production-deployed",
+    "status":  "public-production-deploy-approved",
     "sensitivityDefault":  "public-production",
     "accessModel":  "publicly viewable production deployment with noindex indexing controls",
     "reportSlug":  "regular-report-system",
     "entry":  "reports/regular-report-system/index.html",
+    "latestLocalUpdate":  {
+                              "updatedAt":  "2026-05-22 19:26:12 +08:00",
+                              "change":  "Publishing the current local publish-ready package to public production: weekly card shows only the most recent week, weekly history remains complete, source-priority rules are recorded, and automation-8 monthly/long-cycle schedule is set to every month day 1 at 00:00.",
+                              "publicDeploymentStatus":  "Approved by Kevin in chat on 2026-05-22 and being deployed to GitHub/Vercel production in this task."
+                          },
     "packageType":  "pure-static",
     "externalActions":  {
                             "githubUploadApproved":  true,
@@ -29,7 +34,10 @@
     "crossDeviceNotes":  [
                              "Public production release requested by Kevin on 2026-05-22.",
                              "Do not rely on app-level Basic Auth middleware in this no-framework static package.",
-                             "robots.txt and X-Robots-Tag noindex are indexing requests, not access control."
+                             "robots.txt and X-Robots-Tag noindex are indexing requests, not access control.",
+                             "Local publish-ready package was updated after the last production deployment with weekly-report-2026-05-01-visual.html and weekly-report-2026-05-03-visual.html; GitHub/Vercel were not updated in that backfill task.",
+                             "Source priority is now first-tier objective sources first: familyfinhealth overview, familyfinhealth trends, Google Ads campaign, Codex/GitHub/Vercel records; Gmail report summaries are second-tier fallback or cross-check sources.",
+                             "The local report entry and automation schedule changed after the last production deployment; Kevin requested deploying the local package to public production in the current task."
                          ],
     "copiedFiles":  [
                         "achievement-record-index.html",
@@ -73,6 +81,9 @@
                         "report-index.html",
                         "reporting-process-record.html",
                         "reporting-process-record.md",
+                        "weekly-report-2026-05-01-05-09-backfill-overview.html",
+                        "weekly-report-2026-05-01-visual.html",
+                        "weekly-report-2026-05-03-visual.html",
                         "weekly-report-2026-05-10-visual.html"
                     ]
 }

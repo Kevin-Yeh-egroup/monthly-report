@@ -133,6 +133,12 @@
       border-color: var(--blue);
     }
 
+    .button.secondary {
+      color: var(--blue);
+      background: #ffffff;
+      border-color: rgba(36, 91, 115, 0.35);
+    }
+
     .history { margin-top: 18px; }
 
     .history-head {
@@ -213,7 +219,7 @@
     <header>
       <div class="eyebrow">好理家在報表入口</div>
       <h1>日報、週報、月報、長週期報表、成就紀錄與 Codex 演進史</h1>
-      <p class="subtitle">目前已建立 2026/05/01-05/21 日報、2026/05 進行中月報、獎章牆、成就紀錄、報表生成時間線、Codex 使用演進史與夥伴教學檔。日報已依月份分類，避免塞進單一長清單。</p>
+      <p class="subtitle">目前已建立 2026/05/01-05/21 日報、3 份週報、2026/05 進行中月報、獎章牆、成就紀錄、報表生成時間線、Codex 使用演進史與夥伴教學檔。日報已依月份分類，週報遇到跨月週會拆成月內片段。</p>
     </header>
 
     <section class="grid" aria-label="報表分類">
@@ -229,7 +235,7 @@
       <article class="card weekly" id="weekly">
         <span class="tag">每週日 20:00</span>
         <h2>工作週報</h2>
-        <p>整理上一個自然週的工作、營運數據、Google Ads 觀察、主題成果與下週建議。</p>
+        <p>整理上一個自然週的工作、營運數據、Google Ads 觀察、主題成果與下週建議。首頁只顯示離目前最近的一週，完整歷史在下方選單。</p>
         <div class="actions">
           <a class="button primary" href="weekly-report-2026-05-10-visual.html">開啟 2026/05/10-05/16</a>
         </div>
@@ -289,7 +295,7 @@
           <h2 id="history-title">歷史報表</h2>
           <p>先選月份，再選日期。週報、月報與成就紀錄在同一區快速開啟。</p>
         </div>
-        <span class="tag">21 份日報 + 成就紀錄 + Codex 演進</span>
+        <span class="tag">21 份日報 + 3 份週報 + 成就紀錄 + Codex 演進</span>
       </div>
 
       <div class="history-select-grid">
@@ -326,10 +332,12 @@
         <article class="history-select-card">
           <span class="history-type">週報</span>
           <div class="history-title">自然週週報</div>
-          <div class="history-meta">目前 1 份週報</div>
+          <div class="history-meta">目前 3 份週報</div>
           <select aria-label="選擇週報" data-report-select>
             <option value="">選擇週報</option>
             <option value="weekly-report-2026-05-10-visual.html">2026/05/10 - 05/16</option>
+            <option value="weekly-report-2026-05-03-visual.html">2026/05/03 - 05/09</option>
+            <option value="weekly-report-2026-05-01-visual.html">2026/05/01 - 05/02</option>
           </select>
         </article>
 
@@ -340,6 +348,19 @@
           <select aria-label="選擇月報" data-report-select>
             <option value="">選擇月報</option>
             <option value="monthly-report-2026-05-in-progress.html">2026/05 進行中</option>
+          </select>
+        </article>
+
+        <article class="history-select-card">
+          <span class="history-type">長週期</span>
+          <div class="history-title">季報、半年報與年報</div>
+          <div class="history-meta">產生後要像日報一樣列入歷史</div>
+          <select aria-label="選擇長週期報表" data-report-select>
+            <option value="">選擇長週期報表</option>
+            <option value="">季報尚未產生</option>
+            <option value="">半年報尚未產生</option>
+            <option value="">年度預回顧尚未產生</option>
+            <option value="">年報尚未產生</option>
           </select>
         </article>
 

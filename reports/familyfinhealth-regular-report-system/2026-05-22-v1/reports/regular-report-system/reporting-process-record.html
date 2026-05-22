@@ -54,6 +54,9 @@
         <li>每日要根據 Kevin 的提問、任務敘述與追問方式給回饋，指出做得好的地方、可以更清楚的地方與隔天練習。</li>
         <li>是否需要 agent 要先做判斷：清楚的一次性任務可直接處理；長期追蹤、策略、教學、跨工具回顧與成長回饋要納入 agent/反思視角。</li>
         <li>固定報表可走 <code>publish-codex-report</code>，但預設只建立本機 <code>publish-ready</code> 套件；未經 Kevin 批准不得上傳、部署或分享網址。</li>
+        <li>資料來源優先級：familyfinhealth 後台 overview、familyfinhealth 後台 trends、Google Ads campaign、Codex/GitHub/Vercel 紀錄是第一順位；信箱摘要是第二順位。</li>
+        <li>週報以週日到週六為一週；若同一週橫跨月份，正式週報歷史拆成月內片段。</li>
+        <li>Kevin 的目標狀態是本機 <code>publish-ready/</code> 更新後公開 production 站也自動更新；啟用前仍需明確批准，且不得自動處理敏感內容、權限、網域或移除 noindex。</li>
       </ol>
     </section>
 
@@ -72,6 +75,10 @@
           <tr><td>2026-05-22</td><td>新增 Kevin 每日 Codex 使用回饋</td><td>根據每日提問與任務敘述整理回饋</td><td><code>kevin-codex-daily-feedback.md</code></td></tr>
           <tr><td>2026-05-22</td><td>補上 agent 使用判斷規則</td><td>長期任務需要分流與反思視角</td><td><code>automation-7</code></td></tr>
           <tr><td>2026-05-22</td><td>固定報表接上 <code>publish-codex-report</code> 流程</td><td>先建立本機發布預備包，保留審核與批准關卡，避免未確認敏感度前外流</td><td><code>scripts/build-report-publish-ready.ps1</code>、<code>publish-ready/</code></td></tr>
+          <tr><td>2026-05-22</td><td>明確化資料來源優先級</td><td>報表應優先從客觀後台、Ads 與系統紀錄取得資訊，信箱報表只作第二順位</td><td><code>codex-regular-report-tutorial.md</code>、<code>reporting-process-record.md</code></td></tr>
+          <tr><td>2026-05-22</td><td>明確化跨月週報切分</td><td>5/1-5/9 應拆成 5/1-5/2 與 5/3-5/9 兩份正式週報</td><td><code>report-index.html</code>、<code>report-generation-timeline.md/html</code></td></tr>
+          <tr><td>2026-05-22</td><td>記錄公開站自動同步目標但暫不啟用</td><td>GitHub/Vercel production 自動部署屬外部寫入與部署，需額外批准</td><td><code>codex-regular-report-tutorial.md</code>、<code>reporting-process-record.md</code></td></tr>
+          <tr><td>2026-05-22</td><td>月報/長週期報表排程改為每月 1 日 00:00</td><td>Kevin 要月報排程排每月 1 日 0:00；同一自動化也負責季報、半年報與年報檢查</td><td><code>automation-8</code>、<code>report-generation-timeline.md/html</code></td></tr>
         </tbody>
       </table>
     </section>

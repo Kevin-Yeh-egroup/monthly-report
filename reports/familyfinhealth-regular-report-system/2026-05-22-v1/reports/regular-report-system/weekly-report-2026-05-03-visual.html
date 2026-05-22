@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>好理家在工作週報｜2026/05/03 - 2026/05/09</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --paper: #ffffff;
+      --ink: #1f2933;
+      --muted: #667085;
+      --line: #d8e0e8;
+      --blue: #245b73;
+      --green: #2f7b68;
+      --amber: #c47a2c;
+      --red: #b45f56;
+      --soft: #eef3f7;
+      --shadow: 0 16px 42px rgba(31, 41, 51, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", Arial, sans-serif;
+      line-height: 1.6;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, p { margin: 0; }
+
+    .page {
+      width: min(1160px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0 44px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .nav a {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .nav a.active {
+      color: #ffffff;
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .report {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 34px 36px 28px;
+      border-top: 8px solid var(--blue);
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(120deg, rgba(36, 91, 115, 0.1), rgba(47, 123, 104, 0.07) 48%, rgba(196, 122, 44, 0.1));
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 28px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 4vw, 50px);
+      line-height: 1.08;
+      letter-spacing: 0;
+      max-width: 780px;
+    }
+
+    .subtitle {
+      margin-top: 16px;
+      color: #344054;
+      font-size: 18px;
+      max-width: 800px;
+    }
+
+    .datebox {
+      border: 1px solid rgba(216, 224, 232, 0.95);
+      border-radius: 8px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .datebox .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .datebox .range {
+      margin-top: 8px;
+      color: var(--blue);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .datebox .note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      border-bottom: 1px solid var(--line);
+    }
+
+    .kpi {
+      min-height: 126px;
+      padding: 18px;
+      border-right: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .kpi:last-child { border-right: none; }
+
+    .kpi .label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .kpi .value {
+      margin-top: 8px;
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .kpi .note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .good .value { color: var(--green); }
+    .warn .value { color: var(--amber); }
+    .risk .value { color: var(--red); }
+    .info .value { color: var(--blue); }
+
+    section {
+      padding: 30px 36px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-child { border-bottom: none; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      color: var(--blue);
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .caption {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: var(--soft);
+    }
+
+    .card p {
+      margin-top: 8px;
+      color: #344054;
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f7fafc;
+      color: #344054;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    .number { font-variant-numeric: tabular-nums; font-weight: 900; white-space: nowrap; }
+    .positive { color: var(--green); }
+    .risk-text { color: var(--red); font-weight: 900; }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+    }
+
+    .day {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #ffffff;
+    }
+
+    .day .date {
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .day .message {
+      color: #344054;
+      font-size: 14px;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .action {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      background: #ffffff;
+    }
+
+    .action strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .action p {
+      color: #344054;
+      font-size: 14px;
+    }
+
+    .footnote {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid,
+      .cards,
+      .actions {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(100vw - 20px, 1160px); }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .nav { justify-content: flex-start; }
+      .hero, section { padding: 24px 18px; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      h1 { font-size: 30px; }
+      .subtitle { font-size: 16px; }
+      table { display: block; overflow-x: auto; }
+      .day { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="topbar" aria-label="報表導覽">
+      <a class="brand" href="report-index.html">好理家在報表入口</a>
+      <div class="nav">
+        <a href="weekly-report-2026-05-10-visual.html">2026/05/10-05/16</a>
+        <a class="active" href="weekly-report-2026-05-03-visual.html">2026/05/03-05/09</a>
+        <a href="weekly-report-2026-05-01-visual.html">2026/05/01-05/02</a>
+      </div>
+    </nav>
+
+    <article class="report">
+      <header class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">好理家在工作週報｜完整自然週</div>
+            <h1>註冊高峰出現，但廣告流量未穩定轉成核心使用</h1>
+            <p class="subtitle">5/3-5/9 是 5 月第一個完整週期。5/3 會員註冊日增 +136，是本週關鍵高峰；但後續註冊增量快速回落，且 5/4 Ads 點擊異常偏低，顯示投放表現、註冊流程與站內核心服務入口都需要一起檢查。</p>
+          </div>
+          <aside class="datebox">
+            <div class="label">報表區間</div>
+            <div class="range">2026/05/03 - 05/09</div>
+            <div class="note">週期採週日到週六；此區間為 5 月完整自然週。</div>
+          </aside>
+        </div>
+      </header>
+
+      <div class="kpis" aria-label="本週關鍵指標">
+        <div class="kpi info">
+          <div class="label">日報覆蓋</div>
+          <div class="value">7 天</div>
+          <div class="note">5/3 至 5/9</div>
+        </div>
+        <div class="kpi good">
+          <div class="label">會員註冊日增合計</div>
+          <div class="value">+222</div>
+          <div class="note">日均 +31.7 人</div>
+        </div>
+        <div class="kpi good">
+          <div class="label">唯一訪客日增合計</div>
+          <div class="value">+3,270</div>
+          <div class="note">日均 +467 人次</div>
+        </div>
+        <div class="kpi info">
+          <div class="label">期末累計會員</div>
+          <div class="value">4,576</div>
+          <div class="note">5/9 報告數值</div>
+        </div>
+        <div class="kpi info">
+          <div class="label">期末累計訪客</div>
+          <div class="value">85,663</div>
+          <div class="note">5/9 報告數值</div>
+        </div>
+        <div class="kpi warn">
+          <div class="label">Ads 觀察點擊</div>
+          <div class="value">2,981</div>
+          <div class="note">6 筆不重複事件，CTR 約 1.22%</div>
+        </div>
+      </div>
+
+      <section>
+        <div class="section-head">
+          <h2>本週結論</h2>
+          <p class="caption">本週最重要的判讀是：廣告可以帶動波峰，但波峰沒有自然延續成穩定註冊與核心互動。</p>
+        </div>
+        <div class="cards">
+          <div class="card">
+            <h3>5/3 是可回放的成功樣本</h3>
+            <p>5/3 註冊 +136，對應 5/2 Ads 高曝光。建議回看該日素材、受眾、落地頁與站內路徑。</p>
+          </div>
+          <div class="card">
+            <h3>5/4 Ads 點擊異常</h3>
+            <p>5/4 事件僅曝光 3,875、點擊 31，是本週最明顯異常，需排查預算、素材、設定或投放限制。</p>
+          </div>
+          <div class="card">
+            <h3>核心服務需要接住流量</h3>
+            <p>財務篩檢、AI 問答、知識庫、語音轉文字與線上諮詢多次被提及，適合設為註冊後導流主軸。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>每日明細</h2>
+          <p class="caption">本回填週報依既有日報資料整理；後續正式自動化應優先讀取後台 overview/trends 與 Google Ads 後台。</p>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>累計會員</th>
+              <th>累計訪客</th>
+              <th>主訊號</th>
+              <th>Ads 事件</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="number">05/03</td>
+              <td class="number">4,490 <span class="positive">(+136)</span></td>
+              <td class="number">83,028 <span class="positive">(+640)</span></td>
+              <td>平台關鍵指標整體上升，但需量化 Ads 與實體活動貢獻。</td>
+              <td>05/02 曝光 74,329，點擊 659</td>
+            </tr>
+            <tr>
+              <td class="number">05/04</td>
+              <td class="number">4,514 <span class="positive">(+23)</span></td>
+              <td class="number">83,478 <span class="positive">(+448)</span></td>
+              <td>會員註冊與訪客仍偏弱，但 AI 工具互動升溫。</td>
+              <td>05/03 曝光 46,572，點擊 424</td>
+            </tr>
+            <tr>
+              <td class="number">05/05</td>
+              <td class="number">4,534 <span class="positive">(+20)</span></td>
+              <td class="number">84,018 <span class="positive">(+540)</span></td>
+              <td>訪客增加但核心功能下降，5/4 Ads 點擊驟降需排查。</td>
+              <td class="risk-text">05/04 曝光 3,875，點擊 31</td>
+            </tr>
+            <tr>
+              <td class="number">05/06</td>
+              <td class="number">4,542 <span class="positive">(+10)</span></td>
+              <td class="number">84,499 <span class="positive">(+478)</span></td>
+              <td>註冊與訪客下滑壓力仍在，但財務篩檢與問答等深度功能增加。</td>
+              <td>05/05 曝光 50,578，點擊 795</td>
+            </tr>
+            <tr>
+              <td class="number">05/07</td>
+              <td class="number">4,554 <span class="positive">(+14)</span></td>
+              <td class="number">84,923 <span class="positive">(+424)</span></td>
+              <td>訪客下降但註冊微幅上升，轉換率可能改善；核心功能仍需引導。</td>
+              <td>05/06 曝光 32,405，點擊 539</td>
+            </tr>
+            <tr>
+              <td class="number">05/08</td>
+              <td class="number">4,568 <span class="positive">(+12)</span></td>
+              <td class="number">85,348 <span class="positive">(+425)</span></td>
+              <td>訪客增加但註冊下降，廣告與註冊流程可能存在轉換漏點。</td>
+              <td>05/07 曝光 36,132，點擊 533</td>
+            </tr>
+            <tr>
+              <td class="number">05/09</td>
+              <td class="number">4,576 <span class="positive">(+7)</span></td>
+              <td class="number">85,663 <span class="positive">(+315)</span></td>
+              <td>近 7 天關鍵營運指標普遍下降，需檢查 Ads 與站內行為是否脫鉤。</td>
+              <td>05/07 曝光 36,132，點擊 533</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>週內脈絡</h2>
+        </div>
+        <div class="timeline">
+          <div class="day">
+            <div class="date">05/03</div>
+            <div class="message">註冊高峰出現，是廣告投放、活動或站內入口共同作用的最佳回放樣本。</div>
+          </div>
+          <div class="day">
+            <div class="date">05/04-05/06</div>
+            <div class="message">註冊增量回落，但 AI、財務篩檢與問答需求持續出現，顯示使用者意圖還在，只是需要更好的導流。</div>
+          </div>
+          <div class="day">
+            <div class="date">05/07-05/09</div>
+            <div class="message">訪客與註冊趨緩，5/8-5/9 持續提醒 Ads 與站內行為可能脫鉤。</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>下週建議</h2>
+        </div>
+        <div class="actions">
+          <div class="action">
+            <strong>重建 5/3 高峰路徑</strong>
+            <p>比對 Ads 素材、受眾、投放時間、目標頁與註冊完成路徑，找出可複製因素。</p>
+          </div>
+          <div class="action">
+            <strong>排查 5/4 Ads 異常</strong>
+            <p>確認是否為預算、審核、出價、素材疲乏或設定問題，避免再出現點擊斷崖。</p>
+          </div>
+          <div class="action">
+            <strong>把核心功能變成註冊誘因</strong>
+            <p>將財務篩檢、AI 問答、知識庫與語音轉文字包裝成明確 CTA，減少流量浪費。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <p class="footnote">資料口徑：本回填版使用 `daily-report-data-2026-05-backfill.json` 中 2026/05/03-2026/05/09 的既有日報資料；依新規則，後續正式報表需優先讀取 familyfinhealth 後台與 Google Ads 後台，信箱摘要為第二順位。</p>
+      </section>
+    </article>
+  </main>
+</body>
+</html>

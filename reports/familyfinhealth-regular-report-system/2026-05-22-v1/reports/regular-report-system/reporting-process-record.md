@@ -16,6 +16,11 @@
 10. 給沒有資訊背景夥伴的 Codex 教學檔要保持白話、任務導向、可實作，不以工程術語為主。
 11. 每日要根據 Kevin 的提問、任務敘述與追問方式給回饋，指出做得好的地方、可以更清楚的地方與隔天練習。
 12. 是否需要 agent 要先做判斷：清楚的一次性任務可直接處理；長期追蹤、策略、教學、跨工具回顧與成長回饋要納入 agent/反思視角。
+13. 所有固定報表都要有可點的歷史索引；日報依月份，週報依自然週，月報依年月，季報/半年報/年報依年度週期列出。
+14. 固定報表發布採「候選提醒」模式：自動化只產生發布候選摘要、差異摘要、敏感度與歷史索引檢查，不自動 GitHub push、Vercel deploy 或分享 URL。
+15. 資料來源優先級：familyfinhealth 後台 overview、familyfinhealth 後台 trends、Google Ads campaign、Codex/GitHub/Vercel 紀錄是第一順位；信箱中的日報、週報、月報、季報等摘要是第二順位，只作為補洞、交叉驗證或第一順位不可讀時的回推來源。
+16. 週報依實際月曆週產生，目前以週日到週六為一週；若同一週橫跨月份，正式週報歷史必須拆成月內片段，例如 2026/05/01-05/02 與 2026/05/03-05/09 是兩份週報。
+17. Kevin 的目標狀態是本機 `publish-ready/` 更新後公開 production 站也自動更新，但啟用前必須先得到明確批准，且範圍只限已核准公開的好理家在報表入口，不可自動處理敏感內容、權限、網域或移除 noindex。
 
 ## 2026-05-22 變更
 
@@ -32,6 +37,12 @@
 | 2026-05-22 | 補上 agent 使用判斷規則 | 回應 Kevin 對「為什麼沒有帶入 agent」的提醒，避免後續長期任務缺少分流與反思視角 | `kevin-codex-daily-feedback.md`、`automation-7` |
 | 2026-05-22 | 固定報表接上 `publish-codex-report` 流程 | Kevin 同意先建立本機 publish-ready 套件，保留審核與批准關卡，避免報表在未確認敏感度前外流 | `scripts/build-report-publish-ready.ps1`、`publish-ready/`、`automation-6`、`automation-7`、`automation-8`、`automation-9` |
 | 2026-05-22 | 重製跨裝置報表存取流程 | 將正式教學與產生器更新為 `cross-device-static-v2`：純靜態 publish-ready package、修正 README 反引號跳脫造成的路徑斷裂、標明外部動作批准狀態，並把 app-level Basic Auth middleware 從標準解法中移除 | `codex-regular-report-tutorial.md`、`scripts/build-report-publish-ready.ps1`、`publish-ready/README.md`、`publish-ready/PUBLICATION_CHECKLIST.md`、`publish-ready/PUBLISH_MANIFEST.json` |
+| 2026-05-22 | 採用發布候選提醒自動化 | Kevin 選擇先由自動化檢查本機報表更新與可發布差異，但 GitHub/Vercel production 仍需當次批准 | `codex-regular-report-tutorial.md`、`reporting-process-record.md`、`report-publish-candidate` |
+| 2026-05-22 | 擴充歷史索引規則到所有固定報表 | Kevin 要週報、月報、季報、半年報、年度預回顧與年報都像日報一樣有歷史紀錄可點 | `report-index.html`、`codex-regular-report-tutorial.md`、`automation-6`、`automation-8`、`automation-9` |
+| 2026-05-22 | 明確化資料來源優先級 | Kevin 指定後台 overview/trends、Google Ads 與 Codex/GitHub/Vercel 紀錄為第一順位，信箱報表為第二順位 | `codex-regular-report-tutorial.md`、`reporting-process-record.md` |
+| 2026-05-22 | 明確化跨月週報切分 | Kevin 確認若週期跨月份，週報需依月內片段拆分，5/1-5/9 應拆成 5/1-5/2 與 5/3-5/9 | `codex-regular-report-tutorial.md`、`report-generation-timeline.md/html`、`report-index.html` |
+| 2026-05-22 | 記錄公開站自動同步目標但暫不啟用 | 自動 GitHub/Vercel production 屬外部寫入與部署，需 Kevin 額外明確批准後才可改自動化 | `codex-regular-report-tutorial.md`、`reporting-process-record.md` |
+| 2026-05-22 | 月報/長週期報表排程改為每月 1 日 00:00 | Kevin 要月報排程排每月 1 日 0:00；同一自動化也負責季報、半年報與年報檢查 | `automation-8`、`codex-regular-report-tutorial.md`、`report-generation-timeline.md/html` |
 
 ## 2026-05-22 本次資料來源
 
