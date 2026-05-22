@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-22 19:26:12 +08:00",
+    "generatedAt":  "2026-05-22 19:31:43 +08:00",
     "workflow":  "publish-codex-report",
     "workflowVersion":  "cross-device-static-v2",
     "status":  "public-production-deploy-approved",
@@ -8,8 +8,8 @@
     "reportSlug":  "regular-report-system",
     "entry":  "reports/regular-report-system/index.html",
     "latestLocalUpdate":  {
-                              "updatedAt":  "2026-05-22 19:26:12 +08:00",
-                              "change":  "Publishing the current local publish-ready package to public production: weekly card shows only the most recent week, weekly history remains complete, source-priority rules are recorded, and automation-8 monthly/long-cycle schedule is set to every month day 1 at 00:00.",
+                              "updatedAt":  "2026-05-22 19:31:43 +08:00",
+                              "change":  "Publishing the current local publish-ready package to public production and recording that browser-authenticated first-tier sources should use the egroup.kevin@gmail.com Chrome Default profile.",
                               "publicDeploymentStatus":  "Approved by Kevin in chat on 2026-05-22 and being deployed to GitHub/Vercel production in this task."
                           },
     "packageType":  "pure-static",
@@ -38,6 +38,7 @@
                              "Local publish-ready package was updated after the last production deployment with weekly-report-2026-05-01-visual.html and weekly-report-2026-05-03-visual.html; GitHub/Vercel were not updated in that backfill task.",
                              "Source priority is now first-tier objective sources first: familyfinhealth overview, familyfinhealth trends, Google Ads campaign, Codex/GitHub/Vercel records; Gmail report summaries are second-tier fallback or cross-check sources.",
                              "The local report entry and automation schedule changed after the last production deployment; Kevin requested deploying the local package to public production in the current task."
+                             ,"Browser-authenticated first-tier sources should use Chrome profile directory Default for egroup.kevin@gmail.com before falling back to Gmail summaries."
                          ],
     "copiedFiles":  [
                         "achievement-record-index.html",

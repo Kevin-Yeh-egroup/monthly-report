@@ -57,6 +57,7 @@
         <li>資料來源優先級：familyfinhealth 後台 overview、familyfinhealth 後台 trends、Google Ads campaign、Codex/GitHub/Vercel 紀錄是第一順位；信箱摘要是第二順位。</li>
         <li>週報以週日到週六為一週；若同一週橫跨月份，正式週報歷史拆成月內片段。</li>
         <li>Kevin 的目標狀態是本機 <code>publish-ready/</code> 更新後公開 production 站也自動更新；啟用前仍需明確批准，且不得自動處理敏感內容、權限、網域或移除 noindex。</li>
+        <li>需要登入的第一順位來源要優先使用 <code>egroup.kevin@gmail.com</code> 的 Chrome <code>Default</code> profile；shell/curl 無登入狀態時不得直接視為後台或 Ads 不可讀。</li>
       </ol>
     </section>
 
@@ -79,6 +80,7 @@
           <tr><td>2026-05-22</td><td>明確化跨月週報切分</td><td>5/1-5/9 應拆成 5/1-5/2 與 5/3-5/9 兩份正式週報</td><td><code>report-index.html</code>、<code>report-generation-timeline.md/html</code></td></tr>
           <tr><td>2026-05-22</td><td>記錄公開站自動同步目標但暫不啟用</td><td>GitHub/Vercel production 自動部署屬外部寫入與部署，需額外批准</td><td><code>codex-regular-report-tutorial.md</code>、<code>reporting-process-record.md</code></td></tr>
           <tr><td>2026-05-22</td><td>月報/長週期報表排程改為每月 1 日 00:00</td><td>Kevin 要月報排程排每月 1 日 0:00；同一自動化也負責季報、半年報與年報檢查</td><td><code>automation-8</code>、<code>report-generation-timeline.md/html</code></td></tr>
+          <tr><td>2026-05-22</td><td>固定登入來源使用 Chrome Default profile</td><td><code>egroup.kevin@gmail.com</code> 對應 Chrome <code>Default</code> profile；後台與 Ads 讀取應先用此 profile，不以未登入 shell 結果降級</td><td><code>codex-regular-report-tutorial.md</code>、<code>reporting-process-record.md</code></td></tr>
         </tbody>
       </table>
     </section>

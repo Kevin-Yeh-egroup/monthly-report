@@ -58,6 +58,14 @@ daily-report-YYYY-MM-DD.html
 - Codex/GitHub/Vercel 紀錄是工作、發布與系統演進的第一順位來源；familyfinhealth 與 Google Ads 是營運與廣告數據的第一順位來源。
 - 報表頁面呈現整理後的客觀結論，不放登入失敗、抓取錯誤等操作細節；操作細節放在交付回覆、流程紀錄或 manifest。
 
+需要登入的第一順位來源讀取規則：
+
+- familyfinhealth 後台與 Google Ads 優先透過 Kevin 已登入的 Chrome 設定檔讀取，不以未登入的 shell/curl 結果直接判定不可讀。
+- `egroup.kevin@gmail.com` 對應的 Chrome profile directory 是 `Default`；需要開啟瀏覽器時使用 `--profile-directory="Default"`。
+- 若 Chrome/Codex Chrome Extension 可用，優先 claim 或開啟 `Default` profile 的分頁來讀取 `overview`、`trends` 與 Google Ads。
+- 若只能用命令列且讀不到登入後資料，交付時要寫「shell 無登入狀態，需改用 Chrome Default profile 驗證」，不要直接降級成信箱摘要。
+- 不讀取 cookies、密碼或本機 session 檔；只透過已登入瀏覽器畫面/API 取得報表需要的客觀數據。
+
 每日報表呈現：
 
 - 今日工作簡報：今天最該處理的 3 件事、行事曆、跟進項目、深度工作空檔。
